@@ -1,0 +1,6 @@
+FROM php:8.1-apache
+	
+COPY conf/php.ini /usr/local/etc/php/conf.d/php.ini
+
+RUN docker-php-ext-configure pdo_mysql && \
+	docker-php-ext-install pdo_mysql
