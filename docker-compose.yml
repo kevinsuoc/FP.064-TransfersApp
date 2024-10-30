@@ -1,0 +1,38 @@
+services:
+  php-apache:
+    image: php-apache:proy
+    build: builds/php-apache
+    container_name: php-apache
+    restart: always
+    env_file:
+      .env
+    volumes:
+      - ./web:/var/www/html/
+    ports:
+     - 80:80
+    networks:
+      - proyectnet
+  database:
+    image: mysql:8.0.39
+    container_name: mysql
+    restart: always
+    env_file:
+      .env
+    volumes:
+      - ./database:/var/lib/mysql/
+    networks:
+      - proyectnet
+  phpmyadmin:
+    image: phpmyadmin:5.2.1
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    networks:
+      - proyectnet
+    env_file:
+      .env
+
+networks:
+  proyectnet:
+    name: proyectnet
