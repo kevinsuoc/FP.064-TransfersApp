@@ -1,6 +1,6 @@
 <?php
 
-enum sessionType{
+enum SessionType{
 	case admin;
 	case regular;
 }
