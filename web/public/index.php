@@ -1,7 +1,7 @@
 <?php
 
-if (isset($_GET['request'])){
-	$request = $_GET['request'];
+if (isset($_REQUEST['request'])){
+	$request = $_REQUEST['request'];
 }
 else {
 	$request = 'homepage';
@@ -10,4 +10,5 @@ else {
 switch($request){
 	case 'homepage': require __DIR__.'/../controller/homeController.php'; break;
 	case 'login': require __DIR__.'/../controller/loginController.php'; break;
+	case 'logout': require __DIR__.'/../controller/loginController.php'; break;
 }

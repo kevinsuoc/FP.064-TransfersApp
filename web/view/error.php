@@ -1,3 +1,3 @@
 Error: <?php echo $error;?>
 
-<a href="/public/index.php">Volver</a>
+<a href="/">Volver</a>

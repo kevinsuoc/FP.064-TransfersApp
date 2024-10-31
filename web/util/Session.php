@@ -9,24 +9,29 @@ $admin_password = "password";
 $admin_username = "admin";
 
 class Session{
-	public $sessionType;
-	public $userName;
+	private $sessionType;
+	private $userName;
 
 	function __construct($userName, $password) {
-		if ($userName == $GLOBAL['admin_username'])
-			validateAdminLogin($password);
+		if ($userName == $GLOBALS['admin_username'])
+			$this->validateAdminLogin($password);
 		else
-			validateRegularLogin($userName, $password);
+			$this->validateRegularLogin($userName, $password);
 	}
 
+	public function getSessionType(){return $this->sessionType;}
+
+	public function getUserName(){return $this->userName;}
+
 	private function validateAdminLogin($password){
-		if ($password != $GLOBAL['admin_password'])
-			throw new PublicException("Admin login: Contraseña incorrecta");
-		$sessionType = SessionType::admin;
+		if ($password != $GLOBALS['admin_password'])
+			throw new LoginException("La contraseña de administrador es incorrecta");
+		$this->sessionType = SessionType::admin;
 	}
 
 	private function validateRegularLogin($userName, $password){
-		throw new PublicException("Usuario regular no implementado");
+		throw new LoginException("Usuario regular no implementado");
+		$this->$sessionType = SessionType::regular;
 		$this->userName = $userName;
 	}
 }
