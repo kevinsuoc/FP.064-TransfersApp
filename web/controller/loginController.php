@@ -1,23 +1,22 @@
 <?php
 
-session_start();
-
 require_once __DIR__.'/../util/Session.php';
 
-// Si ya existe una sesion, redireccionar a pagina principal
-if (isset($_SESSION['userSession'])){
-	header("Location: /index.php");
+session_start();
+
+if (isset($request) && $request == 'logout'){
+	unset($_SESSION['userSession']);
 }
 
-// Si el usuario y contraseña existen en el metodo POST, venimos de intento de acceder
-// Si no, venimos de un intento de registro nuevo
-if (isset($_POST['username']) && isset($_POST['password'])){
+if (isset($_SESSION['userSession'])){
+	header("Location: /");
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
 	try {
-		// Intentamos validar los datos. Si son validos vamos a la pagina principal
 		$_SESSION['userSession'] = new Session($_POST['username'], $_POST['password']);
-		header("Location: /index.php");
+		header("Location: /");
 	} catch (LoginException $e){
-		// Si encontramos un error vamos a login con mensaje de error
 		$loginError = "Error: ".$e->getMessage();
 		require __DIR__.'/../view/login.php';
 	}
