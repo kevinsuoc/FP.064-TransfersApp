@@ -14,10 +14,10 @@ if (!isLogged()){
 	exit();
 }
 else if ($_SESSION['userSession']->getSessionType() === sessionType::admin){
-	require __DIR__.'/../view/adminHomepage.php';
+	require __DIR__.'/../view/homepage/admin.php';
 }
 else if ($_SESSION['userSession']->getSessionType() === sessionType::regular){
-	require __DIR__.'/../view/regularHomepage.php';
+	require __DIR__.'/../view/homepage/regular.php';
 }
 else {
 	unset($_SESSION['userSession']);
