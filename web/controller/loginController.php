@@ -4,22 +4,25 @@ require_once __DIR__.'/../util/Session.php';
 
 session_start();
 
-if (isset($request) && $request == 'logout'){
+if ($request == 'logout'){
 	unset($_SESSION['userSession']);
 }
 
 if (isset($_SESSION['userSession'])){
-	header("Location: /");
+	header("Location: /"); exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
 	try {
 		$_SESSION['userSession'] = new Session($_POST['username'], $_POST['password']);
-		header("Location: /");
+		header("Location: /"); exit();
 	} catch (LoginException $e){
 		$loginError = "Error: ".$e->getMessage();
-		require __DIR__.'/../view/login.php';
+	} catch (DatabaseException $e){
+		$error = "Error con la base de datos: ".$e->getMessage();
+		require __DIR__.'/../view/error.php'; exit();
 	}
-} else {
-	require __DIR__.'/../view/login.php';
 }
+
+require __DIR__.'/../view/login.php';
+

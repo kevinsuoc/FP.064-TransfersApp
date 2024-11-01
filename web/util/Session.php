@@ -2,15 +2,16 @@
 
 require_once __DIR__.'/PublicException.php';
 require_once __DIR__.'/SessionType.php';
+require_once __DIR__.'/../model/Viajero.php';
 
 class LoginException extends PublicException {};
 
 $admin_password = "password";
 $admin_username = "admin";
 
-class Session{
+class Session {
+	private $viajero;
 	private $sessionType;
-	private $userName;
 
 	function __construct($userName, $password) {
 		if ($userName == $GLOBALS['admin_username'])
@@ -30,8 +31,12 @@ class Session{
 	}
 
 	private function validateRegularLogin($userName, $password){
-		throw new LoginException("Usuario regular no implementado");
-		$this->$sessionType = SessionType::regular;
-		$this->userName = $userName;
+		$this->sessionType = SessionType::regular;
+		try {
+			$this->viajero = Viajero::getViajeroWithUsernameAndPassword($userName, $password);
+		} catch (PublicException $e){
+			throw new LoginException($e->getMessage());
+		}
+		return $this->viajero;
 	}
 }
