@@ -23,3 +23,7 @@ Cambiado transfer_precios.id_precios a columna autogenerada y llave principal
 Agregado precio por defecto
 
 Cambiado transfer_reservas.email_cliente a varchar(50)
+
+Password puede ser nula
+
+Email es unico
