@@ -13,8 +13,4 @@ Admin !
 	<button type="submit">Hacer reserva</button>
 </form>
 
-<form action="/">
-		
-</form>
-
 <a href="/?request=logout">Desconectarse</a>

@@ -22,7 +22,7 @@ class Session {
 
 	public function getSessionType(){return $this->sessionType;}
 
-	public function getUserName(){return $this->userName;}
+	public function getEmail(){return $this->viajero->getEmail();}
 
 	private function validateAdminLogin($password){
 		if ($password != $GLOBALS['admin_password'])

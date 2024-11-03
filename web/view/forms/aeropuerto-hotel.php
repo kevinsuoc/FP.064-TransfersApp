@@ -15,37 +15,24 @@
 	<label for="aeropueroOrigen">Aeropuerto de origen</label>
 	<input type="text" name="aeropueroOrigen" id="aeropueroOrigen" required><br>
 
-	<label for="hotelDestino">Hotel de destino</label>
-	<input type="text" name="hotelDestino" id="hotelDestino" required><br>
+	<label for="id_destino">Destino: </label>
+	<select id="id_destino" name="id_destino">
+	<?php 
+		foreach ($destinos as $destino){
+			echo '<option value="'.$destino[0].'">'.'Hotel '.$destino[0].': "'.$destino['descripcion'].'"</option>';
+		}
+	?>
+	</select><br>
 
 	<label for="numeroViejeros">Numero de viajeros</label>
 	<input type="number" name="numeroViejeros" id="numeroViejeros" required><br>
 
-	<p>Datos de viajero</p>
-
-	<label for="nombreViajero">Nombre</label>
-	<input type="text" name="nombreViajero" id="nombreViajero" required><br>
-
-	<label for="apellido1Viajero">Primer apellido</label>
-	<input type="text" name="apellido1Viajero" id="apellido1Viajero" required><br>
-
-	<label for="apellido2Viajero">Segundo apellido</label>
-	<input type="text" name="apellido2Viajero" id="apellido2Viajero"><br>
-
-	<label for="direccionViajero">Direccion</label>
-	<input type="text" name="direccionViajero" id="direccionViajero" required><br>
-
-	<label for="codigoPostal">Codigo postal</label>
-	<input type="number" name="codigoPostal" id="codigoPostal" required><br>
-
-	<label for="ciudadViajero">Ciudad</label>
-	<input type="text" name="ciudadViajero" id="ciudadViajero" required><br>
-
-	<label for="paisViajero">Pais</label>
-	<input type="text" name="paisViajero" id="paisViajero" required><br>
-
-	<label for="emailViajero">Email</label>
-	<input type="email" name="emailViajero" id="emailViajero" required><br>
+	<label for="email">Email</label>
+	<input type="email" name="email" id="email" required 
+	<?php 
+		if (isset($email)){echo ' disabled value="'.$email.'"';};
+	?>
+	><br>
 
 	<input type="hidden" name="request" value="reservar">
 	<input type="hidden" name="tipoReserva" value="<?php echo $tipoReserva?>">

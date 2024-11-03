@@ -31,8 +31,8 @@ class Viajero {
 
 	public function save(){
 		$db = new Database();
-		$db->query("INSERT INTO transfer_viajeros (id_viajero, nombre, apellido1, apellido2, direccion, codigoPostal, ciudad, pais, email, password)
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		$db->query("INSERT INTO transfer_viajeros (nombre, apellido1, apellido2, direccion, codigoPostal, ciudad, pais, email, password)
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 			ON DUPLICATE KEY UPDATE
 			nombre = VALUES(nombre),
 			apellido1 = VALUES(apellido1),
@@ -43,8 +43,7 @@ class Viajero {
 			pais = VALUES(pais),
 			email = VALUES(email),
 			password = VALUES(password);
-		", [$this->id_viajero,
-			$this->nombre, 
+		", [$this->nombre, 
 			$this->apellido1, 
 			$this->apellido2, 
 			$this->direccion,
@@ -54,6 +53,11 @@ class Viajero {
 			$this->email,
 			$this->password,
 		]);
+		$this->id_viajero = $db->getLastId();
+	}
+
+	public function getEmail(){
+		return $this->email;
 	}
 	
 	public static function getViajeroWithUsernameAndPassword($username, $password){
@@ -66,13 +70,11 @@ class Viajero {
 
 		$viajeroData = $db->fetch();
 
-		if (!isset($viajeroData['password'])){
-			throw new PublicException("Viajero no registrado");
-		}
-
 		if (!password_verify($password, $viajeroData['password'])){
 			throw new PublicException("Contraseña incorrecta");
 		}
+
+		unset($viajeroData['password']);
 	
 		return new Viajero($viajeroData);
 	}
