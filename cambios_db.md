@@ -27,3 +27,7 @@ Cambiado transfer_reservas.email_cliente a varchar(50)
 Password puede ser nula
 
 Email es unico
+
+Poner nullable a bastantes en transfer_reservas
+
+Sacado default de hora_vuelo_salida

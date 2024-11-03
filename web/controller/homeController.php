@@ -13,6 +13,7 @@ function routeHome(){
 		require __DIR__.'/../view/homepage/admin.php';
 	}
 	else if ($_SESSION['userSession']->getSessionType() === sessionType::regular){
+		$tiposReserva = TipoReserva::getTiposReserva();
 		require __DIR__.'/../view/homepage/regular.php';
 	}
 	else {
