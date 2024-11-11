@@ -77,7 +77,6 @@ class ReservaController {
 		$data['id_vehiculo'] = 1;
 		$this->reserva = new Reserva($data);
 		$this->reserva->save();
-		success();
 	}
 
 	private function agregarReservaHotelAeropuerto(){
@@ -92,7 +91,6 @@ class ReservaController {
 		$data[''] = $_POST[''];
 		$data[''] = $_POST[''];
 		$data[''] = $_POST[''];
-
 		$this->reserva = new Reserva($data);
 	}
 
@@ -108,7 +106,6 @@ class ReservaController {
 		$data[''] = $_POST[''];
 		$data[''] = $_POST[''];
 		$data[''] = $_POST[''];
-
 		$this->reserva = new Reserva($data);
 	}
 
