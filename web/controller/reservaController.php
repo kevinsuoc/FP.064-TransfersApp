@@ -1,62 +1,66 @@
 <?php
 
+/*
+	Controlador de reservas
+ */
+
 require __DIR__.'/../model/Hotel.php';
 require __DIR__.'/../model/Zona.php';
 
-try {
-	$reservaController = new ReservaController();
+$reservaController = new ReservaController();
 
-	switch($request){
-		case 'reserva': $reservaController->showForm(); break;
-		case 'reservar': $reservaController->reservar(); break;
-	}
-} catch (PublicException $e){
-	$error = $e->getMessage();
-	require __DIR__.'/../view/error.php';
+switch($request){
+	case 'reserva': $reservaController->showForm(); break;
+	case 'reservar': $reservaController->reservar(); break;
 }
 
 class ReservaController {
 	private $viajero;
 	private $reserva;
 	private $tipoReserva;
+	private $destinos;
+	private $email;
+	private $errorReserva;
 
+	/*
+		Si no hay una sesión, enviamos un mensaje de error.
+	*/
 	function __construct(){
-		if (!isset($_SESSION['userSession']))
-			throw new PublicException('Peticion invalida');
-
+		if (!isset($_SESSION["userSession"])){
+			$this->mostrarPaginaError("No se puede reservar sin estar logeado"); exit();
+		}
 		$this->viajero = $_SESSION['userSession'];
 		$this->tipoReserva = $_REQUEST['tipoReserva'];
 	}
 
+	/*
+		Agregamos la reserva, en caso de error volvemos a la vista con un mensaje.
+	*/
 	public function reservar(){
 		try {
-			$this->reserva = $this->agregarReserva();
-
 			switch ($tipoReserva){
 				case 1: $this->reservarAeropuertoHotel(); break;
 				case 2: $this->reservaerHotelAeropuerto(); break;
 				case 3: $this->reservarIdaYVuelta(); break;
 			}
 		} catch (PublicException $e){
-			$errorReserva = "Error: ".$e->getMessage();
+			$this->errorReserva = "Error: ".$e->getMessage();
 			showForm();
 		}
 	}
 
+	/*
+		Preparamos los datos que la vista necesita y la llamamos.
+	*/
 	public function showForm(){
 		$destinos = Hotel::getHotels();
 		foreach ($destinos as &$destino){
-			$destino['descripcion'] = Zona::getZonaById($destino[1])->getDescription();
+			$this->destino['descripcion'] = Zona::getZonaById($destino[1])->getDescription();
 		}
-		
+		$this->destinos = $destinos;
 		if ($this->viajero->getSessionType() === SessionType::regular)
-			$email = $this->viajero->getEmail();
-		$tipoReserva = $this->tipoReserva;
-		switch ($tipoReserva){
-			case 1: require __DIR__.'/../view/forms/aeropuerto-hotel.php'; break;
-			case 2: require __DIR__.'/../view/forms/hotel-aeropuerto.php'; break;
-			case 3: require __DIR__.'/../view/forms/ida-y-vuelta.php'; break;
-		}
+			$this->email = $this->viajero->getEmail();
+		$this->mostrarFormularioReserva();
 	}
 
 	private function agregarReservaAeropuertoHotel(){
@@ -108,9 +112,21 @@ class ReservaController {
 		$this->reserva = new Reserva($data);
 	}
 
-	private function success(){
-		$message = 'Reserva agregada correctamente';
-		require __DIR__.'/../view/message.php';
+	private function mostrarFormularioReserva(){
+		// Preparamos los datos de la vista
+		$tipoReserva = $this->tipoReserva;
+		$destinos = $this->destinos;
+		$email = $this->email;
+		// Llamamos a la vista
+		switch ($tipoReserva){
+			case 1: require __DIR__.'/../view/forms/aeropuerto-hotel.php'; break;
+			case 2: require __DIR__.'/../view/forms/hotel-aeropuerto.php'; break;
+			case 3: require __DIR__.'/../view/forms/ida-y-vuelta.php'; break;
+		}
+	}
+	
+	public function mostrarPaginaError($error){
+		require __DIR__.'/../view/error.php';
 	}
 }
 

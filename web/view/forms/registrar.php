@@ -28,7 +28,7 @@
 	<label for="passwordViajero">Password</label>
 	<input type="password" name="passwordViajero" id="passwordViajero" required><br>
 
-	<input type="hidden" name="request" value="registrarse">
+	<input type="hidden" name="request" value="intentoRegistro">
 	<button type="submit">Registrarse</button><br>
 	<?php if (isset($registrarError)){echo $registrarError;}; ?>
 </form>
