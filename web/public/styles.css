@@ -1,0 +1,38 @@
+
+
+@import 'bootstrap/scss/bootstrap';
+
+.navbar-brand {
+    letter-spacing: 1px;
+}
+
+.btn {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    border-radius: 20px;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.form-control {
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(59, 89, 152, 0.25);
+    border-color: #3B5998;
+}
+
+.btn-primary {
+    background-color: #3B5998;
+    border-color: #3B5998;
+}
+
+.btn-primary:hover {
+    background-color: #344e86;
+    border-color: #344e86;
+}
