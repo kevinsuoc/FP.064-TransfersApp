@@ -1,38 +1,71 @@
 
 
 @import 'bootstrap/scss/bootstrap';
-
-.navbar-brand {
-    letter-spacing: 1px;
+.main-container {
+    position: relative;
+    height: 100vh;
+    background-image: url('https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+    background-position: center;
 }
 
-.btn {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    border-radius: 20px;
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
 }
 
-.card {
-    border: none;
-    border-radius: 15px;
-}
-
-.form-control {
-    padding: 0.75rem 1rem;
+.login-form {
+   background: rgba(255, 255, 255, 0.95);
     border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    max-width: 400px; /* Añade un ancho máximo */
+    margin: 0 auto;
 }
 
-.form-control:focus {
-    box-shadow: 0 0 0 0.25rem rgba(59, 89, 152, 0.25);
-    border-color: #3B5998;
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Asegúrate de que esté encima de otros elementos */
+    background-color: rgba(0, 0, 0, 0.7); /* Opcional: Color de fondo */
+    padding: 10px 0;
+}
+body {
+    margin-top: 70px; /* Añadir un margen para que no se oculte el contenido */
 }
 
-.btn-primary {
-    background-color: #3B5998;
-    border-color: #3B5998;
+/* Estilo para el header */
+.header-bar {
+    background-color: rgba(173, 216, 230, 0.9); /* Aumenta la opacidad para mejor contraste */
+    padding: 1rem;
+    color: black; /* Asegura que el texto sea legible */
+    text-align: center;
 }
 
-.btn-primary:hover {
-    background-color: #344e86;
-    border-color: #344e86;
+/* Centrar el mensaje de bienvenida */
+.welcome-message {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Tamaño del texto de bienvenida */
+.welcome-message h1 {
+    font-size: 3rem;
+    font-weight: bold;
 }
