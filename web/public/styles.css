@@ -23,15 +23,21 @@
     color: white;
     text-align: center;
 }
-
 .login-form {
-   background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 10px;
     padding: 2rem;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    max-width: 400px; /* Añade un ancho máximo */
-    margin: 0 auto;
+    max-width: 400px;
+    width: 100%;
+}
+.form-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el formulario a la derecha */
+    height: 40vh; /* Ocupa toda la altura de la ventana */
+    align-items: center; /* Centra verticalmente el formulario */
+    padding-right: 20px; /* Añade un poco de espacio a la derecha */
 }
 
 .navbar {
@@ -40,7 +46,7 @@
     left: 0;
     width: 100%;
     z-index: 1000; /* Asegúrate de que esté encima de otros elementos */
-    background-color: rgba(0, 0, 0, 0.7); /* Opcional: Color de fondo */
+    background-color: rgba(0, 0, 0, 0.); /* Opcional: Color de fondo */
     padding: 10px 0;
 }
 body {
@@ -49,7 +55,7 @@ body {
 
 /* Estilo para el header */
 .header-bar {
-    background-color: rgba(173, 216, 230, 0.9); /* Aumenta la opacidad para mejor contraste */
+    background-color: rgba(173, 216, 230, 0.4); /* Aumenta la opacidad para mejor contraste */
     padding: 1rem;
     color: black; /* Asegura que el texto sea legible */
     text-align: center;
@@ -69,3 +75,20 @@ body {
     font-size: 3rem;
     font-weight: bold;
 }
+
+.airlines-title {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    color:rgb(41, 41, 166);
+    font-weight: bold;
+}
+
+.btn-bd-primary {
+    color: white;
+    background-color: rgb(41, 41, 166);
+    border: 2px solid rgb(41, 41, 166); /* Borde del mismo color que el fondo */
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 5px 10px; 
+    
+  }
