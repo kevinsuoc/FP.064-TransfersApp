@@ -31,5 +31,6 @@
 </div>
 </div>
 </div>
+
 <?php if (isset($loginError)){echo $loginError;}; ?>
 <?php if (isset($loginMessage)){echo $loginMessage;}; ?>

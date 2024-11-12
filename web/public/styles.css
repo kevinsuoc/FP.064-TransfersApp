@@ -121,5 +121,6 @@
 
 .containerfromwelcome{
     display: flex;
-    justify-content: center; /* Centra horizontalmente */
+    justify-content: center;
+    align-items: center; /* Centra horizontalmente */
     /* Centra verticalmente */}
