@@ -5,6 +5,10 @@
 	Recibe una solicitud con un parametro 'request'.
 	A partir de este se selecciona un controlador.
 	Si no existe, se redirige a la pagina inicial.
+
+	Variables relevantes:
+	
+	$_REQUEST['request']. - A través de un post/get se redirige a algun controlador.
 */
 
 // Necesario para que la sesion no se destruya por tener tipos de datos desconocidos

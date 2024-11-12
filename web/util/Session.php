@@ -21,8 +21,8 @@ class Session {
 	}
 
 	public function getSessionType(){return $this->sessionType;}
-
 	public function getEmail(){return $this->viajero->getEmail();}
+	public function getViajero(){return $this->viajero;}
 
 	private function validateAdminLogin($password){
 		if ($password != $GLOBALS['admin_password'])

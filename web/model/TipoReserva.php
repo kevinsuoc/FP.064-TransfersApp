@@ -9,4 +9,11 @@ class TipoReserva {
 		$reservas = $db->fetchAll();
 		return $reservas;
 	}
+
+	public static function getReservaPorTipo($tipoReserva){
+		$db = new Database();
+		$db->query("SELECT * FROM transfer_tipo_reserva WHERE id_tipo_reserva = ?", [$tipoReserva]);
+		$reserva = $db->fetch();
+		return $reserva;
+	}
 }

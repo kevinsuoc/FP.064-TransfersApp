@@ -4,33 +4,33 @@
 <form action="/" method="post">
 	<p>Datos de la reserva</p>
 	<label for="diaLlegada">Dia de llegada</label>
-	<input type="date" name="diaLlegada" id="diaLlegada" required><br>
+	<input type="date" name="fecha_entrada" id="diaLlegada" required><br>
 
 	<label for="diaLlegada">Hora de llegada</label>
-	<input type="time" name="horaLlegada" id="horaLlegada" required><br>
+	<input type="time" name="hora_entrada" id="horaLlegada" required><br>
 
 	<label for="numeroVuelo">Numero de vuelo</label>
-	<input type="number" name="numeroVuelo" id="numeroVuelo" required><br>
+	<input type="number" name="numero_vuelo_entrada" id="numeroVuelo" required><br>
 
 	<label for="aeropueroOrigen">Aeropuerto de origen</label>
-	<input type="text" name="aeropueroOrigen" id="aeropueroOrigen" required><br>
+	<input type="text" name="origen_vuelo_entrada" id="aeropueroOrigen" required><br>
 
-	<label for="id_destino">Destino: </label>
+	<label for="id_destino">Destino (Hotel): </label>
 	<select id="id_destino" name="id_destino">
 	<?php 
 		foreach ($destinos as $destino){
-			echo '<option value="'.$destino[0].'">'.'Hotel '.$destino[0].': "'.$destino['descripcion'].'"</option>';
+			echo '<option value="'.$destino->getIdHotel().'">'.$destino->getUsuario().'</option>';
 		}
 	?>
 	</select><br>
 
 	<label for="numeroViejeros">Numero de viajeros</label>
-	<input type="number" name="numeroViejeros" id="numeroViejeros" required><br>
+	<input type="number" name="num_viajeros" id="numeroViejeros" required><br>
 
 	<label for="email">Email</label>
-	<input type="email" name="email" id="email" required 
+	<input type="email" name="email_cliente" id="email" required 
 	<?php 
-		if (isset($email)){echo ' disabled value="'.$email.'"';};
+		if (isset($email)){echo ' readonly value="'.$email.'"';};
 	?>
 	><br>
 

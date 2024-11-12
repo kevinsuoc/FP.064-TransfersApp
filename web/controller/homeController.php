@@ -8,6 +8,15 @@
 
 	Esto podría ser una simple funcion, pero se usa una clase
 	para mantener la consistencia de diseño con otros controladores.
+
+	Variables relevantes:
+	$_SESSION['userSession']) contiene una instancia de la clase Session y se usa para
+	determinar si hay un usuario logeado o no.
+
+	$error - Utilizada por la vista de error, un mensaje.
+	
+	$tiposReserva - Array utilizado por la vista homepage 
+	para mostrar los tipos de reserva a elegir entre.
 */
 
 require_once __DIR__.'/../model/TipoReserva.php';

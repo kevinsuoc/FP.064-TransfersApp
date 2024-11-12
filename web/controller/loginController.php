@@ -4,6 +4,12 @@
 	Controlador que se encarga de iniciar/cerrar sesión.
 	Se encarga de llamar a las vistas de inicio de sesión y registro.
 	Se encarga de validar los registros e inicios de sesion a través de las clases modelo.
+
+	Requests disponibles:
+	registrarse - Muestra el formulario de registro.
+	login - Muestra el formulario de login.
+	intentoRegistro - Envia una peticion de registro con datos pertinentes.
+	logout - cerrar sesión.
 */
 $loginController = new LoginController($request);
 

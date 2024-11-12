@@ -31,3 +31,13 @@ Email es unico
 Poner nullable a bastantes en transfer_reservas
 
 Sacado default de hora_vuelo_salida
+
+Fecha reserva/modificacion tiene valor por defecto - Hoy
+
+Agregado id de viajero reservador
+
+Agragado numero de vuelo salida
+
+Agregado hora de recogida de salida
+
+Agregado nombre a los hoteles

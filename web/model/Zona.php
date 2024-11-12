@@ -36,8 +36,6 @@ class Zona {
 			throw new PublicException("Zona no encontrada");
 		}
 
-		$zonaData = $db->fetch();
-
-		return new Zona($zonaData);
+		return new Zona($db->fetch());
 	}
 }

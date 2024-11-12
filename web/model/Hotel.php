@@ -5,33 +5,50 @@ require_once __DIR__.'/../util/Database.php';
 class Hotel {
 	private $id_hotel;
 	private $id_zona;
+	private $usuario;
 	private $comision;
+	private $password;
 
 	function __construct($data = null){
 		if ($data) {
-            if (isset($data['id_hotel'])) {$this->id_viajero = $data['id_hotel'];};
-            $this->id_zona = $data['id_zona'];
-            $this->comision = $data['comision'];
+            if (isset($data['id_hotel'])) {$this->setIdHotel($data['id_hotel']);};
+			if (isset($data['id_zona'])) {$this->setIdZona($data['id_zona']);};
+			if (isset($data['Comision'])) {$this->setComision($data['Comision']);};
+			if (isset($data['usuario'])) {$this->setUsuario($data['usuario']);};
+			if (isset($data['password'])) {$this->setPassword($data['password']);};
         }
 	}
 
+	public function setIdHotel($id_hotel){$this->id_hotel = $id_hotel;}
+	public function setIdZona($id_zona){$this->id_zona = $id_zona;}
+	public function setUsuario($usuario){$this->usuario = $usuario;}
+	public function setComision($comision){$this->comision = $comision;}
+	public function setPassword($password){$this->password = crypt($password, 'S4LTF0RFUN');}
+
+	public function getIdHotel(){return $this->id_hotel;}
+	public function getIdZona(){return $this->id_zona;}
+	public function getUsuario(){return $this->usuario;}
+	public function getComision(){return $this->comision;}
+	public function getPassword(){return $this->password;}
+
 	public function save(){
 		$db = new Database();
-		$db->query("INSERT INTO transfer_hotel (id_zona, comision)
-			VALUES (?, ?)
+		$db->query("INSERT INTO transfer_hotel (id_zona, comision, usuario, password)
+			VALUES (?, ?, ?, ?)
 			ON DUPLICATE KEY UPDATE
 			id_zona = VALUES(id_zona),
 			comision = VALUES(comision),
+			usuario = VALUES(usuario),
+			password = VALUES(password)
 		", [$this->id_zona, 
 			$this->comision,
+			$this->usuario,
+			$this->password,
 		]);
 		$this->id_hotel = $db->getLastId();
 	}
 
-	public function getEmail(){
-		return $this->email;
-	}
-	
+
 	public static function getHotelById($id_hotel){
 		$db = new Database();
 		$db->query("SELECT * FROM transfer_hotel WHERE id_hotel = ?", [$id_hotel]);
@@ -39,16 +56,18 @@ class Hotel {
 		if ($db->rowCount() < 1){
 			throw new PublicException("Hotel no encontrado");
 		}
-
-		$hotelData = $db->fetch();
-
-		return new Hotel($hotelData);
+		return new Hotel($db->fetch());
 	}
 
 	public static function getHotels(){
 		$db = new Database();
 		$db->query("SELECT * FROM transfer_hotel");
-		$hotels = $db->fetchAll();
+
+		$hotelData = $db->fetchAll();
+		$hotels = [];
+		foreach ($hotelData as $hotel){
+			$hotels[] = new Hotel($hotel);
+		}
 		return $hotels;
 	}
 }

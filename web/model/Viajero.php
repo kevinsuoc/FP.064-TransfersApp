@@ -56,9 +56,11 @@ class Viajero {
 		$this->id_viajero = $db->getLastId();
 	}
 
-	public function getEmail(){
-		return $this->email;
-	}
+	public function getEmail(){return $this->email;}
+	public function getNombre(){return $this->nombre;}
+	public function getApellido1(){return $this->apellido1;}
+	public function getApellido2(){return $this->apellido2;}
+	public function getIdViajero(){return $this->id_viajero;}
 	
 	public static function getViajeroWithUsernameAndPassword($username, $password){
 		$db = new Database();
@@ -77,5 +79,12 @@ class Viajero {
 		unset($viajeroData['password']);
 	
 		return new Viajero($viajeroData);
+	}
+
+	public static function getViajeroPorId($id_viajero){
+		$db = new Database();
+		$db->query("SELECT * FROM transfer_viajeros WHERE id_viajero = ?", [$id_viajero]);
+		$viajero = $db->fetch();
+		return new Viajero($viajero);
 	}
 }
