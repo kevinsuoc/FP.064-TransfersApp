@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: Oct 30, 2024 at 02:43 PM
+-- Generation Time: Nov 12, 2024 at 08:47 PM
 -- Server version: 8.0.39
 -- PHP Version: 8.2.24
 
@@ -31,7 +31,7 @@ CREATE TABLE `transfer_hotel` (
   `id_hotel` int NOT NULL,
   `id_zona` int DEFAULT NULL,
   `Comision` int DEFAULT NULL,
-  `usuario` varchar(30) DEFAULT NULL,
+  `usuario` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
@@ -40,7 +40,7 @@ CREATE TABLE `transfer_hotel` (
 --
 
 INSERT INTO `transfer_hotel` (`id_hotel`, `id_zona`, `Comision`, `usuario`, `password`) VALUES
-(1, 1, 0, NULL, NULL);
+(1, 1, 0, 'Hotelestest', NULL);
 
 -- --------------------------------------------------------
 
@@ -72,20 +72,24 @@ CREATE TABLE `transfer_reservas` (
   `id_reserva` int NOT NULL,
   `localizador` varchar(100) NOT NULL,
   `id_hotel` int DEFAULT NULL COMMENT 'Es el hotel que realiza la reserva',
+  `id_viajero` int DEFAULT NULL COMMENT 'Viejo que realiza la reserva',
   `id_tipo_reserva` int NOT NULL,
   `email_cliente` varchar(50) NOT NULL,
-  `fecha_reserva` datetime NOT NULL,
-  `fecha_modificacion` datetime NOT NULL,
-  `id_destino` int NOT NULL,
-  `fecha_entrada` date NOT NULL,
-  `hora_entrada` time NOT NULL,
-  `numero_vuelo_entrada` varchar(50) NOT NULL,
-  `origen_vuelo_entrada` varchar(50) NOT NULL,
-  `hora_vuelo_salida` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `fecha_vuelo_salida` date NOT NULL,
+  `fecha_reserva` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_modificacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id_destino` int NOT NULL COMMENT 'Hotel de destino y/o recogida',
+  `fecha_entrada` date DEFAULT NULL COMMENT 'Fecha de entrada del vuelo al aeropuerto',
+  `hora_entrada` time DEFAULT NULL COMMENT 'Hora de entrada del vuelo al aeropuerto',
+  `numero_vuelo_entrada` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `origen_vuelo_entrada` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `hora_recogida` time DEFAULT NULL COMMENT 'Hora de recogida en el hotel hacia el aeropuerto',
+  `numero_vuelo_salida` int DEFAULT NULL,
+  `hora_vuelo_salida` timestamp NULL DEFAULT NULL,
+  `fecha_vuelo_salida` date DEFAULT NULL,
   `num_viajeros` int NOT NULL,
   `id_vehiculo` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
 
 -- --------------------------------------------------------
 
@@ -125,7 +129,7 @@ CREATE TABLE `transfer_vehiculo` (
 --
 
 INSERT INTO `transfer_vehiculo` (`id_vehiculo`, `Descripción`, `email_conductor`, `password`) VALUES
-(1, 'Un vehiculo', 'conductor@temp.uoc', '');
+(1, 'Un vehiculo de 3 ruedas', 'conductor@temp.uoc', '');
 
 -- --------------------------------------------------------
 
@@ -143,7 +147,7 @@ CREATE TABLE `transfer_viajeros` (
   `ciudad` varchar(100) NOT NULL,
   `pais` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL
+  `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
@@ -191,7 +195,8 @@ ALTER TABLE `transfer_reservas`
   ADD KEY `FK_RESERVAS_DESTINO` (`id_destino`),
   ADD KEY `FK_RESERVAS_HOTEL` (`id_hotel`),
   ADD KEY `FK_RESERVAS_TIPO` (`id_tipo_reserva`),
-  ADD KEY `FK_RESERVAS_VEHICULO` (`id_vehiculo`);
+  ADD KEY `FK_RESERVAS_VEHICULO` (`id_vehiculo`),
+  ADD KEY `FK_RESERVAS_VIAJERO` (`id_viajero`);
 
 --
 -- Indexes for table `transfer_tipo_reserva`
@@ -209,7 +214,8 @@ ALTER TABLE `transfer_vehiculo`
 -- Indexes for table `transfer_viajeros`
 --
 ALTER TABLE `transfer_viajeros`
-  ADD PRIMARY KEY (`id_viajero`);
+  ADD PRIMARY KEY (`id_viajero`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `transfer_zona`
@@ -237,7 +243,7 @@ ALTER TABLE `transfer_precios`
 -- AUTO_INCREMENT for table `transfer_reservas`
 --
 ALTER TABLE `transfer_reservas`
-  MODIFY `id_reserva` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_reserva` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `transfer_tipo_reserva`
@@ -255,7 +261,7 @@ ALTER TABLE `transfer_vehiculo`
 -- AUTO_INCREMENT for table `transfer_viajeros`
 --
 ALTER TABLE `transfer_viajeros`
-  MODIFY `id_viajero` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_viajero` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `transfer_zona`
@@ -287,7 +293,8 @@ ALTER TABLE `transfer_reservas`
   ADD CONSTRAINT `FK_RESERVAS_DESTINO` FOREIGN KEY (`id_destino`) REFERENCES `transfer_hotel` (`id_hotel`),
   ADD CONSTRAINT `FK_RESERVAS_HOTEL` FOREIGN KEY (`id_hotel`) REFERENCES `transfer_hotel` (`id_hotel`),
   ADD CONSTRAINT `FK_RESERVAS_TIPO` FOREIGN KEY (`id_tipo_reserva`) REFERENCES `transfer_tipo_reserva` (`id_tipo_reserva`),
-  ADD CONSTRAINT `FK_RESERVAS_VEHICULO` FOREIGN KEY (`id_vehiculo`) REFERENCES `transfer_vehiculo` (`id_vehiculo`);
+  ADD CONSTRAINT `FK_RESERVAS_VEHICULO` FOREIGN KEY (`id_vehiculo`) REFERENCES `transfer_vehiculo` (`id_vehiculo`),
+  ADD CONSTRAINT `FK_RESERVAS_VIAJERO` FOREIGN KEY (`id_viajero`) REFERENCES `transfer_viajeros` (`id_viajero`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
