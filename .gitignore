@@ -1,2 +1,3 @@
 database
 copy_database.sh
+docker-compose.yml

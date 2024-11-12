@@ -2,7 +2,7 @@ services:
   php-apache:
     image: php-apache:proy
     build: builds/php-apache
-    container_name: php-apache
+    container_name: php-apache_php
     restart: always
     env_file:
       .env
@@ -14,7 +14,7 @@ services:
       - proyectnet
   database:
     image: mysql:8.0.39
-    container_name: mysql
+    container_name: mysql_php
     restart: always
     env_file:
       .env
@@ -24,7 +24,7 @@ services:
       - proyectnet
   phpmyadmin:
     image: phpmyadmin:5.2.1
-    container_name: phpmyadmin
+    container_name: phpmyadmin_php
     restart: always
     ports:
       - 8080:80

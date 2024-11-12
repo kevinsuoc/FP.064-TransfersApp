@@ -1,8 +1,11 @@
 <?php
+global $pageTitle;
+
 require_once __DIR__.'/../util/Session.php';
 session_start();
-?>
+//include __DIR__ . '/../view/head.php';
 
+/*
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -16,9 +19,10 @@ session_start();
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+*/
+?>
     <?php
-    include __DIR__ . '/../view/header.php';
+    //include __DIR__ . '/../view/header.php';
 
     if (isset($_REQUEST['request'])){
         $request = $_REQUEST['request'];
@@ -40,7 +44,5 @@ session_start();
         default: 
             require __DIR__.'/../controller/homeController.php';
     }
-    ?>
-</body>
-</html>
+?>
 

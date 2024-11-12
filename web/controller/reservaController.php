@@ -32,7 +32,7 @@ class ReservaController {
 		try {
 			$this->reserva = $this->agregarReserva();
 
-			switch ($tipoReserva){
+			switch (this->tipoReserva){
 				case 1: $this->reservarAeropuertoHotel(); break;
 				case 2: $this->reservaerHotelAeropuerto(); break;
 				case 3: $this->reservarIdaYVuelta(); break;

@@ -22,6 +22,7 @@ function login(){
 		$error = "Error con la base de datos: ".$e->getMessage();
 		require __DIR__.'/../view/error.php'; exit();
 	}
+	$pageTitle = "Login";
 	require __DIR__.'/../view/login.php';
 }
 
@@ -49,8 +50,20 @@ function registrar(){
 		}
 	}
 	else {
-		require __DIR__.'/../view/forms/registrar.php';
+		$pageTitle = "Registro";
+		require __DIR__.'/../view/register.php';
 	}
+}
+function return_login(){
+try{
+	$pageTitle = "Login";
+	require __DIR__.'/../view/login.php';
+} catch (LoginException $e){
+	$loginError = "Error: ".$e->getMessage();
+} catch (DatabaseException $e){
+	$error = "Error con la base de datos: ".$e->getMessage();
+	require __DIR__.'/../view/error.php'; exit();
+}
 }
 ?>
 
