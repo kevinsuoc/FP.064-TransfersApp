@@ -1,3 +1,4 @@
+
 <?php
 
 switch($request){
@@ -51,4 +52,6 @@ function registrar(){
 		require __DIR__.'/../view/forms/registrar.php';
 	}
 }
+?>
+
 

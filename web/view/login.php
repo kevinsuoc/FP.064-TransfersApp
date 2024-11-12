@@ -1,4 +1,10 @@
-
+<div class="containerfromwelcome">
+<div class="airlines-welcome">
+    <div class="welcome-text">
+        <h1>Bienvenido a Codecrafters Airlines, 
+            ¿listo para una nueva aventura?</h1>
+    </div>
+</div>
 
 <div class="form-container">
 <form action="/" method="post"class="login-form"  >
@@ -21,6 +27,7 @@
     <input type="hidden" name="request" value="registrarse"> 
     <button type="submit" value="registrarse" class="btn-bd-primary">Registrarse</button> <br>
 </form>
+</div>
 </div>
 </div>
 </div>

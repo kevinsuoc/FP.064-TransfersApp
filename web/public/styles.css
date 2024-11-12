@@ -49,9 +49,7 @@
     background-color: rgba(0, 0, 0, 0.); /* Opcional: Color de fondo */
     padding: 10px 0;
 }
-body {
-    margin-top: 70px; /* Añadir un margen para que no se oculte el contenido */
-}
+
 
 /* Estilo para el header */
 .header-bar {
@@ -88,7 +86,40 @@ body {
     color: white;
     background-color: rgb(41, 41, 166);
     border: 2px solid rgb(41, 41, 166); /* Borde del mismo color que el fondo */
-    border-radius: 20px; /* Bordes redondeados */
+    border-radius: 5px; /* Bordes redondeados */
     padding: 5px 10px; 
     
   }
+  
+  .airlines-welcome {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    height: 80vh; /* Ocupa el 80% de la altura de la pantalla */
+    text-align: center; /* Centra el texto dentro del contenedor */
+    color: rgb(41, 41, 166); /* Color del texto */
+    margin: 0; /* Elimina márgenes predeterminados */
+}
+
+/* Contenedor de texto con fondo blanco y bordes redondeados */
+.welcome-text {
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco */
+    padding: 20px; /* Espaciado dentro del contenedor */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave para darle profundidad */
+    max-width: 80%; /* Limita el ancho para que no se vea demasiado grande */
+    width: 600px; /* Establece un ancho fijo */
+}
+
+/* Ajustes para el encabezado dentro del contenedor */
+.welcome-text h1 {
+    color: rgb(41, 41, 166); /* Color del texto */
+    font-weight: bold;
+    font-size: 40px; /* Tamaño del texto */
+    /* Borde de texto */
+}
+
+.containerfromwelcome{
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    /* Centra verticalmente */}

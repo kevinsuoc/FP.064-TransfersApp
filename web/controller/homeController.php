@@ -22,3 +22,7 @@ function routeHome(){
 		require __DIR__.'/../view/error.php';
 	}
 }
+?>
+
+
+
