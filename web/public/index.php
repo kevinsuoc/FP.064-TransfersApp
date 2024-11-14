@@ -22,14 +22,17 @@ $request = $_REQUEST['request'] ?? 'homepage';
 
 // De acuerdo al parametro request, seleccionamos el controlador adecuado.
 switch($request){
-	case 'registrarse':
-	case 'login':
-	case 'intentoRegistro':
-	case 'actualizarPassword':
-	case 'actualizarViajero':
+	case 'registrarse': // Para registrar un viajero
+	case 'login': // Para iniciar sesion
+	case 'intentoRegistro': // Para registrar un viajero
+	case 'actualizarPassword': // Para cambiar la password
+	case 'actualizarViajero': // Para editar el perfil
 	case 'logout': require __DIR__.'/../controller/loginController.php'; break;
-	case 'reservar':
+	case 'reservar': // Para reservar
 	case 'reserva': require __DIR__.'/../controller/reservaController.php'; break;
-	case 'homepage':
+	case 'homepage': // Para la pagina principal
 	default: require __DIR__.'/../controller/homeController.php';
+	case 'editarReserva':  // Para editar la reserva
+	require __DIR__ . '/../controller/reservaController.php'; break;
+	
 }
