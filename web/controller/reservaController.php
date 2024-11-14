@@ -17,7 +17,7 @@ require __DIR__.'/../model/Vehiculo.php';
 $reservaController = new ReservaController();
 
 switch($request){
-	case 'reserva': $reservaController->showForm(); break;
+	case 'reserva': $reservaController->mostrarFormularioReserva(); break;
 	case 'reservar': $reservaController->reservar(); break;
 }
 
@@ -25,8 +25,6 @@ class ReservaController {
 	private $session;
 	private $reserva;
 	private $tipoReserva;
-	private $destinos;
-	private $email;
 	private $errorReserva;
 
 	/*
@@ -53,22 +51,33 @@ class ReservaController {
 			$this->mostrarExito();
 		} catch (PublicException $e){
 			$this->errorReserva = "Error: ".$e->getMessage();
-			$this->showForm();
+			$this->mostrarFormularioReserva();
+		}
+	}
+
+	public function mostrarFormularioReserva(){
+		// Preparamos los datos de la vista
+		$destinos = Hotel::getHotels();
+		if ($this->session->getSessionType() === SessionType::regular)
+			$email = $this->session->getEmail();
+		$errorReserva = $this->errorReserva;
+		$tipoReserva = $this->tipoReserva;
+		// Llamamos a la vista
+		switch ($tipoReserva){
+			case 1: require __DIR__.'/../view/forms/aeropuerto-hotel.php'; break;
+			case 2: require __DIR__.'/../view/forms/hotel-aeropuerto.php'; break;
+			case 3: require __DIR__.'/../view/forms/ida-y-vuelta.php'; break;
 		}
 	}
 
 	/*
-		Preparamos los datos que la vista necesita y la llamamos.
-	*/
-	public function showForm(){
-		$this->destinos = Hotel::getHotels();
-		if ($this->session->getSessionType() === SessionType::regular)
-			$this->email = $this->session->getEmail();
-		$this->mostrarFormularioReserva();
-	}
-
+		Creamos un objeto Reserva con los datos apropiados. Luego usamos save() para
+		guardarlos en la base de datos. Los campos son auto descriptivos y
+		corresponden a los nombres de estos en la tabla Reserva
+	 */
 	private function agregarReservaAeropuertoHotel(){
 		$data = [];
+		// Generar localizador automaticamente de 5 letras
 		$data['localizador'] = substr(str_shuffle(MD5(microtime())), 0, 5);
 		$data['id_tipo_reserva'] = $_POST['tipoReserva'];
 		$data['email_cliente'] = $_POST['email_cliente'];
@@ -101,6 +110,7 @@ class ReservaController {
 
 	private function agregarReservaIdaYVuelta(){
 		$data = [];
+		// Datos conjuntos
 		$data['localizador'] = substr(str_shuffle(MD5(microtime())), 0, 5);
 		$data['id_tipo_reserva'] = $_POST['tipoReserva'];
 		$data['email_cliente'] = $_POST['email_cliente'];
@@ -108,40 +118,27 @@ class ReservaController {
 		$data['num_viajeros'] = $_POST['num_viajeros'];
 		$data['id_vehiculo'] = 1;
 
+		// Datos aeropuerto->hotel
 		$data['fecha_entrada'] = $_POST['fecha_entrada'];
 		$data['hora_entrada'] = $_POST['hora_entrada'];
 		$data['numero_vuelo_entrada'] = $_POST['numero_vuelo_entrada'];
 		$data['origen_vuelo_entrada'] = $_POST['origen_vuelo_entrada'];
 		
+		// Datos hotel->aeropuerto
 		$data['fecha_vuelo_salida'] = $_POST['fecha_vuelo_salida'];
 		$data['hora_vuelo_salida'] = $_POST['hora_vuelo_salida'];
 		$data['hora_recogida'] = $_POST['hora_recogida'];
 		$data['numero_vuelo_salida'] = $_POST['numero_vuelo_salida'];
-		
+
 		$this->reserva = new Reserva($data);
 		$this->reserva->save();
-		$this->reserva = new Reserva($data);
-	}
-
-	private function mostrarFormularioReserva(){
-		// Preparamos los datos de la vista
-		$errorReserva = $this->errorReserva;
-		$tipoReserva = $this->tipoReserva;
-		$destinos = $this->destinos;
-		$email = $this->email;
-		// Llamamos a la vista
-		switch ($tipoReserva){
-			case 1: require __DIR__.'/../view/forms/aeropuerto-hotel.php'; break;
-			case 2: require __DIR__.'/../view/forms/hotel-aeropuerto.php'; break;
-			case 3: require __DIR__.'/../view/forms/ida-y-vuelta.php'; break;
-		}
 	}
 	
-	public function mostrarPaginaError($error){
-		require __DIR__.'/../view/error.php';
-	}
-
-	public function mostrarExito(){
+	/*
+		Preparamos una pequeña vista con los datos de la reserva.
+		También nos servirá para confirmar que la reserva fue exitosa
+	*/
+	private function mostrarExito(){
 		if ($this->session->getSessionType() == SessionType::regular){
 			$viajero = $this->session->getViajero();
 			$reservador = $viajero->getNombre().' '.$viajero->getApellido1().' '.$viajero->getApellido2();
@@ -153,6 +150,10 @@ class ReservaController {
 		$tipoReserva = TipoReserva::getReservaPorTipo($this->tipoReserva)['Descripción'];
 		$descripcionVehiculo = Vehiculo::getVehiculoById($reserva->getIdVehiculo())->getDescripcion();
 		require __DIR__.'/../view/reserva_agregada.php';
+	}
+
+	private function mostrarPaginaError($error){
+		require __DIR__.'/../view/error.php';
 	}
 }
 
