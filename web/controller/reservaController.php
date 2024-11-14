@@ -94,22 +94,32 @@ class ReservaController {
 		$data['num_viajeros'] = $_POST['num_viajeros'];
 		$data['id_vehiculo'] = 1;
 		$data['hora_recogida'] = $_POST['hora_recogida'];
+		$data['numero_vuelo_salida'] = $_POST['numero_vuelo_salida'];
 		$this->reserva = new Reserva($data);
 		$this->reserva->save();
 	}
 
 	private function agregarReservaIdaYVuelta(){
 		$data = [];
-		$data[''] = $_POST[''];
-		$data[''] = $_POST[''];
-		$data[''] = $_POST[''];
-		$data[''] = $_POST[''];
-		$data[''] = $_POST[''];
-		$data[''] = $_POST[''];
-		$data[''] = $_POST[''];
-		$data[''] = $_POST[''];
-		$data[''] = $_POST[''];
-		$data[''] = $_POST[''];
+		$data['localizador'] = substr(str_shuffle(MD5(microtime())), 0, 5);
+		$data['id_tipo_reserva'] = $_POST['tipoReserva'];
+		$data['email_cliente'] = $_POST['email_cliente'];
+		$data['id_destino'] = $_POST['id_destino'];
+		$data['num_viajeros'] = $_POST['num_viajeros'];
+		$data['id_vehiculo'] = 1;
+
+		$data['fecha_entrada'] = $_POST['fecha_entrada'];
+		$data['hora_entrada'] = $_POST['hora_entrada'];
+		$data['numero_vuelo_entrada'] = $_POST['numero_vuelo_entrada'];
+		$data['origen_vuelo_entrada'] = $_POST['origen_vuelo_entrada'];
+		
+		$data['fecha_vuelo_salida'] = $_POST['fecha_vuelo_salida'];
+		$data['hora_vuelo_salida'] = $_POST['hora_vuelo_salida'];
+		$data['hora_recogida'] = $_POST['hora_recogida'];
+		$data['numero_vuelo_salida'] = $_POST['numero_vuelo_salida'];
+		
+		$this->reserva = new Reserva($data);
+		$this->reserva->save();
 		$this->reserva = new Reserva($data);
 	}
 
