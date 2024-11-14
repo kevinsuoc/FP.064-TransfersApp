@@ -163,6 +163,29 @@ class ReservaController {
 	private function mostrarPaginaError($error){
 		require __DIR__.'/../view/error.php';
 	}
+
+//añado editar reserva 
+
+
+    public function editarReserva($id_reserva) {
+        // buscamos reserva por su ID
+        $this->reserva = Reserva::getReservaById($id_reserva);
+        require __DIR__.'/../view/forms/editar-reserva.php'; // Llamamos a la vista
+    }
+
+    public function actualizarReserva($data) {
+        try {
+            // Actualizamos la reserva
+            $reserva = new Reserva($data);
+            $reserva->update(); // Actualizamos la reserva
+            $this->mostrarExito(); // Mostramos el mensaje de confirmacion
+        } catch (PublicException $e) {
+            $this->errorReserva = "Error: ".$e->getMessage();
+            $this->editarReserva($data['id_reserva']); // Volvemos a la vista si hay error
+        }
+    }
+
+
 }
 
 

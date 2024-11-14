@@ -176,4 +176,45 @@ class Reserva {
 	}
 
 
+
+	// Busca una reserva por su ID
+    public static function getReservaById($id_reserva) {
+        $db = new Database();
+        $db->query("SELECT * FROM transfer_reservas WHERE id_reserva = ?", [$id_reserva]);
+        
+        if ($db->rowCount() < 1) {
+            throw new PublicException("Reserva no encontrada");
+        }
+// obtiene los datos de la reserva
+        $data = $db->fetch();
+        return new Reserva($data); // crea una nueva instancia de Reserva
+    }
+// Actualiza los datos de la reserva en la base de datos 
+    public function update() {
+        $db = new Database();
+
+		// actualizamos los datos de la reserva en la base de datos 
+        $db->query("UPDATE transfer_reservas SET id_tipo_reserva = ?, email_cliente = ?, id_destino = ?, fecha_entrada = ?, hora_entrada = ?, numero_vuelo_entrada = ?, origen_vuelo_entrada = ?, fecha_vuelo_salida = ?, hora_vuelo_salida = ?, num_viajeros = ?, id_vehiculo = ? WHERE id_reserva = ?", [
+            $this->id_tipo_reserva,
+            $this->email_cliente,
+            $this->id_destino,
+            $this->fecha_entrada,
+            $this->hora_entrada,
+            $this->numero_vuelo_entrada,
+            $this->origen_vuelo_entrada,
+            $this->fecha_vuelo_salida,
+            $this->hora_vuelo_salida,
+            $this->num_viajeros,
+            $this->id_vehiculo,
+            $this->id_reserva
+        ]);
+    }
+
+
+
+
+
+
+
+
 }
