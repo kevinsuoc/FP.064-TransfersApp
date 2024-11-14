@@ -128,7 +128,7 @@ class Viajero {
         $viajeroData = $db->fetch();
 		$viajero = new Viajero($viajeroData);
 		$viajero->setCryptedPassword($viajeroData["password"]);
-        return new viajero;
+        return $viajero;
     }
 
     // método: Actualizar información del usuario

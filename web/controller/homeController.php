@@ -70,11 +70,12 @@ class HomeController {
 			$mensajeViajero = $_SESSION["mensajeActualizarViajero"];
 			unset($_SESSION["mensajeActualizarViajero"]);
 		}
-		
+
 		// Peparando perfil
 		$perfil = $_SESSION['userSession']->getViajero();
 
 		//Preparando data de reservas
+		$destinos = Hotel::getHotels();
 		$reservas = Reserva::getReservasEmail($_SESSION['userSession']->getViajero()->getEmail());
 		$dataReservas = [];
 		foreach ($reservas as $reserva) {
