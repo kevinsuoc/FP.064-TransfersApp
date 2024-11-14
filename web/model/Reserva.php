@@ -31,6 +31,9 @@ class Reserva {
 			if (isset($data['id_viajero'])) {$this->id_viajero = $data['id_viajero'];};
 			$this->id_tipo_reserva = $data['id_tipo_reserva'];
 			$this->email_cliente = $data['email_cliente'];
+			if (isset($data['fecha_reserva'])) {$this->fecha_reserva = $data['fecha_reserva'];}
+			else {$this->fecha_reserva = date('Y-m-d');};
+			if (isset($data['fecha_modificacion'])) {$this->fecha_modificacion = $data['fecha_modificacion'];};
 			$this->id_destino = $data['id_destino'];
 			if (isset($data['fecha_entrada'])) {$this->fecha_entrada = $data['fecha_entrada'];};
 			if (isset($data['hora_entrada'])) {$this->hora_entrada = $data['hora_entrada'];};
@@ -118,6 +121,7 @@ class Reserva {
 			$this->id_vehiculo,
 		]);
 		$this->id_reserva = $db->getLastId();
+		$this->fecha_modificacion = date('Y-m-d');
 	}
 
 }

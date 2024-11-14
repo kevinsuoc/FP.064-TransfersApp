@@ -92,7 +92,7 @@ class Viajero {
 	
 		return new Viajero($viajeroData);
 	}
-}
+
     // método: Obtener viajero por ID
     public static function getViajeroById($id_viajero) {
         $db = new Database();
@@ -130,3 +130,4 @@ class Viajero {
         $db = new Database();
         $db->query("UPDATE transfer_viajeros SET password = ? WHERE id_viajero = ?", [$hashedPassword, $id_viajero]);
     }
+}
