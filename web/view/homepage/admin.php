@@ -13,4 +13,26 @@ Admin !
 	<button type="submit">Hacer reserva</button>
 </form>
 
+<form action="/">
+	<input type="hidden" name="request" value="">
+	<button type="submit">Panel reservas</button>
+</form>
+
+<form action="/">
+	<input type="hidden" name="request" value="">
+	<button type="submit">Panel trayectos</button>
+</form>
+
+<form action="/">
+	<input type="hidden" name="request" value="">
+	<button type="submit">Panel destinos</button>
+</form>
+
+<form action="/">
+	<input type="hidden" name="request" value="">
+	<button type="submit">Panel vehiculos</button>
+</form>
+
+
+
 <a href="/?request=logout">Desconectarse</a>

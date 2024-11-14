@@ -24,19 +24,47 @@ class Viajero {
 
 		//si se pasa un array de datos
 		if ($data) {
-            if (isset($data['id_viajero'])) {$this->id_viajero = $data['id_viajero'];};
-            $this->nombre = $data['nombre'];
-            $this->apellido1 = $data['apellido1'];
-            $this->apellido2 = $data['apellido2'];
-            $this->direccion = $data['direccion'];
-            $this->codigoPostal = $data['codigoPostal'];
-            $this->ciudad = $data['ciudad'];
-            $this->pais = $data['pais'];
-            $this->email = $data['email'];
+            if (isset($data['id_viajero'])) {$this->setIdViajero($data['id_viajero']);};
+            $this->setNombre($data['nombre']);
+            $this->setApellido1($data['apellido1']);
+            $this->setApellido2($data['apellido2']);
+            $this->setDireccion($data['direccion']);
+            $this->setCodigoPostal($data['codigoPostal']);
+            $this->setCiudad($data['ciudad']);
+            $this->setPais($data['pais']);
+            $this->setEmail($data['email']);
 			//encriptamos la contraseña
-			if (isset($data['password'])) {$this->password = crypt($data['password'], 'S4LTF0RFUN');};
+			if (isset($data['password'])) {$this->setPassword($data['password']);};
         }
 	}
+
+	// metodo para obtener el email del viajero 
+	public function getIdViajero(){return $this->id_viajero;}
+	public function getNombre(){return $this->nombre;}
+	public function getApellido1(){return $this->apellido1;}
+	public function getApellido2(){return $this->apellido2;}
+	public function getDireccion(){return $this->direccion;}
+	public function getCodigoPostal(){return $this->codigoPostal;}
+	public function getCiudad(){return $this->ciudad;}
+	public function getPais(){return $this->pais;}
+	public function getEmail(){return $this->email;}
+	public function getPassword(){return $this->password;}
+	
+	// Formato para el nombre completo.
+	public function getNombreCompleto(){return $this->getNombre().' '.$this->getApellido1().' '.$this->getApellido2();}
+
+	public function setIdViajero($id_viajero){ $this->id_viajero = $id_viajero;}
+	public function setNombre($nombre){ $this->nombre = $nombre;}
+	public function setApellido1($apellido1){ $this->apellido1 = $apellido1;}
+	public function setApellido2($apellido2){ $this->apellido2 = $apellido2;}
+	public function setDireccion($direccion){$this->direccion = $direccion;}
+	public function setCodigoPostal($codigoPostal){ $this->codigoPostal = $codigoPostal;}
+	public function setCiudad($ciudad){ $this->ciudad = $ciudad;}
+	public function setPais($pais){ $this->pais = $pais;}
+	public function setEmail($email){ $this->email = $email;}
+	public function setPassword($password){$this->password = crypt($password, 'S4LTF0RFUN');}
+	public function setCryptedPassword($password) {$this->password = $password;}
+
 //metodo para guardar el viajero en la base de datos 
 	public function save(){
 		$db = new Database();
@@ -66,12 +94,7 @@ class Viajero {
 		//obtenemos el id del viajero insertado o actualizado 
 		$this->id_viajero = $db->getLastId();
 	}
-// metodo para obtener el email del viajero 
-	public function getEmail(){return $this->email;}
-	public function getNombre(){return $this->nombre;}
-	public function getApellido1(){return $this->apellido1;}
-	public function getApellido2(){return $this->apellido2;}
-	public function getIdViajero(){return $this->id_viajero;}
+
 	//metodo para obtener un viajero por email y contraseña
 	public static function getViajeroWithUsernameAndPassword($username, $password){
 		$db = new Database();
@@ -87,10 +110,10 @@ class Viajero {
 		if (!password_verify($password, $viajeroData['password'])){
 			throw new PublicException("Contraseña incorrecta");
 		}
-// quitamos la contraseña del array de datos 
-		unset($viajeroData['password']);
 	
-		return new Viajero($viajeroData);
+		$viajero = new Viajero($viajeroData);
+		$viajero->setCryptedPassword($viajeroData["password"]);
+		return $viajero;
 	}
 
     // método: Obtener viajero por ID
@@ -103,31 +126,32 @@ class Viajero {
         }
 // obtenemos los datos del viajero 
         $viajeroData = $db->fetch();
-        return new Viajero($viajeroData);
+		$viajero = new Viajero($viajeroData);
+		$viajero->setCryptedPassword($viajeroData["password"]);
+        return new viajero;
     }
 
     // método: Actualizar información del usuario
-    public function updateUsuario($id_viajero, $data) {
+    public function updateUsuario() {
 		// actualizamos los datos del viajero en la base de datos
         $db = new Database();
         $db->query("UPDATE transfer_viajeros SET nombre = ?, apellido1 = ?, apellido2 = ?, direccion = ?, codigoPostal = ?, ciudad = ?, pais = ?, email = ? WHERE id_viajero = ?", [
-            $data['nombre'], 
-            $data['apellido1'], 
-            $data['apellido2'], 
-            $data['direccion'], 
-            $data['codigoPostal'], 
-            $data['ciudad'], 
-            $data['pais'], 
-            $data['email'], 
-            $id_viajero
+            $this->nombre, 
+            $this->apellido1, 
+            $this->apellido2, 
+            $this->direccion, 
+            $this->codigoPostal, 
+            $this->ciudad, 
+            $this->pais, 
+            $this->email, 
+            $this->id_viajero
         ]);
     }
 
     // método: Actualizar contraseña del usuario
-    public function updatePassword($id_viajero, $newPassword) {
+    public function updatePassword() {
 		// actualizamos la contraseña del viajero en la base de datos
-        $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
         $db = new Database();
-        $db->query("UPDATE transfer_viajeros SET password = ? WHERE id_viajero = ?", [$hashedPassword, $id_viajero]);
+        $db->query("UPDATE transfer_viajeros SET password = ? WHERE id_viajero = ?", [$this->password, $this->id_viajero]);
     }
 }

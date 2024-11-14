@@ -24,6 +24,8 @@ class Session {
 	public function getEmail(){return $this->viajero->getEmail();}
 	public function getViajero(){return $this->viajero;}
 
+	public function setViajero($viajero){$this->viajero = $viajero;}
+
 	private function validateAdminLogin($password){
 		if ($password != $GLOBALS['admin_password'])
 			throw new LoginException("La contraseña de administrador es incorrecta");

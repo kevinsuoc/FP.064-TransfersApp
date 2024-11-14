@@ -88,6 +88,10 @@ class ReservaController {
 		$data['origen_vuelo_entrada'] = $_POST['origen_vuelo_entrada'];
 		$data['num_viajeros'] = $_POST['num_viajeros'];
 		$data['id_vehiculo'] = 1;
+
+		// Guardando el ID de viajero si existe.
+		if ($this->session->getSessionType() == SessionType::regular)
+			$data['id_viajero'] = $this->session->getViajero()->getIdViajero();
 		$this->reserva = new Reserva($data);
 		$this->reserva->save();
 	}
@@ -104,6 +108,8 @@ class ReservaController {
 		$data['id_vehiculo'] = 1;
 		$data['hora_recogida'] = $_POST['hora_recogida'];
 		$data['numero_vuelo_salida'] = $_POST['numero_vuelo_salida'];
+		if ($this->session->getSessionType() == SessionType::regular)
+			$data['id_viajero'] = $this->session->getViajero()->getIdViajero();
 		$this->reserva = new Reserva($data);
 		$this->reserva->save();
 	}
@@ -117,6 +123,8 @@ class ReservaController {
 		$data['id_destino'] = $_POST['id_destino'];
 		$data['num_viajeros'] = $_POST['num_viajeros'];
 		$data['id_vehiculo'] = 1;
+		if ($this->session->getSessionType() == SessionType::regular)
+			$data['id_viajero'] = $this->session->getViajero()->getIdViajero();
 
 		// Datos aeropuerto->hotel
 		$data['fecha_entrada'] = $_POST['fecha_entrada'];
@@ -141,7 +149,7 @@ class ReservaController {
 	private function mostrarExito(){
 		if ($this->session->getSessionType() == SessionType::regular){
 			$viajero = $this->session->getViajero();
-			$reservador = $viajero->getNombre().' '.$viajero->getApellido1().' '.$viajero->getApellido2();
+			$reservador = $viajero->getNombreCompleto();
 		}
 		else
 			$reservador = "Administrador";

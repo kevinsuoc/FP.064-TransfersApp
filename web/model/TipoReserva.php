@@ -2,6 +2,9 @@
 
 require_once __DIR__.'/../util/Database.php';
 
+/*
+	Simple por no estar sujeto a modificacion.
+*/
 class TipoReserva {
 	public static function getTiposReserva(){
 		$db = new Database();

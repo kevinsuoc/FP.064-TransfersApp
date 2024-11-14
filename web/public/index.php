@@ -25,6 +25,8 @@ switch($request){
 	case 'registrarse':
 	case 'login':
 	case 'intentoRegistro':
+	case 'actualizarPassword':
+	case 'actualizarViajero':
 	case 'logout': require __DIR__.'/../controller/loginController.php'; break;
 	case 'reservar':
 	case 'reserva': require __DIR__.'/../controller/reservaController.php'; break;

@@ -20,6 +20,10 @@
 */
 
 require_once __DIR__.'/../model/TipoReserva.php';
+require_once __DIR__.'/../model/Reserva.php';
+require_once __DIR__.'/../model/Hotel.php';
+require_once __DIR__.'/../model/Vehiculo.php';
+
 
 $homeController = new HomeController();
 $homeController->mostrarHomepage();
@@ -57,6 +61,37 @@ class HomeController {
 	}
 
 	private function mostrarRegularHomepage($tiposReserva){
+		// Datos de control de perfil
+		if (isset($_SESSION["mensajeActualizarPassword"])){
+			$mensajePassword = $_SESSION["mensajeActualizarPassword"];
+			unset($_SESSION["mensajeActualizarPassword"]);
+		}
+		if (isset($_SESSION["mensajeActualizarViajero"])){
+			$mensajeViajero = $_SESSION["mensajeActualizarViajero"];
+			unset($_SESSION["mensajeActualizarViajero"]);
+		}
+		
+		// Peparando perfil
+		$perfil = $_SESSION['userSession']->getViajero();
+
+		//Preparando data de reservas
+		$reservas = Reserva::getReservasEmail($_SESSION['userSession']->getViajero()->getEmail());
+		$dataReservas = [];
+		foreach ($reservas as $reserva) {
+			$dataReserva = [];
+			$dataReserva['reserva'] = $reserva;
+			if ($reserva->getIdViajero() !== null)
+				$dataReserva['reservador'] = Viajero::getViajeroById($reserva->getIdViajero())->getNombreCompleto();
+			else
+				$dataReserva['reservador'] = 'Administrador';
+			$dataReserva['tipoReservaDescripcion'] = TipoReserva::getReservaPorTipo($reserva->getIdTipoReserva())['Descripción'];
+			$dataReserva['hotelDestinoRecogida'] = Hotel::getHotelById($reserva->getIdDestino());
+			$dataReserva['descripcionVehiculo'] = Vehiculo::getVehiculoById($reserva->getIdVehiculo())->getDescripcion();
+			$dataReservas[] = $dataReserva;
+		}
+
+		// Mostrar vista
 		require __DIR__.'/../view/homepage/regular.php';
 	}
 }
+

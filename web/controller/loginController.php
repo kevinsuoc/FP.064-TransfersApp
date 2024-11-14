@@ -18,6 +18,8 @@ switch($request){
 	case 'login': $loginController->login(); break;
 	case 'registrarse': $loginController->mostrarFormularioRegistro(); break;
 	case 'intentoRegistro': $loginController->enviarSolicitudRegistro(); break;
+	case 'actualizarViajero': $loginController->actualizarViajero(); break;
+	case 'actualizarPassword': $loginController->actualizarPassword(); break;
 }
 
 class LoginController {
@@ -65,6 +67,32 @@ class LoginController {
 		} catch (DatabaseException $e){
 			$this->mostrarPaginaError("Error con la base de datos: ".$e->getMessage());
 		}
+	}
+
+	public function actualizarViajero(){
+		
+		try {
+			$viajero = new Viajero($_POST);
+			$viajero->updateUsuario();
+			$_SESSION['userSession']->setViajero($viajero);
+			$_SESSION["mensajeActualizarViajero"] = "Perfil actualizado";
+		} catch (Exception $e){
+			$_SESSION["mensajeActualizarViajero"] = "Error: ".$e->getMessage();
+		}
+		header("location: /"); exit();
+	}
+
+	public function actualizarPassword(){
+		$viajero =  $_SESSION['userSession']->getViajero();
+		if (password_verify($_POST['oldPassword'], $viajero->getPassword())){
+			$viajero->setPassword($_POST['newPassword']);
+			$viajero->updatePassword();
+			$_SESSION['userSession']->setViajero($viajero);
+			$_SESSION["mensajeActualizarPassword"] = "Contraseña actualizada";
+		} else {
+			$_SESSION["mensajeActualizarPassword"] = "Contraseña incorrecta";
+		}
+		header("location: /"); exit();
 	}
 
 	/* Remover la Session  y volver al formulario de login */

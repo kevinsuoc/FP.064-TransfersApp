@@ -22,7 +22,6 @@ class Vehiculo {
 	public function setEmailConductor($email_conductor){$this->email_conductor = $email_conductor;}
 	public function setPassword($password){$this->password = crypt($password, 'S4LTF0RFUN');}
 
-
 	public function getIdZona(){return $this->id_zona;}
 	public function getDescripcion(){return $this->descripcion;}
 	public function getEmailConductor(){return $this->email_conductor;}
