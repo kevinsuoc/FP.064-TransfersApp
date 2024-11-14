@@ -1,15 +1,44 @@
-Hotel -> Aeropuerto
+<p>Aeropuerto -> Hotel</p>
 
-Si se solicita el de hotel a aeropuerto, se solicitará: 
-día del vuelo, 
-hora del vuelo, 
-número de vuelo, 
-hora de recogida
+<br>
+<form action="/" method="post">
+	<p>Datos de la reserva</p>
+	<label for="fecha_vuelo_salida">Dia del vuelo</label>
+	<input type="date" name="fecha_vuelo_salida" id="fecha_vuelo_salida" required><br>
 
-Después tendremos que solicitar 
-el hotel de destino/recogida,
-número de viajeros,
-datos personales de quien realiza la reserva si no han sido entrados anteriormente (se identifican por el email).
+	<label for="hora_vuelo_salida">Hora del vuelo</label>
+	<input type="time" name="hora_vuelo_salida" id="hora_vuelo_salida" required><br>
 
+	<label for="numero_vuelo_salida">Numero de vuelo</label>
+	<input type="number" name="numero_vuelo_salida" id="numero_vuelo_salida" required><br>
+
+	<label for="hora_recogida">Hora de recogida</label>
+	<input type="time" name="hora_recogida" id="hora_recogida" required><br>
+
+	<label for="id_destino">Origen (Hotel): </label>
+	<select id="id_destino" name="id_destino">
+	<?php 
+		foreach ($destinos as $destino){
+			echo '<option value="'.$destino->getIdHotel().'">'.$destino->getUsuario().'</option>';
+		}
+	?>
+	</select><br>
+
+	<label for="numeroViejeros">Numero de viajeros</label>
+	<input type="number" name="num_viajeros" id="numeroViejeros" required><br>
+
+	<label for="email">Email</label>
+	<input type="email" name="email_cliente" id="email" required 
+	<?php 
+		if (isset($email)){echo ' readonly value="'.$email.'"';};
+	?>
+	><br>
+
+	<input type="hidden" name="request" value="reservar">
+	<input type="hidden" name="tipoReserva" value="<?php echo $tipoReserva?>">
+	<button type="submit">Reservar</button><br>
+	<?php if (isset($errorReserva)){echo $errorReserva;}; ?>
+</form>
+<br>
 
 <a href="/">Volver</a>

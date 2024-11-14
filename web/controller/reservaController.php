@@ -93,9 +93,9 @@ class ReservaController {
 		$data['hora_vuelo_salida'] = $_POST['hora_vuelo_salida'];
 		$data['num_viajeros'] = $_POST['num_viajeros'];
 		$data['id_vehiculo'] = 1;
-		$data[''] = $_POST[''];
-		$data[''] = $_POST[''];
+		$data['hora_recogida'] = $_POST['hora_recogida'];
 		$this->reserva = new Reserva($data);
+		$this->reserva->save();
 	}
 
 	private function agregarReservaIdaYVuelta(){
