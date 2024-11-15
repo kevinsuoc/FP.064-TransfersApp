@@ -29,10 +29,9 @@ switch($request){
 	case 'actualizarViajero': // Para editar el perfil
 	case 'logout': require __DIR__.'/../controller/loginController.php'; break;
 	case 'reservar': // Para reservar
+	case 'editarReserva':  // Para editar la reserva
+	case 'eliminarReserva': // Para eliminar una reserva
 	case 'reserva': require __DIR__.'/../controller/reservaController.php'; break;
 	case 'homepage': // Para la pagina principal
 	default: require __DIR__.'/../controller/homeController.php';
-	case 'editarReserva':  // Para editar la reserva
-	require __DIR__ . '/../controller/reservaController.php'; break;
-	
 }

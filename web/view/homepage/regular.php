@@ -19,6 +19,8 @@ Regular !
 	<button type="submit">Perfil</button>
 </form>
 
+<p><?php if (isset($mensajeReservaEliminada)) {echo $mensajeReservaEliminada	;} ?></p>
+
 <!-- Ventaja de perfil (Temporal) -->
 <div style="border: 1px solid blue;">
 
@@ -141,13 +143,13 @@ Regular !
 			<label for="num_viajeros">Numero de viajeros</label>
 			<input type="number" name="num_viajeros" id="num_viajeros"  value="<?php echo $data['reserva']->getNumViajeros()?>" required><br>
 
-			<input type="hidden" name="id_reserva" value="<?php $data['reserva']->getIdReserva() ?>">
+			<input type="hidden" name="id_reserva" value="<?php echo $data['reserva']->getIdReserva() ?>">
 			<input type="hidden" name="request" value="actualizarReserva">
 			<button type="submit">Modificar</button>
 		</form>
 
 		<form method="post" action="/">
-			<input type="hidden" name="id_reserva" value="<?php $data['reserva']->getIdReserva() ?>">
+			<input type="hidden" name="id_reserva" value="<?php echo $data['reserva']->getIdReserva() ?>">
 			<input type="hidden" name="request" value="eliminarReserva">
 			<button type="submit">Eliminar</button>
 		</form>

@@ -1,4 +1,4 @@
-<p>Aeropuerto -> Hotel</p>
+<p>Hotel -> Aeropuerto</p>
 
 <br>
 <form action="/" method="post">

@@ -19,6 +19,8 @@ $reservaController = new ReservaController();
 switch($request){
 	case 'reserva': $reservaController->mostrarFormularioReserva(); break;
 	case 'reservar': $reservaController->reservar(); break;
+	case 'eliminarReserva': $reservaController->eliminarReserva(); break;
+	case 'actualizarReserva': $reservaController->actualizarReserva(); break;
 }
 
 class ReservaController {
@@ -35,7 +37,7 @@ class ReservaController {
 			$this->mostrarPaginaError("No se puede reservar sin estar logeado"); exit();
 		}
 		$this->session = $_SESSION['userSession'];
-		$this->tipoReserva = $_REQUEST['tipoReserva'];
+		$this->tipoReserva = $_REQUEST['tipoReserva'] ?? $this->tipoReserva;
 	}
 
 	/*
@@ -164,9 +166,9 @@ class ReservaController {
 		require __DIR__.'/../view/error.php';
 	}
 
-//añado editar reserva 
 
 
+	// Editar reserva 
     public function editarReserva($id_reserva) {
         // buscamos reserva por su ID
         $this->reserva = Reserva::getReservaById($id_reserva);
@@ -185,6 +187,12 @@ class ReservaController {
         }
     }
 
+	// Eliminar reserva
+	public function eliminarReserva(){
+		Reserva::DeleteById($_POST['id_reserva']);
+		$_SESSION["mensajeReservaEliminada"] = "Reserva eliminada";
+		header("Location: /"); exit();
+	}
 
 }
 

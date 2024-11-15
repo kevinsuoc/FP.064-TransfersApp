@@ -28,7 +28,8 @@ class Reserva {
 
 	function __construct($data = null){
 		if ($data) {
-			if (isset($data['id_reserva'])) {$this->setIdReserva($data['id_reserva']);};
+			if (isset($data['id_reserva'])) {$this->setIdReserva($data['id_reserva']);}
+			else {echo 'no';}
 			$this->setLocalizador($data['localizador']);
 			if (isset($data['id_hotel'])) {$this->setIdHotel($data['id_hotel']);};
 			if (isset($data['id_viajero'])) {$this->setIdViajero($data['id_viajero']);};
@@ -42,7 +43,7 @@ class Reserva {
 			if (isset($data['hora_entrada'])) {$this->setHoraEntrada($data['hora_entrada']);};
 			if (isset($data['numero_vuelo_entrada'])) {$this->setNumeroVueloEntrada($data['numero_vuelo_entrada']);};
 			if (isset($data['origen_vuelo_entrada'])) {$this->setOrigenVueloEntrada($data['origen_vuelo_entrada']);};
-			if (isset($data['numero_vuelo_salida'])) {$this->setNumeroVueloEntrada($data['numero_vuelo_salida']);};
+			if (isset($data['numero_vuelo_salida'])) {$this->setNumeroVueloSalida($data['numero_vuelo_salida']);};
 			if (isset($data['hora_recogida'])) {$this->setHoraRecogida($data['hora_recogida']);};		
 			if (isset($data['hora_vuelo_salida'])) {$this->setHoraVueloSalida($data['hora_vuelo_salida']);};
 			if (isset($data['fecha_vuelo_salida'])) {$this->setFechaVueloSalida($data['fecha_vuelo_salida']);};
@@ -71,25 +72,25 @@ class Reserva {
 	public function getNumViajeros(){return $this->num_viajeros;}
 	public function getIdVehiculo(){return $this->id_vehiculo;}
 
-	public function setIdReserva($id_reserva){return $this->id_reserva = $id_reserva;}
-	public function setLocalizador($localizador){return $this->localizador = $localizador;}
-	public function setIdHotel($id_hotel){return $this->id_hotel = $id_hotel;}
-	public function setIdViajero($id_viajero){return $this->id_viajero = $id_viajero;}
-	public function setIdTipoReserva($id_tipo_reserva){return $this->id_tipo_reserva = $id_tipo_reserva;}
-	public function setEmailCliente($email_cliente){return $this->email_cliente = $email_cliente;}
-	public function setFechaReserva($fecha_reserva){return $this->fecha_reserva = $fecha_reserva;}
-	public function setFechaModificacion($fecha_modificacion){return $this->fecha_modificacion = $fecha_modificacion;}
-	public function setIdDestino($id_destino){return $this->id_destino = $id_destino;}
-	public function setFechaEntrada($fecha_entrada){return $this->fecha_entrada = $fecha_entrada;}
-	public function setHoraEntrada($hora_entrada){return $this->hora_entrada = $hora_entrada;}
-	public function setNumeroVueloEntrada($numero_vuelo_entrada){return $this->numero_vuelo_entrada = $numero_vuelo_entrada;}
-	public function setOrigenVueloEntrada($origen_vuelo_entrada){return $this->origen_vuelo_entrada = $origen_vuelo_entrada;}
-	public function setHoraRecogida($hora_recogida){return $this->hora_recogida = $hora_recogida;}
-	public function setNumeroVueloSalida($numero_vuelo_salida){return $this->numero_vuelo_salida = $numero_vuelo_salida;}
-	public function setHoraVueloSalida($hora_vuelo_salida){return $this->hora_vuelo_salida = $hora_vuelo_salida;}
-	public function setFechaVueloSalida($fecha_vuelo_salida){return $this->fecha_vuelo_salida = $fecha_vuelo_salida;}
-	public function setNumViajeros($num_viajeros){return $this->num_viajeros = $num_viajeros;}
-	public function setIdVehiculo($id_vehiculo){return $this->id_vehiculo = $id_vehiculo;}
+	public function setIdReserva($id_reserva){$this->id_reserva = $id_reserva;}
+	public function setLocalizador($localizador){ $this->localizador = $localizador;}
+	public function setIdHotel($id_hotel){ $this->id_hotel = $id_hotel;}
+	public function setIdViajero($id_viajero){ $this->id_viajero = $id_viajero;}
+	public function setIdTipoReserva($id_tipo_reserva){ $this->id_tipo_reserva = $id_tipo_reserva;}
+	public function setEmailCliente($email_cliente){ $this->email_cliente = $email_cliente;}
+	public function setFechaReserva($fecha_reserva){ $this->fecha_reserva = $fecha_reserva;}
+	public function setFechaModificacion($fecha_modificacion){ $this->fecha_modificacion = $fecha_modificacion;}
+	public function setIdDestino($id_destino){ $this->id_destino = $id_destino;}
+	public function setFechaEntrada($fecha_entrada){ $this->fecha_entrada = $fecha_entrada;}
+	public function setHoraEntrada($hora_entrada){ $this->hora_entrada = $hora_entrada;}
+	public function setNumeroVueloEntrada($numero_vuelo_entrada){ $this->numero_vuelo_entrada = $numero_vuelo_entrada;}
+	public function setOrigenVueloEntrada($origen_vuelo_entrada){ $this->origen_vuelo_entrada = $origen_vuelo_entrada;}
+	public function setHoraRecogida($hora_recogida){ $this->hora_recogida = $hora_recogida;}
+	public function setNumeroVueloSalida($numero_vuelo_salida){ $this->numero_vuelo_salida = $numero_vuelo_salida;}
+	public function setHoraVueloSalida($hora_vuelo_salida){ $this->hora_vuelo_salida = $hora_vuelo_salida;}
+	public function setFechaVueloSalida($fecha_vuelo_salida){ $this->fecha_vuelo_salida = $fecha_vuelo_salida;}
+	public function setNumViajeros($num_viajeros){ $this->num_viajeros = $num_viajeros;}
+	public function setIdVehiculo($id_vehiculo){ $this->id_vehiculo = $id_vehiculo;}
 
 
 	public function save(){
@@ -185,11 +186,12 @@ class Reserva {
         if ($db->rowCount() < 1) {
             throw new PublicException("Reserva no encontrada");
         }
-// obtiene los datos de la reserva
+		// obtiene los datos de la reserva
         $data = $db->fetch();
         return new Reserva($data); // crea una nueva instancia de Reserva
     }
-// Actualiza los datos de la reserva en la base de datos 
+
+		// Actualiza los datos de la reserva en la base de datos 
     public function update() {
         $db = new Database();
 
@@ -210,11 +212,8 @@ class Reserva {
         ]);
     }
 
-
-
-
-
-
-
-
+	public static function DeleteById($id_reserva){
+		$db = new Database();
+		$db->query("DELETE FROM transfer_reservas WHERE id_reserva = ?", [$id_reserva]);
+	}
 }
