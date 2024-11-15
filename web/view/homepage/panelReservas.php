@@ -7,8 +7,6 @@
 			<p><?php echo 'Fecha de ultima modificacion: '.$data['reserva']->getFechaModificacion(); ?></p>
 			<p><?php echo 'Precio por trayecto:  10'; ?></p>
 
-
-			
 			<label for="email">Email</label>
 			<input type="email" name="email_cliente" id="email" <?php echo 'value="'.$data['reserva']->getEmailCliente().'"'; ?> required><br>
 
@@ -58,6 +56,19 @@
 
 			<label for="num_viajeros">Numero de viajeros</label>
 			<input type="number" name="num_viajeros" id="num_viajeros"  value="<?php echo $data['reserva']->getNumViajeros()?>" required><br>
+
+			<label for="id_vehiculo">Vehiculo </label>
+			<select id="id_vehiculo" name="id_vehiculo">
+				<?php 
+					echo '<option value="">Vehiculo no seleccionado</option>';
+					foreach ($vehiculos as $vehiculo){
+						if ($vehiculo->getIdVehiculo() == $data['reserva']->getIdVehiculo())
+							echo '<option selected="selected" value="'.$vehiculo->getIdVehiculo().'">'.$vehiculo->getDescripcion().': '.$vehiculo->getEmailConductor().'</option>';
+						else
+							echo '<option value="'.$vehiculo->getIdVehiculo().'">'.$vehiculo->getDescripcion().': '.$vehiculo->getEmailConductor().'</option>';
+					}
+				?>
+			</select><br>
 
 			<input type="hidden" name="id_reserva" value="<?php echo $data['reserva']->getIdReserva() ?>">
 			<input type="hidden" name="request" value="actualizarReserva">

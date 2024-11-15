@@ -30,6 +30,7 @@ class AdminController {
 	}
 
 	public function mostrarPanelReservas(){
+		$vehiculos = Vehiculo::getVehiculos();
 		$reservas = Reserva::getReservas();
 		$destinos = Hotel::getHotels();
 		$tiposReserva = TipoReserva::getTiposReserva();

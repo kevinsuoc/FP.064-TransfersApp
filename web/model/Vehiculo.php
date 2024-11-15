@@ -10,19 +10,19 @@ class Vehiculo {
 
 	function __construct($data = null){
 		if ($data) {
-			if (isset($data['id_zona'])) {$this->setIdVehiculo($data['id_zona']);};
+			if (isset($data['id_vehiculo'])) {$this->setIdVehiculo($data['id_vehiculo']);};
             if (isset($data['Descripción'])) {$this->setDescripcion($data['Descripción']);};
 			if (isset($data['email_conductor'])) {$this->setEmailConductor($data['email_conductor']);};
 			if (isset($data['password'])) {$this->setPassword($data['password']);};
         }
 	}
 
-	public function setIdVehiculo($id_zona){$this->id_zona = $id_zona;}
+	public function setIdVehiculo($id_vehiculo){$this->id_vehiculo = $id_vehiculo;}
 	public function setDescripcion($descripcion){$this->descripcion = $descripcion;}
 	public function setEmailConductor($email_conductor){$this->email_conductor = $email_conductor;}
 	public function setPassword($password){$this->password = crypt($password, 'S4LTF0RFUN');}
 
-	public function getIdZona(){return $this->id_zona;}
+	public function getIdVehiculo(){return $this->id_vehiculo;}
 	public function getDescripcion(){return $this->descripcion;}
 	public function getEmailConductor(){return $this->email_conductor;}
 	public function getPassword(){return $this->password;}
