@@ -56,7 +56,7 @@ class HomeController {
 		require __DIR__.'/../view/error.php';
 	}
 
-	private function mostrarAdminHomepage($tiposReserva){
+	private function mostrarAdminHomepage($tiposReserva){		
 		require __DIR__.'/../view/homepage/admin.php';
 	}
 

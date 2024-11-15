@@ -19,7 +19,7 @@ Admin !
 </form>
 
 <form action="/">
-	<input type="hidden" name="request" value="">
+	<input type="hidden" name="request" value="mostrarCalendario">
 	<button type="submit">Panel trayectos</button>
 </form>
 
