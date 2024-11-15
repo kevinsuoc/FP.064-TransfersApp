@@ -2,17 +2,59 @@
 
 require_once __DIR__.'/../model/Reserva.php';
 require_once __DIR__.'/../model/Hotel.php';
+require_once __DIR__.'/../model/Vehiculo.php';
+require_once __DIR__.'/../model/Hotel.php';
+require_once __DIR__.'/../model/Zona.php';
+require_once __DIR__.'/../model/TipoReserva.php';
 
 
 $adminController = new AdminController();
 
 switch($request){
-	case 'mostrarCalendario': $adminController->mostrarCalendario();
+	case 'mostrarCalendario': $adminController->mostrarCalendario(); break;
+	case 'panelDestinos': $adminController->mostrarPanelDestinos(); break;
+	case 'panelReservas': $adminController->mostrarPanelReservas(); break; 
+	case 'panelVehiculos': $adminController->mostrarPanelVehiculos(); break;
 }
 
 class AdminController {
 
 	public function __contruct(){
+	}
+
+
+	public function mostrarPanelDestinos(){
+		$destinos = Hotel::getHotels();
+		$zonas = Zona::getZonas();
+		require __DIR__.'/../view/homepage/panelDestinos.php';
+	}
+
+	public function mostrarPanelReservas(){
+		$reservas = Reserva::getReservas();
+		$destinos = Hotel::getHotels();
+		$tiposReserva = TipoReserva::getTiposReserva();
+		$dataReservas = [];
+		foreach ($reservas as $reserva) {
+			$dataReserva = [];
+			$dataReserva['reserva'] = $reserva;
+			$dataReserva['tipoReservaDescripcion'] = TipoReserva::getReservaPorTipo($reserva->getIdTipoReserva())['Descripción'];
+			if ($reserva->getIdTipoReserva() == 1 || $reserva->getIdTipoReserva() == 3){
+				$dataReserva['dia'] = $reserva->getFechaEntrada();
+				$dataReserva['hora'] = $reserva->getHoraEntrada();
+			}
+			else {
+				$dataReserva['dia'] = $reserva->getFechaVueloSalida();
+				$dataReserva['hora'] = $reserva->getHoraRecogida();
+			}
+			$dataReservas[] = $dataReserva;
+		}
+		usort($dataReservas, [$this, 'comparar']);
+		require __DIR__.'/../view/homepage/panelReservas.php';
+	}
+
+	public function mostrarPanelVehiculos(){
+		$vehiculos = Vehiculo::getVehiculos();
+		require __DIR__.'/../view/homepage/panelVehiculos.php';
 	}
 
 	public function mostrarCalendario(){
@@ -26,7 +68,6 @@ class AdminController {
 				$trayecto['tipo'] = "Aeropuerto a hotel";
 				$trayecto['localizador'] = $reserva->getLocalizador();
 				$trayecto['email'] = $reserva->getEmailCliente();
-				$trayecto['vehiculo'] = $reserva->getIdVehiculo();
 				$trayecto['num_viajeros'] = $reserva->getNumViajeros();
 				$trayecto['dia'] = $reserva->getFechaEntrada();
 				$trayecto['hora'] = $reserva->getHoraEntrada();
@@ -40,7 +81,6 @@ class AdminController {
 				$trayecto['tipo'] = "Hotel a aeropuerto";
 				$trayecto['localizador'] = $reserva->getLocalizador();
 				$trayecto['email'] = $reserva->getEmailCliente();
-				$trayecto['vehiculo'] = $reserva->getIdVehiculo();
 				$trayecto['num_viajeros'] = $reserva->getNumViajeros();
 				$trayecto['dia'] = $reserva->getFechaVueloSalida();
 				$trayecto['hora_salida'] = $reserva->getHoraVueloSalida();
@@ -50,12 +90,12 @@ class AdminController {
 				$trayectos[] = $trayecto;
 			}
 		}
-		usort($trayectos, [$this, 'compararTrayectos']);
+		usort($trayectos, [$this, 'comparar']);
 		require __DIR__.'/../view/homepage/calendario.php';
 	}
 
 
-	private function compararTrayectos($a, $b) {
+	private function comparar($a, $b) {
 		$datetimeA = new DateTime($a['dia'] . ' ' . $a['hora']);
 		$datetimeB = new DateTime($b['dia'] . ' ' . $b['hora']);
 		

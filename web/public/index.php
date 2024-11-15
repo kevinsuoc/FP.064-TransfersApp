@@ -32,6 +32,9 @@ switch($request){
 	case 'editarReserva':  // Para editar la reserva
 	case 'eliminarReserva': // Para eliminar una reserva
 	case 'reserva': require __DIR__.'/../controller/reservaController.php'; break;
+	case 'panelReservas':
+	case 'panelVehiculos':
+	case 'panelDestinos':
 	case 'mostrarCalendario': require __DIR__.'/../controller/adminController.php'; break;
 	case 'homepage': // Para la pagina principal
 	default: require __DIR__.'/../controller/homeController.php';

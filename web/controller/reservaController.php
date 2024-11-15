@@ -89,7 +89,6 @@ class ReservaController {
 		$data['numero_vuelo_entrada'] = $_POST['numero_vuelo_entrada'];
 		$data['origen_vuelo_entrada'] = $_POST['origen_vuelo_entrada'];
 		$data['num_viajeros'] = $_POST['num_viajeros'];
-		$data['id_vehiculo'] = 1;
 
 		// Guardando el ID de viajero si existe.
 		if ($this->session->getSessionType() == SessionType::regular)
@@ -107,7 +106,6 @@ class ReservaController {
 		$data['fecha_vuelo_salida'] = $_POST['fecha_vuelo_salida'];
 		$data['hora_vuelo_salida'] = $_POST['hora_vuelo_salida'];
 		$data['num_viajeros'] = $_POST['num_viajeros'];
-		$data['id_vehiculo'] = 1;
 		$data['hora_recogida'] = $_POST['hora_recogida'];
 		$data['numero_vuelo_salida'] = $_POST['numero_vuelo_salida'];
 		if ($this->session->getSessionType() == SessionType::regular)
@@ -124,7 +122,6 @@ class ReservaController {
 		$data['email_cliente'] = $_POST['email_cliente'];
 		$data['id_destino'] = $_POST['id_destino'];
 		$data['num_viajeros'] = $_POST['num_viajeros'];
-		$data['id_vehiculo'] = 1;
 		if ($this->session->getSessionType() == SessionType::regular)
 			$data['id_viajero'] = $this->session->getViajero()->getIdViajero();
 
@@ -165,8 +162,6 @@ class ReservaController {
 	private function mostrarPaginaError($error){
 		require __DIR__.'/../view/error.php';
 	}
-
-
 
 	// Editar reserva 
     public function editarReserva($id_reserva) {

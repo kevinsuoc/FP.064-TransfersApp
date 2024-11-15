@@ -91,7 +91,12 @@ class HomeController {
 				$dataReserva['reservador'] = 'Administrador';
 			$dataReserva['tipoReservaDescripcion'] = TipoReserva::getReservaPorTipo($reserva->getIdTipoReserva())['Descripción'];
 			$dataReserva['hotelDestinoRecogida'] = Hotel::getHotelById($reserva->getIdDestino());
-			$dataReserva['descripcionVehiculo'] = Vehiculo::getVehiculoById($reserva->getIdVehiculo())->getDescripcion();
+			try{
+				$dataReserva['descripcionVehiculo'] = Vehiculo::getVehiculoById($reserva->getIdVehiculo())->getDescripcion();
+			}
+			catch (PublicException $e){
+				$dataReserva['descripcionVehiculo'] = "Vehiculo no asignado. Contacte con un administrador";
+			}
 			$dataReservas[] = $dataReserva;
 		}
 

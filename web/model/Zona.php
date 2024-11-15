@@ -24,8 +24,11 @@ class Zona {
 		$this->id_zona = $db->getLastId();
 	}
 
-	public function getDescription(){
+	public function getDescripcion(){
 		return $this->descripcion;
+	}
+	public function getIdZona(){
+		return $this->id_zona;
 	}
 	
 	public static function getZonaById($id_zona){
@@ -37,5 +40,17 @@ class Zona {
 		}
 
 		return new Zona($db->fetch());
+	}
+
+	public static function getZonas(){
+		$db = new Database();
+		$db->query("SELECT * FROM transfer_zona");
+
+		$zonaData = $db->fetchAll();
+		$zonas = [];
+		foreach ($zonaData as $zona){
+			$zonas[] = new Zona($zona);
+		}
+		return $zonas;
 	}
 }

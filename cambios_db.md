@@ -41,3 +41,5 @@ Agragado numero de vuelo salida
 Agregado hora de recogida de salida
 
 Agregado nombre a los hoteles
+
+Agergado vehiculo null

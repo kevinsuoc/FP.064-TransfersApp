@@ -51,4 +51,16 @@ class Vehiculo {
 		}
 		return new Vehiculo($db->fetch());
 	}
+
+	public static function getVehiculos(){
+		$db = new Database();
+		$db->query("SELECT * FROM transfer_vehiculo");
+
+		$vehiculoData = $db->fetchAll();
+		$vehiculos = [];
+		foreach ($vehiculoData as $vehiculo){
+			$vehiculos[] = new Vehiculo($vehiculo);
+		}
+		return $vehiculos;
+	}
 }
