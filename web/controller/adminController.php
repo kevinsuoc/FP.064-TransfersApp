@@ -11,8 +11,10 @@ require_once __DIR__.'/../model/TipoReserva.php';
 $adminController = new AdminController();
 
 switch($request){
+	case 'filtroTrayectos':
 	case 'mostrarCalendario': $adminController->mostrarCalendario(); break;
 	case 'panelDestinos': $adminController->mostrarPanelDestinos(); break;
+	case 'filtroReservas':
 	case 'panelReservas': $adminController->mostrarPanelReservas(); break; 
 	case 'panelVehiculos': $adminController->mostrarPanelVehiculos(); break;
 }
@@ -22,7 +24,6 @@ class AdminController {
 	public function __contruct(){
 	}
 
-
 	public function mostrarPanelDestinos(){
 		$destinos = Hotel::getHotels();
 		$zonas = Zona::getZonas();
@@ -30,8 +31,14 @@ class AdminController {
 	}
 
 	public function mostrarPanelReservas(){
+		$filtroData = $this->obtenerDataFiltro();
+		switch($filtroData['tipo']){
+			case 'diaria': $reservas = Reserva::getByCreationDate($filtroData['dia']); break;
+			case 'mensual': $reservas = Reserva::getByCreationMonth($filtroData['anyo'], $filtroData['mes']); break;
+			case 'semanal': $reservas = Reserva::getByCreationWeek($filtroData['anyo'], $filtroData['semana']);break;
+			default: $reservas = [];
+		}
 		$vehiculos = Vehiculo::getVehiculos();
-		$reservas = Reserva::getReservas();
 		$destinos = Hotel::getHotels();
 		$tiposReserva = TipoReserva::getTiposReserva();
 		$dataReservas = [];
@@ -39,17 +46,8 @@ class AdminController {
 			$dataReserva = [];
 			$dataReserva['reserva'] = $reserva;
 			$dataReserva['tipoReservaDescripcion'] = TipoReserva::getReservaPorTipo($reserva->getIdTipoReserva())['Descripción'];
-			if ($reserva->getIdTipoReserva() == 1 || $reserva->getIdTipoReserva() == 3){
-				$dataReserva['dia'] = $reserva->getFechaEntrada();
-				$dataReserva['hora'] = $reserva->getHoraEntrada();
-			}
-			else {
-				$dataReserva['dia'] = $reserva->getFechaVueloSalida();
-				$dataReserva['hora'] = $reserva->getHoraRecogida();
-			}
 			$dataReservas[] = $dataReserva;
 		}
-		usort($dataReservas, [$this, 'comparar']);
 		require __DIR__.'/../view/homepage/panelReservas.php';
 	}
 
@@ -59,6 +57,7 @@ class AdminController {
 	}
 
 	public function mostrarCalendario(){
+		$filtroData = $this->obtenerDataFiltro();
 		// Preparamos los trayectos
 		$trayectos = [];
 		$reservas = Reserva::getReservas();
@@ -103,4 +102,19 @@ class AdminController {
 		return $datetimeA <=> $datetimeB;
 	}
 
+	private function obtenerDataFiltro(){
+		$dataFiltro = [];
+		$dataFiltro['tipo'] = $_REQUEST['vista'] ?? 'mensual';
+		if ($dataFiltro['tipo'] == 'semanal'){
+			$dataFiltro['semana'] = $_REQUEST['semana'] ?? "1";
+			$dataFiltro['anyo'] = $_REQUEST['anyo'] ?? "2024";
+		} else if ($dataFiltro['tipo'] == 'diaria') {
+			$dataFiltro['dia'] = $_REQUEST['dia'] ?? "2024-01-01";
+		}
+		else {
+			$dataFiltro['mes'] = $_REQUEST['mes'] ?? 1;
+			$dataFiltro['anyo'] = $_REQUEST['anyo'] ?? 2024;
+		}
+		return $dataFiltro;
+	}
 }

@@ -35,6 +35,8 @@ switch($request){
 	case 'panelReservas':
 	case 'panelVehiculos':
 	case 'panelDestinos':
+	case 'filtroReservas':
+	case 'filtroTrayectos':
 	case 'mostrarCalendario': require __DIR__.'/../controller/adminController.php'; break;
 	case 'homepage': // Para la pagina principal
 	default: require __DIR__.'/../controller/homeController.php';

@@ -176,7 +176,55 @@ class Reserva {
 		return $reservas;
 	}
 
+	public static function getByCreationWeek($year, $week){
+		$db = new Database();
+        $db->query("SELECT *
+					FROM transfer_reservas
+					WHERE YEAR(fecha_reserva) = ?
+  					AND WEEK(fecha_reserva) = ?
+					ORDER BY fecha_reserva ASC;", [$year, $week]
+		);
 
+		$reservaData = $db->fetchAll();
+		$reservas = [];
+		foreach ($reservaData as $reserva){
+			$reservas[] = new Reserva($reserva);
+		}
+		return $reservas;
+	}
+
+	public static function getByCreationMonth($year, $month){
+		$db = new Database();
+        $db->query("SELECT *
+					FROM transfer_reservas
+					WHERE YEAR(fecha_reserva) = ?
+  					AND MONTH(fecha_reserva) = ?
+					ORDER BY fecha_reserva ASC;", [$year, $month]
+		);
+
+		$reservaData = $db->fetchAll();
+		$reservas = [];
+		foreach ($reservaData as $reserva){
+			$reservas[] = new Reserva($reserva);
+		}
+		return $reservas;
+	}
+
+	public static function getByCreationDate($date){
+		$db = new Database();
+        $db->query("SELECT *
+					FROM transfer_reservas
+					WHERE DATE(fecha_reserva) = ?
+					ORDER BY fecha_reserva ASC;", [$date]
+		);
+
+		$reservaData = $db->fetchAll();
+		$reservas = [];
+		foreach ($reservaData as $reserva){
+			$reservas[] = new Reserva($reserva);
+		}
+		return $reservas;
+	}
 
 	// Busca una reserva por su ID
     public static function getReservaById($id_reserva) {
@@ -191,7 +239,7 @@ class Reserva {
         return new Reserva($data); // crea una nueva instancia de Reserva
     }
 
-		// Actualiza los datos de la reserva en la base de datos 
+	// Actualiza los datos de la reserva en la base de datos 
     public function update() {
         $db = new Database();
 
