@@ -49,14 +49,15 @@ class Hotel {
 	*/
 	public function save(){
 		$db = new Database();
-		$db->query("INSERT INTO transfer_hotel (id_zona, comision, usuario, password)
-			VALUES (?, ?, ?, ?)
+		$db->query("INSERT INTO transfer_hotel (id_hotel, id_zona, comision, usuario, password)
+			VALUES (?, ?, ?, ?, ?)
 			ON DUPLICATE KEY UPDATE
 			id_zona = VALUES(id_zona),
 			comision = VALUES(comision),
 			usuario = VALUES(usuario),
 			password = VALUES(password)
-		", [$this->id_zona, 
+		", [$this->id_hotel,
+			$this->id_zona, 
 			$this->comision,
 			$this->usuario,
 			$this->password,
@@ -92,4 +93,10 @@ class Hotel {
 		}
 		return $hotels;
 	}
+
+	public static function deleteById($id_hotel){
+		$db = new Database();
+		$db->query("DELETE FROM transfer_hotel WHERE id_hotel = ?", [$id_hotel]);
+	}
+	
 }

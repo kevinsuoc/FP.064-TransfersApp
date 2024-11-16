@@ -17,6 +17,16 @@ switch($request){
 	case 'filtroReservas':
 	case 'panelReservas': $adminController->mostrarPanelReservas(); break; 
 	case 'panelVehiculos': $adminController->mostrarPanelVehiculos(); break;
+	case 'eliminarZona': $adminController->eliminarZona(); break;
+	case 'eliminarHotel': $adminController->eliminarHotel(); break;
+	case 'eliminarVehiculo': $adminController->eliminarVehiculo(); break;
+	case 'eliminarReservaAdmin': $adminController->eliminarReserva(); break;
+	case 'agregarZona': $adminController->agregarZona(); break;
+	case 'agregarHotel': $adminController->agregarHotel(); break;
+	case 'agregarVehiculo': $adminController->agregarVehiculo(); break;
+	case 'actualizarZona': $adminController->actualizarZona(); break;
+	case 'actualizarHotel': $adminController->actualizarHotel(); break;
+	case 'actualizarVehiculo': $adminController->actualizarVehiculo(); break;
 }
 
 class AdminController {
@@ -141,5 +151,65 @@ class AdminController {
 			default:
 				return false;
 		}
+	}
+
+	// Eliminar
+	public function eliminarZona(){
+		Zona::deleteById($_POST['id_zona']);
+		$this->mostrarPanelDestinos();
+	}
+	
+	public function eliminarHotel(){
+		Hotel::deleteById($_POST['id_hotel']);
+		$this->mostrarPanelDestinos();
+	}
+	
+	public function eliminarVehiculo(){
+		Vehiculo::deleteById($_POST['id_vehiculo']);
+		$this->mostrarPanelVehiculos();
+
+	}
+	
+	public function eliminarReserva(){
+		Reserva::deleteById($_POST['id_reserva']);
+		$this->mostrarPanelReservas();
+	}
+
+	// Agregar
+	public function agregarZona(){
+		$zona = new Zona($_POST);
+		$zona->save();
+		$this->mostrarPanelDestinos();
+	}
+	
+	public function agregarHotel(){
+		$hotel = new Hotel($_POST);
+		$hotel->save();
+		$this->mostrarPanelDestinos();
+	}
+	
+	public function agregarVehiculo(){
+		$vehiculo = new Vehiculo($_POST);
+		$vehiculo->save();
+		$this->mostrarPanelVehiculos();
+	}
+
+	// Actualizar
+	public function actualizarZona(){
+		$zona = new Zona($_POST);
+		$zona->save();
+		$this->mostrarPanelDestinos();
+	}
+	
+	public function actualizarHotel(){
+		$hotel = new Hotel($_POST);
+		$hotel->save();
+		$this->mostrarPanelDestinos();
+	}
+	
+	public function actualizarVehiculo(){
+		$vehiculo = new Vehiculo($_POST);
+		$vehiculo->save();
+		$this->mostrarPanelVehiculos();
 	}
 }

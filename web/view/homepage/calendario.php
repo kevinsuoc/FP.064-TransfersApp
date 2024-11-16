@@ -1,3 +1,5 @@
+<a href="/">Volver</a>
+
 <form action="/" method="post">
         <label for="vista">Selecciona el tipo de vista:</label>
         <select id="vista" name="vista" onchange="mostrarOpciones()">

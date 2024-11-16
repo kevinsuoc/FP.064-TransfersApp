@@ -15,7 +15,7 @@ Admin !
 
 <form action="/">
 	<input type="hidden" name="request" value="mostrarCalendario">
-	<button type="submit">Panel trayectos</button>
+	<button type="submit">Calendario de trayectos</button>
 </form>
 
 <form action="/">

@@ -1,4 +1,6 @@
 
+<a href="/">Volver</a>
+
 <h3> Gestion hoteles </h3>
 <div style="border: 1px solid green;">
 
@@ -16,7 +18,7 @@
 	?>
 	</select><br>
 
-	<input type="hidden" name="request" value="agregarDestino">
+	<input type="hidden" name="request" value="agregarHotel">
 	<button type="submit">Agregar</button>
 </form>
 </div>
@@ -42,14 +44,14 @@
 	?>
 	</select><br>
 
-	<input type="hidden" name="id_destino" value="<?php echo $destino->getIdHotel() ?>">
-	<input type="hidden" name="request" value="actualizarDestino">
+	<input type="hidden" name="id_hotel" value="<?php echo $destino->getIdHotel() ?>">
+	<input type="hidden" name="request" value="actualizarHotel">
 	<button type="submit">Actualizar</button>
 </form>
 
 <form action="/" method="post">
-	<input type="hidden" name="id_destino" value="<?php echo $destino->getIdHotel() ?>">
-	<input type="hidden" name="request" value="eliminarDestino">
+	<input type="hidden" name="id_hotel" value="<?php echo $destino->getIdHotel() ?>">
+	<input type="hidden" name="request" value="eliminarHotel">
 	<button type="submit">Eliminar</button>
 </form>
 
@@ -58,6 +60,14 @@
 </div>
 
 <h3> Gestion Zonas </h3>
+
+<div style="border: 1px solid green;">
+<form action="/" method="post">
+		<input type="text" name="descripcion" required>
+		<input type="hidden" name="request" value="agregarZona">
+		<button type="submit">Agregar</button>
+</form>
+</div>
 
 <div style="border: 1px solid blue;">
 <?php foreach ($zonas as $zona): ?>

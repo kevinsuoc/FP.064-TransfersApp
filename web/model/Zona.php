@@ -15,11 +15,12 @@ class Zona {
 
 	public function save(){
 		$db = new Database();
-		$db->query("INSERT INTO transfer_zona (descripcion)
-			VALUES (?)
+		$db->query("INSERT INTO transfer_zona (id_zona, descripcion)
+			VALUES (?, ?)
 			ON DUPLICATE KEY UPDATE
-			descripcion = VALUES(descripcion),
-		", [$this->descripcion,
+			descripcion = VALUES(descripcion);
+		", [$this->id_zona,
+			$this->descripcion,
 		]);
 		$this->id_zona = $db->getLastId();
 	}
@@ -52,5 +53,10 @@ class Zona {
 			$zonas[] = new Zona($zona);
 		}
 		return $zonas;
+	}
+
+	public static function deleteById($id_zona){
+		$db = new Database();
+		$db->query("DELETE FROM transfer_zona WHERE id_zona = ?", [$id_zona]);
 	}
 }

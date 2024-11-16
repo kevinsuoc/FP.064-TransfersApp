@@ -29,13 +29,14 @@ class Vehiculo {
 
 	public function save(){
 		$db = new Database();
-		$db->query("INSERT INTO transfer_hotel (Descripción, email_conductor, password)
-			VALUES (?, ?, ?)
+		$db->query("INSERT INTO transfer_vehiculo (id_vehiculo, Descripción, email_conductor, password)
+			VALUES (?, ?, ?, ?)
 			ON DUPLICATE KEY UPDATE
 			Descripción = VALUES(Descripción),
 			email_conductor = VALUES(email_conductor),
-			password = VALUES(password),
-		", [$this->descripcion,
+			password = VALUES(password);
+		", [$this->id_vehiculo,
+			$this->descripcion,
 			$this->email_conductor,
 			$this->password,
 		]);
@@ -62,5 +63,10 @@ class Vehiculo {
 			$vehiculos[] = new Vehiculo($vehiculo);
 		}
 		return $vehiculos;
+	}
+
+	public static function deleteById($id_vehiculo){
+		$db = new Database();
+		$db->query("DELETE FROM transfer_vehiculo WHERE id_vehiculo = ?", [$id_vehiculo]);
 	}
 }
