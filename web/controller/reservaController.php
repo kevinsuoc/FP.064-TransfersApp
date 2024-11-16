@@ -155,13 +155,13 @@ class ReservaController {
 		$reserva = $this->reserva;
 		$hotelDestinoRecogida = Hotel::getHotelById($reserva->getIdDestino())->getUsuario();
 		$tipoReserva = TipoReserva::getReservaPorTipo($this->tipoReserva)['Descripción'];
-		$descripcionVehiculo = Vehiculo::getVehiculoById($reserva->getIdVehiculo())->getDescripcion();
 		require __DIR__.'/../view/reserva_agregada.php';
 	}
 
 	private function mostrarPaginaError($error){
 		require __DIR__.'/../view/error.php';
 	}
+
 
 	// Editar reserva 
     public function editarReserva($id_reserva) {

@@ -48,7 +48,7 @@ class Reserva {
 			if (isset($data['hora_vuelo_salida'])) {$this->setHoraVueloSalida($data['hora_vuelo_salida']);};
 			if (isset($data['fecha_vuelo_salida'])) {$this->setFechaVueloSalida($data['fecha_vuelo_salida']);};
 			$this->setNumViajeros($data['num_viajeros']);
-			$this->setIdVehiculo($data['id_vehiculo']);
+			if (isset($data['id_vehiculo'])) {$this->setIdVehiculo($data['id_vehiculo']);};
         }
 	}
 
@@ -181,7 +181,7 @@ class Reserva {
         $db->query("SELECT *
 					FROM transfer_reservas
 					WHERE YEAR(fecha_reserva) = ?
-  					AND WEEK(fecha_reserva) = ?
+  					AND WEEK(fecha_reserva, 1) = ?
 					ORDER BY fecha_reserva ASC;", [$year, $week]
 		);
 
@@ -216,6 +216,55 @@ class Reserva {
 					FROM transfer_reservas
 					WHERE DATE(fecha_reserva) = ?
 					ORDER BY fecha_reserva ASC;", [$date]
+		);
+
+		$reservaData = $db->fetchAll();
+		$reservas = [];
+		foreach ($reservaData as $reserva){
+			$reservas[] = new Reserva($reserva);
+		}
+		return $reservas;
+	}
+
+	public static function getByTrayectoWeek($year, $week){
+		$db = new Database();
+        $db->query("SELECT *
+					FROM transfer_reservas
+					WHERE YEAR(fecha_entrada) = ? AND WEEK(fecha_entrada, 1) = ?
+					OR  YEAR(fecha_vuelo_salida) = ? AND WEEK(fecha_vuelo_salida, 1) = ?
+					;", [$year, $week, $year, $week]
+		);
+
+		$reservaData = $db->fetchAll();	
+		$reservas = [];
+		foreach ($reservaData as $reserva){
+			$reservas[] = new Reserva($reserva);
+		}
+		return $reservas;
+	}
+
+	public static function getByTrayectoMonth($year, $month){
+		$db = new Database();
+        $db->query("SELECT *
+					FROM transfer_reservas
+					WHERE YEAR(fecha_entrada) = ? AND MONTH(fecha_entrada) = ?
+					OR  YEAR(fecha_vuelo_salida) = ? AND MONTH(fecha_vuelo_salida) = ?
+					;", [$year, $month, $year, $month]
+		);
+
+		$reservaData = $db->fetchAll();
+		$reservas = [];
+		foreach ($reservaData as $reserva){
+			$reservas[] = new Reserva($reserva);
+		}
+		return $reservas;
+	}
+
+	public static function getByTrayectoDate($date){
+		$db = new Database();
+        $db->query("SELECT *
+					FROM transfer_reservas
+					WHERE DATE(fecha_entrada) = ? OR DATE(fecha_vuelo_salida) = ?;", [$date, $date]
 		);
 
 		$reservaData = $db->fetchAll();

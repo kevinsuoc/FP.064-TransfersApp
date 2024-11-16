@@ -14,6 +14,5 @@
 <p><?php if (null !== $reserva->getHoraVueloSalida()) {echo 'Hora de vuelo de salida: '.$reserva->getHoraVueloSalida();}; ?></p>
 <p><?php if (null !== $reserva->getFechaVueloSalida()) {echo 'Fecha de vuelo de salida: '.$reserva->getFechaVueloSalida();}; ?></p>
 <p><?php echo 'Numero de viajeros: '.$reserva->getNumViajeros(); ?></p>
-<p><?php echo 'Vehiculo: '.$descripcionVehiculo; ?></p>
 
 <a href="/">Volver</a>

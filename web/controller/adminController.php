@@ -59,11 +59,16 @@ class AdminController {
 	public function mostrarCalendario(){
 		$filtroData = $this->obtenerDataFiltro();
 		// Preparamos los trayectos
+		switch($filtroData['tipo']){
+			case 'diaria': $reservas = Reserva::getByTrayectoDate($filtroData['dia']); break;
+			case 'mensual': $reservas = Reserva::getByTrayectoMonth($filtroData['anyo'], $filtroData['mes']); break;
+			case 'semanal': $reservas = Reserva::getByTrayectoWeek($filtroData['anyo'], $filtroData['semana']);break;
+			default: $reservas = [];
+		}
+	
 		$trayectos = [];
-		$reservas = Reserva::getReservas();
-
 		foreach ($reservas as $reserva){
-			if ($reserva->getIdTipoReserva() == 1 || $reserva->getIdTipoReserva() == 3){
+			if (($reserva->getIdTipoReserva() == 1 || $reserva->getIdTipoReserva() == 3) && $this->dentroDeFecha($filtroData, $reserva->getFechaEntrada())){
 				$trayecto = [];
 				$trayecto['tipo'] = "Aeropuerto a hotel";
 				$trayecto['localizador'] = $reserva->getLocalizador();
@@ -76,7 +81,7 @@ class AdminController {
 				$trayecto['numero_vuelo'] = $reserva->getNumeroVueloSalida();
 				$trayectos[] = $trayecto;
 			}
-			if ($reserva->getIdTipoReserva() == 2 || $reserva->getIdTipoReserva() == 3){
+			if (($reserva->getIdTipoReserva() == 2 || $reserva->getIdTipoReserva() == 3 ) && $this->dentroDeFecha($filtroData, $reserva->getFechaVueloSalida())){
 				$trayecto = [];
 				$trayecto['tipo'] = "Hotel a aeropuerto";
 				$trayecto['localizador'] = $reserva->getLocalizador();
@@ -116,5 +121,25 @@ class AdminController {
 			$dataFiltro['anyo'] = $_REQUEST['anyo'] ?? 2024;
 		}
 		return $dataFiltro;
+	}
+
+	private function dentroDeFecha($filtroData, $fecha) {
+		$fechaDate = new DateTime($fecha);
+		switch ($filtroData['tipo']) {
+			case 'diaria': 
+				$filtroDate = new DateTime($filtroData['dia']);
+				return $fechaDate->format('Y-m-d') === $filtroDate->format('Y-m-d');
+			case 'semanal':
+				$fechaReserva = new DateTime($fecha);
+				$anyoReserva = $fechaReserva->format("Y");
+				$semanaReserva = $fechaReserva->format("W");
+				return $filtroData['anyo'] == $anyoReserva && $filtroData['semana'] == $semanaReserva;
+			case 'mensual':
+				$month = str_pad($filtroData['mes'], 2, '0', STR_PAD_LEFT);
+				$year = $filtroData['anyo'];
+				return $fechaDate->format('Y-m') === "$year-$month";
+			default:
+				return false;
+		}
 	}
 }

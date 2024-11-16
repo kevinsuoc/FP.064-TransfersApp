@@ -72,7 +72,7 @@ class Hotel {
 		$db = new Database();
 		$db->query("SELECT * FROM transfer_hotel WHERE id_hotel = ?", [$id_hotel]);
 		
-		if ($db->rowCount() < 1){
+		if ($db->rowCount() != 1){
 			throw new PublicException("Hotel no encontrado");
 		}
 		return new Hotel($db->fetch());
