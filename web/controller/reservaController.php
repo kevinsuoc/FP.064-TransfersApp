@@ -170,16 +170,11 @@ class ReservaController {
         require __DIR__.'/../view/forms/editar-reserva.php'; // Llamamos a la vista
     }
 
-    public function actualizarReserva($data) {
-        try {
-            // Actualizamos la reserva
-            $reserva = new Reserva($data);
-            $reserva->update(); // Actualizamos la reserva
-            $this->mostrarExito(); // Mostramos el mensaje de confirmacion
-        } catch (PublicException $e) {
-            $this->errorReserva = "Error: ".$e->getMessage();
-            $this->editarReserva($data['id_reserva']); // Volvemos a la vista si hay error
-        }
+    public function actualizarReserva() {
+		$reserva = new Reserva($_POST);
+		$reserva->save();
+		$_SESSION["mensajeReservaActualizada"] = "Reserva actualizada";
+		header("Location: /"); exit();
     }
 
 	// Eliminar reserva

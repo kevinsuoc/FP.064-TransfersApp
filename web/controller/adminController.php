@@ -27,6 +27,7 @@ switch($request){
 	case 'actualizarZona': $adminController->actualizarZona(); break;
 	case 'actualizarHotel': $adminController->actualizarHotel(); break;
 	case 'actualizarVehiculo': $adminController->actualizarVehiculo(); break;
+	case 'actualizarReservaAdmin': $adminController->actualizarReserva(); break;
 }
 
 class AdminController {
@@ -211,5 +212,11 @@ class AdminController {
 		$vehiculo = new Vehiculo($_POST);
 		$vehiculo->save();
 		$this->mostrarPanelVehiculos();
+	}
+
+	public function actualizarReserva(){
+		$reserva = new Reserva($_POST);
+		$reserva->save();
+		$this->mostrarPanelReservas();
 	}
 }

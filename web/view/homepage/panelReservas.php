@@ -60,7 +60,9 @@
 	<div style="border: 1px solid red;">
 		<form method="post" action="/">
 			<p><?php echo 'Localizador: '.$data['reserva']->getLocalizador(); ?></p>
+			<input type="hidden" name = "localizador" value="<?=$data['reserva']->getLocalizador()?>">
 			<p><?php echo 'Tipo reserva: '.$data['tipoReservaDescripcion']; ?></p>
+			<input type="hidden" name = "id_tipo_reserva" value="<?=$data['reserva']->getIdTipoReserva()?>">
 			<p><?php echo 'Fecha de reserva: '.$data['reserva']->getFechaReserva(); ?></p>
 			<p><?php echo 'Fecha de ultima modificacion: '.$data['reserva']->getFechaModificacion(); ?></p>
 			<p><?php echo 'Precio por trayecto:  10'; ?></p>
@@ -129,13 +131,13 @@
 			</select><br>
 
 			<input type="hidden" name="id_reserva" value="<?php echo $data['reserva']->getIdReserva() ?>">
-			<input type="hidden" name="request" value="actualizarReserva">
+			<input type="hidden" name="request" value="actualizarReservaAdmin">
 			<button type="submit">Modificar</button>
 		</form>
 
 		<form method="post" action="/">
 			<input type="hidden" name="id_reserva" value="<?php echo $data['reserva']->getIdReserva() ?>">
-			<input type="hidden" name="request" value="eliminarReserva">
+			<input type="hidden" name="request" value="eliminarReservaAdmin">
 			<button type="submit">Eliminar</button>
 		</form>
 	</div>

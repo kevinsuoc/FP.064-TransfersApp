@@ -96,7 +96,8 @@ class Reserva {
 	public function save(){
 		$db = new Database();
 		$db->query("INSERT INTO transfer_reservas 
-		(localizador, 
+		(id_reserva,
+		localizador, 
 		id_hotel, 
 		id_viajero, 
 		id_tipo_reserva, 
@@ -112,7 +113,7 @@ class Reserva {
 		fecha_vuelo_salida, 
 		num_viajeros, 
 		id_vehiculo)
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 			ON DUPLICATE KEY UPDATE
 			localizador = VALUES(localizador),
 			id_hotel = VALUES(id_hotel),
@@ -129,8 +130,10 @@ class Reserva {
 			hora_vuelo_salida = VALUES(hora_vuelo_salida),
 			fecha_vuelo_salida = VALUES(fecha_vuelo_salida),
 			num_viajeros = VALUES(num_viajeros),
-			id_vehiculo = VALUES(id_vehiculo);
-		", [$this->localizador, 
+			id_vehiculo = VALUES(id_vehiculo),
+			fecha_modificacion = NOW();
+		", [$this->id_reserva,
+			$this->localizador, 
 			$this->id_hotel, 
 			$this->id_viajero,
 			$this->id_tipo_reserva, 

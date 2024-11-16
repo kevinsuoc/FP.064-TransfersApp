@@ -90,8 +90,11 @@ Regular !
 		<form method="post" action="/">
 			<p><?php echo 'Reserva realizada por: '.$data['reservador']; ?></p>
 			<p><?php echo 'Localizador: '.$data['reserva']->getLocalizador(); ?></p>
+			<input type="hidden" name = "localizador" value="<?=$data['reserva']->getLocalizador()?>">
 			<p><?php echo 'Tipo reserva: '.$data['tipoReservaDescripcion']; ?></p>
+			<input type="hidden" name = "id_tipo_reserva" value="<?=$data['reserva']->getIdTipoReserva()?>">
 			<p><?php echo 'Email cliente: '.$data['reserva']->getEmailCliente(); ?></p>
+			<input type="email" name="email_cliente" id="email" <?php echo 'value="'.$data['reserva']->getEmailCliente().'"'; ?> required><br>
 			<p><?php echo 'Fecha de reserva: '.$data['reserva']->getFechaReserva(); ?></p>
 			<p><?php echo 'Fecha de ultima modificacion: '.$data['reserva']->getFechaModificacion(); ?></p>
 			<p><?php echo 'Precio por trayecto:  10'; ?></p>

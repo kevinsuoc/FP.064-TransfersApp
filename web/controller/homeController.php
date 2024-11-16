@@ -74,6 +74,10 @@ class HomeController {
 			$mensajeReservaEliminada = $_SESSION["mensajeReservaEliminada"];
 			unset($_SESSION["mensajeReservaEliminada"]);
 		}
+		if (isset($_SESSION["mensajeReservaActualizada"])){
+			$mensajeReservaEliminada = $_SESSION["mensajeReservaActualizada"];
+			unset($_SESSION["mensajeReservaActualizada"]);
+		}
 
 		// Peparando perfil
 		$perfil = $_SESSION['userSession']->getViajero();
