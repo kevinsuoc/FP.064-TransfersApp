@@ -1,4 +1,4 @@
-<div class="form-container-register">
+<div class="form-container-register paginaRegistro">
 <form action="/" method="post" class="register-form">
 	<div class="form-group">
 		<h3>Datos de viajero</h3>
@@ -67,14 +67,18 @@
 	<input type="hidden" name="request" value="intentoRegistro">
 	<div class="form-group">
 		<button type="submit" class="btn-bd-primary">Registrarse</button><br>
-	</div>
 
-	<?php if (isset($registrarError)){echo $registrarError;}; ?>
+		<?php if (isset($registrarError)): ?>
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <?= $registrarError; ?>
+            </div>
+    	<?php endif; ?>
+
+	</div>
+	
+
 
 </form>
-<form action="/" class="return-button">
-    <input type="hidden" name="request" value="return_login"> 
-    <button type="submit" value="return_login" class="btn-bd-primary">Volver</button> <br>
-	</form>
+
 </div>
 

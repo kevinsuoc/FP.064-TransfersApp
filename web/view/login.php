@@ -1,8 +1,4 @@
-<?php
-require_once __DIR__ . '/../view/head.php';
-require_once __DIR__ . '/../view/header.php';
 
-?>
 <body>
 
 <div class="containerfromwelcome">

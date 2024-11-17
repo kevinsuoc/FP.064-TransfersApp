@@ -57,7 +57,7 @@
     align-items: center; /* Centra verticalmente el formulario */
     flex-wrap: wrap;
     flex-direction: column;
-    margin: 1em;
+    margin: auto;
 }
 
 .navbar {

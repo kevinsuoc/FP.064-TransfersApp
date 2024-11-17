@@ -1,26 +1,7 @@
-<?php
-global $pageTitle;
 
-require_once __DIR__.'/../util/Session.php';
-session_start();
-
-/*
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TransfersApp</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- CSS -->
-    <link rel="stylesheet" href="styles.css">
-</head>
-*/
-?>
     <?php
+
+	global $pageTitle;
 	// Necesario para que la sesion no se destruya por tener tipos de datos desconocidos
 	require_once __DIR__.'/../util/Session.php';
 
@@ -41,7 +22,7 @@ session_start();
 	// Si no hay solicitud vamos a la homepage
 	$request = $_REQUEST['request'] ?? 'homepage';
 	
-
+	include __DIR__ . '/../view/head.php';
     include __DIR__ . '/../view/header.php';
 
 
