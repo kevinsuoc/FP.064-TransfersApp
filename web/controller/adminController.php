@@ -33,6 +33,8 @@ switch($request){
 class AdminController {
 
 	public function __contruct(){
+		if ($_SESSION['userSession']->getSessionType() === sessionType::admin)
+			throw new PrivateException("No se puede ingresar sin ser administrador");
 	}
 
 	public function mostrarPanelDestinos(){
@@ -157,66 +159,111 @@ class AdminController {
 	// Eliminar
 	public function eliminarZona(){
 		Zona::deleteById($_POST['id_zona']);
+		$_SESSION['respuestaAdmin'] = "Zona eliminada";
 		$this->mostrarPanelDestinos();
 	}
 	
 	public function eliminarHotel(){
 		Hotel::deleteById($_POST['id_hotel']);
+		$_SESSION['respuestaAdmin'] = "Hotel eliminado";
 		$this->mostrarPanelDestinos();
 	}
 	
 	public function eliminarVehiculo(){
 		Vehiculo::deleteById($_POST['id_vehiculo']);
+		$_SESSION['respuestaAdmin'] = "Vehiculo eliminado";
 		$this->mostrarPanelVehiculos();
-
 	}
 	
 	public function eliminarReserva(){
 		Reserva::deleteById($_POST['id_reserva']);
+		$_SESSION['respuestaAdmin'] = "Reserva eliminada";
 		$this->mostrarPanelReservas();
 	}
 
 	// Agregar
 	public function agregarZona(){
-		$zona = new Zona($_POST);
-		$zona->save();
+		try {
+			$zona = new Zona($_POST);
+			$zona->validate();
+			$zona->save();
+			$_SESSION['respuestaAdmin'] = "Zona agregada";
+		} catch (PublicException $e) {
+			$_SESSION['respuestaAdmin'] = "No se pudo agregar zona: ".$e->getMessage();
+		}
 		$this->mostrarPanelDestinos();
 	}
 	
 	public function agregarHotel(){
-		$hotel = new Hotel($_POST);
-		$hotel->save();
+		try {
+			$hotel = new Hotel($_POST);
+			$hotel->validate();
+			$hotel->save();
+			$_SESSION['respuestaAdmin'] = "Hotel agregado";
+		} catch (PublicException $e) {
+			$_SESSION['respuestaAdmin'] = "No se pudo agregar hotel: ".$e->getMessage();
+		}
 		$this->mostrarPanelDestinos();
 	}
 	
 	public function agregarVehiculo(){
-		$vehiculo = new Vehiculo($_POST);
-		$vehiculo->save();
+		try {
+			$vehiculo = new Vehiculo($_POST);
+			$vehiculo->validate();
+			$vehiculo->save();
+			$_SESSION['respuestaAdmin'] = "Vehiculo agregado";
+		} catch (PublicException $e) {
+			$_SESSION['respuestaAdmin'] = "No se pudo agregar vehiculo: ".$e->getMessage();
+		}
 		$this->mostrarPanelVehiculos();
 	}
 
 	// Actualizar
 	public function actualizarZona(){
-		$zona = new Zona($_POST);
-		$zona->save();
+		try {
+			$zona = new Zona($_POST);
+			$zona->validate();
+			$zona->save();
+			$_SESSION['respuestaAdmin'] = "Zona actualizada";
+		} catch (PublicException $e) {
+			$_SESSION['respuestaAdmin'] = "No se pudo actualizar zona: ".$e->getMessage();
+		}
 		$this->mostrarPanelDestinos();
 	}
 	
 	public function actualizarHotel(){
-		$hotel = new Hotel($_POST);
-		$hotel->save();
+		try {
+			$hotel = new Hotel($_POST);
+			$hotel->validate();
+			$hotel->save();
+			$_SESSION['respuestaAdmin'] = "Hotel actualizado";
+		} catch (PublicException $e) {
+			$_SESSION['respuestaAdmin'] = "No se pudo actualizar hotel: ".$e->getMessage();
+		}
 		$this->mostrarPanelDestinos();
 	}
 	
 	public function actualizarVehiculo(){
-		$vehiculo = new Vehiculo($_POST);
-		$vehiculo->save();
+		try {
+			$vehiculo = new Vehiculo($_POST);
+			$vehiculo->validate();
+			$vehiculo->save();
+			$_SESSION['respuestaAdmin'] = "Vehiculo actualizado";
+		} catch (PublicException $e) {
+			$_SESSION['respuestaAdmin'] = "No se pudo actualizar vehiculo: ".$e->getMessage();
+		}
 		$this->mostrarPanelVehiculos();
 	}
 
 	public function actualizarReserva(){
-		$reserva = new Reserva($_POST);
-		$reserva->save();
+		try {
+			$reserva = new Reserva($_POST);
+			$reserva->validate();
+			$reserva->save();
+			$_SESSION['respuestaAdmin'] = "Reserva actualizada";
+		} catch (PublicException $e) {
+			$_SESSION['respuestaAdmin'] = "No se pudo actualizar reserva: ".$e->getMessage();
+		}
 		$this->mostrarPanelReservas();
 	}
 }

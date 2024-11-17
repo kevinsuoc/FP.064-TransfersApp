@@ -95,7 +95,8 @@ class ReservaController {
 			$data['id_viajero'] = $this->session->getViajero()->getIdViajero();
 		$this->reserva = new Reserva($data);
 		$this->reserva->validate();
-		$this->reserva->validateUpddateTime();
+		if ($_SESSION['userSession']->getSessionType() === sessionType::regular)
+			$this->reserva->validateUpddateTime();
 		$this->reserva->save();
 	}
 
@@ -114,7 +115,8 @@ class ReservaController {
 			$data['id_viajero'] = $this->session->getViajero()->getIdViajero();
 		$this->reserva = new Reserva($data);
 		$this->reserva->validate();
-		$this->reserva->validateUpddateTime();
+		if ($_SESSION['userSession']->getSessionType() === sessionType::regular)
+			$this->reserva->validateUpddateTime();
 		$this->reserva->save();
 	}
 
@@ -143,7 +145,8 @@ class ReservaController {
 
 		$this->reserva = new Reserva($data);
 		$this->reserva->validate();
-		$this->reserva->validateUpddateTime();
+		if ($_SESSION['userSession']->getSessionType() === sessionType::regular)
+			$this->reserva->validateUpddateTime();
 		$this->reserva->save();
 	}
 	

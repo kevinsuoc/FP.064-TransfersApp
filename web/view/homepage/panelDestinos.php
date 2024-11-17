@@ -1,12 +1,21 @@
 
 <a href="/">Volver</a>
 
+<div>
+	<?php
+	if (isset($_SESSION['respuestaAdmin'])){
+		echo $_SESSION['respuestaAdmin'];
+		unset ($_SESSION['respuestaAdmin']);
+	}
+	?>
+</div>
+
 <h3> Gestion hoteles </h3>
 <div style="border: 1px solid green;">
 
 <form action="/" method="post">
 	Comision
-	<input type="double" name="comision">
+	<input type="double" name="Comision">
 	Usuario
 	<input type="text" name="usuario">
 	Zona
@@ -30,7 +39,7 @@
 
 <form action="/" method="post">
 	Comision
-	<input type="double" name="comision" value="<?php echo $destino->getComision() ?>">
+	<input type="number" name="Comision" value="<?php echo $destino->getComision() ?>">
 	Usuario
 	<input type="text" name="usuario" value="<?php echo $destino->getUsuario() ?>">
 	Zona

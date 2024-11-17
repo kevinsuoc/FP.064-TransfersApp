@@ -85,4 +85,13 @@ class Vehiculo {
 			throw new PrivateException("no se pudo eliminar vehiculo");
 		}
 	}
+
+	public function validate(){
+		if (!filter_var($this->email_conductor, FILTER_VALIDATE_EMAIL)) {
+            throw new PublicException("El email no es válido");
+        }
+		if (strlen($this->descripcion ?? '') < 2 || !preg_match("/^[a-zA-Z\s]+$/", $this->descripcion)) {
+			throw new PublicException("La descripcion debe tener más de 2 caracteres y contener solo letras");
+		}
+	}
 }

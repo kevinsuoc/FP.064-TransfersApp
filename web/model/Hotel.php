@@ -28,7 +28,6 @@ class Hotel {
         }
 	}
 
-	// Setters (TODO: Validaciones)
 	public function setIdHotel($id_hotel){$this->id_hotel = $id_hotel;}
 	public function setIdZona($id_zona){$this->id_zona = $id_zona;}
 	public function setUsuario($usuario){$this->usuario = $usuario;}
@@ -50,11 +49,11 @@ class Hotel {
 	public function save(){
 		try {
 			$db = new Database();
-			$db->query("INSERT INTO transfer_hotel (id_hotel, id_zona, comision, usuario, password)
+			$db->query("INSERT INTO transfer_hotel (id_hotel, id_zona, Comision, usuario, password)
 				VALUES (?, ?, ?, ?, ?)
 				ON DUPLICATE KEY UPDATE
 				id_zona = VALUES(id_zona),
-				comision = VALUES(comision),
+				Comision = VALUES(Comision),
 				usuario = VALUES(usuario),
 				password = VALUES(password)
 			", [$this->id_hotel,
@@ -117,4 +116,13 @@ class Hotel {
 		}
 	}
 	
+	public function validate(){
+		if ($this->comision < 0 || $this->comision > 100) {
+			throw new PublicException("La comision debe ser de 0 a 100 %");
+		}
+		if (strlen($this->usuario ?? '') < 2 || !preg_match("/^[a-zA-Z\s]+$/", $this->usuario)) {
+			throw new PublicException("El usuario debe tener más de 2 caracteres y contener solo letras");
+		}
+	}
+
 }

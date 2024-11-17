@@ -1,5 +1,14 @@
 <a href="/">Volver</a>
 
+<div>
+	<?php
+	if (isset($_SESSION['respuestaAdmin'])){
+		echo $_SESSION['respuestaAdmin'];
+		unset ($_SESSION['respuestaAdmin']);
+	}
+	?>
+</div>
+
 <h3>Gestion vehiculos</h3>
 
 <div style="border: 1px solid green;">

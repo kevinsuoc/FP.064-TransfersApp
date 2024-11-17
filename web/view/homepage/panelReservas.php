@@ -1,5 +1,14 @@
 <a href="/">Volver</a>
 
+<div>
+	<?php
+	if (isset($_SESSION['respuestaAdmin'])){
+		echo $_SESSION['respuestaAdmin'];
+		unset ($_SESSION['respuestaAdmin']);
+	}
+	?>
+</div>
+
 <form action="/" method="post">
         <label for="vista">Selecciona el tipo de vista:</label>
         <select id="vista" name="vista" onchange="mostrarOpciones()">
