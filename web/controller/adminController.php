@@ -80,9 +80,14 @@ class AdminController {
 		}
 	
 		$trayectos = [];
+		$id = 1;
 		foreach ($reservas as $reserva){
+			$vehiculo = Vehiculo::getVehiculoById($reserva->getIdVehiculo());
 			if (($reserva->getIdTipoReserva() == 1 || $reserva->getIdTipoReserva() == 3) && $this->dentroDeFecha($filtroData, $reserva->getFechaEntrada())){
 				$trayecto = [];
+				$trayecto['id'] = $id;
+				$id = $id + 1;
+				$trayecto['tipoid'] = 1;
 				$trayecto['tipo'] = "Aeropuerto a hotel";
 				$trayecto['localizador'] = $reserva->getLocalizador();
 				$trayecto['email'] = $reserva->getEmailCliente();
@@ -92,10 +97,17 @@ class AdminController {
 				$trayecto['origen'] = $reserva->getOrigenVueloEntrada();
 				$trayecto['destino'] = Hotel::getHotelById($reserva->getIdDestino())->getUsuario();
 				$trayecto['numero_vuelo'] = $reserva->getNumeroVueloSalida();
+				if (isset($vehiculo) && $vehiculo !== null){
+					$trayecto['vehiculo'] = $vehiculo->getDescripcion();
+					$trayecto['email_conductor'] = $vehiculo->getEmailConductor();
+				}
 				$trayectos[] = $trayecto;
 			}
 			if (($reserva->getIdTipoReserva() == 2 || $reserva->getIdTipoReserva() == 3 ) && $this->dentroDeFecha($filtroData, $reserva->getFechaVueloSalida())){
 				$trayecto = [];
+				$trayecto['id'] = $id;
+				$id = $id + 1;
+				$trayecto['tipoid'] = 2;
 				$trayecto['tipo'] = "Hotel a aeropuerto";
 				$trayecto['localizador'] = $reserva->getLocalizador();
 				$trayecto['email'] = $reserva->getEmailCliente();
@@ -105,6 +117,10 @@ class AdminController {
 				$trayecto['hora'] = $reserva->getHoraRecogida();
 				$trayecto['origen'] = "Hotel ".Hotel::getHotelById($reserva->getIdDestino())->getUsuario();
 				$trayecto['numero_vuelo'] = $reserva->getNumeroVueloSalida();
+				if (isset($vehiculo) && $vehiculo !== null){
+					$trayecto['vehiculo'] = $vehiculo->getDescripcion();
+					$trayecto['email_conductor'] = $vehiculo->getEmailConductor();
+				}
 				$trayectos[] = $trayecto;
 			}
 		}

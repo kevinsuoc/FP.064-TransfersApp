@@ -12,4 +12,10 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Vincular CSS personalizado -->
     <link href="web/public/styles.css" rel="stylesheet"> <!-- Cambia 'ruta/a/' por la ubicación real de tu archivo -->
+
+    <!-- Bootstrap 5 CSS (in <head>) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap 5 JS (before closing </body>) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>

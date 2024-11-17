@@ -52,9 +52,6 @@ class Vehiculo {
 			$db = new Database();
 			$db->query("SELECT * FROM transfer_vehiculo WHERE id_vehiculo = ?", [$id_vehiculo]);
 			
-			if ($db->rowCount() < 1){
-				throw new PublicException("Vehiculo no encontrado");
-			}
 			return new Vehiculo($db->fetch());
 		} catch (PDOException $e) {
 			throw new PrivateException("no se pudo obtener vehiculo");
