@@ -67,16 +67,13 @@
 	<input type="hidden" name="request" value="intentoRegistro">
 	<div class="form-group">
 		<button type="submit" class="btn-bd-primary">Registrarse</button><br>
-
-		<?php if (isset($registrarError)): ?>
-            <div class="alert alert-danger d-flex align-items-center" role="alert">
-                <?= $registrarError; ?>
-            </div>
-    	<?php endif; ?>
-
 	</div>
 	
-
+	<?php if (isset($registrarError)): ?>
+		<div class="alert alert-danger d-flex justify-content-center align-items-center" role="alert">
+			<?= $registrarError; ?>
+		</div>
+    <?php endif; ?>
 
 </form>
 

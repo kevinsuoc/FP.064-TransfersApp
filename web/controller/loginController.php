@@ -104,7 +104,7 @@ class LoginController {
 	/* Remover la Session  y volver al formulario de login */
 	public function logout(){
 		unset($_SESSION['userSession']);
-		$this->mostrarFormularioLogin("Usuario desconectado");
+		$this->mostrarFormularioLogin();
 	}
 
 	/* Metodos para mostrar vistas con mensajes de error/informacion*/
