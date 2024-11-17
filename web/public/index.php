@@ -1,3 +1,10 @@
+<?php
+global $pageTitle;
+
+require_once __DIR__.'/../util/Session.php';
+session_start();
+
+/*
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,7 +18,8 @@
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+*/
+?>
     <?php
 	// Necesario para que la sesion no se destruya por tener tipos de datos desconocidos
 	require_once __DIR__.'/../util/Session.php';

@@ -34,12 +34,30 @@
     max-width: 400px;
     width: 100%;
 }
-.form-container {
+.register-form {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    max-width: 95%;
+    width: 100%;
+}
+.form-container-register {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    padding: 1em;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    max-width: 800px;
+    width: 100%;
     display: flex;
-    justify-content: flex-end; /* Alinea el formulario a la derecha */
-    height: 40vh; /* Ocupa toda la altura de la ventana */
+    justify-content: center; /* Alinea el formulario a la derecha */
+    height: 100%; /* Ocupa toda la altura de la ventana */
     align-items: center; /* Centra verticalmente el formulario */
-    padding-right: 20px; /* Añade un poco de espacio a la derecha */
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 1em;
 }
 
 .navbar {
@@ -123,6 +141,32 @@
 
 .containerfromwelcome{
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center; /* Centra horizontalmente */
+
     /* Centra verticalmente */}
+
+
+.link-button, .link-button:hover, .link-button:active, .link-button:focus{
+    text-decoration: none;
+    color: inherit;
+}
+.btn-bd-primary:hover{
+    background-color: #fff;
+    color: black;
+}
+.form-group{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.return-button{
+    margin-top: 1em;
+}
+
+.form-control-register{
+    width: 70%;
+}
+.form-field{
+    width: 30%;
+}
