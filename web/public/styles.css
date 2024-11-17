@@ -3,10 +3,12 @@
 @import 'bootstrap/scss/bootstrap';
 .main-container {
     position: relative;
-    height: 100vh;
+    min-height: 100vh;
     background-image: url('https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
+    overflow-y: auto; 
 }
 
 .hero-overlay {
