@@ -96,7 +96,7 @@ class LoginController {
 			$_SESSION['userSession']->setViajero($viajero);
 			$_SESSION["mensajeActualizarPassword"] = "Contraseña actualizada";
 		} catch (PublicException $e) {
-			$_SESSION["mensajeActualizarPassword"] = "$e->getMessage()";
+			$_SESSION["mensajeActualizarPassword"] = $e->getMessage();
 		}
 		header("location: /"); exit();
 	}

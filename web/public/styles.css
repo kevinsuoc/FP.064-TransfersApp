@@ -170,3 +170,22 @@
 .form-field{
     width: 30%;
 }
+
+.perfil .section {
+    max-width: 600px; 
+    margin: 0 auto; 
+}
+.perfil .card-body {
+    padding: 20px;
+}
+.perfil .form-control, .perfil .btn {
+    width: 100%;
+}
+
+#perfilSection, #reservasSection, #editSection {
+    display: none;
+}
+
+#perfilSection.active, #reservasSection.active, #editSection.active {
+    display: block;
+}
