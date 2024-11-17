@@ -1,65 +1,117 @@
-<p>Aeropuerto -> Hotel</p>
+<div class="form-container-register">
+<form action="/" method="post" class="register-form">
+	<div class="form-group">
+		<h3>Reserva ida y vuelta</h3>
+	</div>
 
-<br>
-<form action="/" method="post">
-	<p>Datos de la reserva</p>
-	<p> Ida </p>
-	<label for="diaLlegada">Dia de llegada</label>
-	<input type="date" name="fecha_entrada" id="diaLlegada" required><br>
+	<div class="form-group">
+		<h3>Datos de aeropuerto a hotel</h3>
+	</div>
 
-	<label for="diaLlegada">Hora de llegada</label>
-	<input type="time" name="hora_entrada" id="horaLlegada" required><br>
+	<div class="form-group">
+		<div class="form-field">
+			<label for="diaLlegada" class="form-label">Dia de llegada</label>
+		</div>
+		<input type="date" name="fecha_entrada" id="diaLlegada" class="form-control-register" placeholder="Dia de llegada" required><br>
+	</div>
 
-	<label for="numeroVuelo">Numero de vuelo</label>
-	<input type="number" name="numero_vuelo_entrada" id="numeroVuelo" required><br>
+	<div class="form-group">
+		<div class="form-field">
+			<label for="hora_entrada" class="form-label">Hora de llegada</label>
+		</div>
+		<input type="time" name="hora_entrada" id="hora_entrada" class="form-control-register" placeholder="Hora de entrada" required><br>
+	</div>
 
-	<label for="aeropueroOrigen">Aeropuerto de origen</label>
-	<input type="text" name="origen_vuelo_entrada" id="aeropueroOrigen" required><br>
+	<div class="form-group">
+		<div class="form-field">
+			<label for="numero_vuelo_entrada" class="form-label">Numero de vuelo</label>
+		</div>
+		<input type="number" name="numero_vuelo_entrada" id="numero_vuelo_entrada" class="form-control-register" placeholder="Numero de vuelo" required><br>
+	</div>
 
-	<p> Vuelta </p>
+	<div class="form-group">
+		<div class="form-field">
+			<label for="origen_vuelo_entrada" class="form-label">Aeropuerto de origen</label>
+		</div>
+		<input type="text" name="origen_vuelo_entrada" id="origen_vuelo_entrada" class="form-control-register" placeholder="Aeropuerto de origen" required><br>
+	</div>
 
-	<label for="fecha_vuelo_salida">Dia del vuelo</label>
-	<input type="date" name="fecha_vuelo_salida" id="fecha_vuelo_salida" required><br>
+	<div class="form-group">
+		<h3>Datos de hotel a aeropuerto</h3>
+	</div>
 
-	<label for="hora_vuelo_salida">Hora del vuelo</label>
-	<input type="time" name="hora_vuelo_salida" id="hora_vuelo_salida" required><br>
+	<div class="form-group">
+		<div class="form-field">
+			<label for="fecha_vuelo_salida" class="form-label">Día del vuelo</label>
+		</div>
+		<input type="date" name="fecha_vuelo_salida" id="fecha_vuelo_salida" class="form-control-register" required><br>
+	</div>
 
-	<label for="numero_vuelo_salida">Numero de vuelo</label>
-	<input type="number" name="numero_vuelo_salida" id="numero_vuelo_salida" required><br>
+	<div class="form-group">
+		<div class="form-field">
+			<label for="hora_vuelo_salida" class="form-label">Hora del vuelo</label>
+		</div>
+		<input type="time" name="hora_vuelo_salida" id="hora_vuelo_salida" class="form-control-register" required><br>
+	</div>
 
-	<label for="hora_recogida">Hora de recogida</label>
-	<input type="time" name="hora_recogida" id="hora_recogida" required><br>
+	<div class="form-group">
+		<div class="form-field">
+			<label for="numero_vuelo_salida" class="form-label">Número de vuelo</label>
+		</div>
+		<input type="number" name="numero_vuelo_salida" id="numero_vuelo_salida" class="form-control-register" required><br>
+	</div>
 
-	<p> Compartidos </p>
+	<div class="form-group">
+		<div class="form-field">
+			<label for="hora_recogida" class="form-label">Hora de recogida</label>
+		</div>
+		<input type="time" name="hora_recogida" id="hora_recogida" class="form-control-register" required><br>
+	</div>
 
-	<label for="id_destino">Destino/Origen (Hotel): </label>
-	<select id="id_destino" name="id_destino">
-	<?php 
-		foreach ($destinos as $destino){
-			echo '<option value="'.$destino->getIdHotel().'">'.$destino->getUsuario().'</option>';
-		}
-	?>
-	</select><br>
 
-	<label for="numeroViejeros">Numero de viajeros</label>
-	<input type="number" name="num_viajeros" id="numeroViejeros" required><br>
+	<div class="form-group">
+		<h3>Otros datos</h3>
+	</div>
 
-	<label for="email">Email</label>
-	<input type="email" name="email_cliente" id="email" required 
-	<?php 
-		if (isset($email)){echo ' readonly value="'.$email.'"';};
-	?>
-	><br>
+	<div class="form-group">
+		<div class="form-field">
+			<label for="id_destino">Destino (Hotel): </label>
+		</div>
+		<select id="id_destino" name="id_destino" class="form-control-register">
+		<?php 
+			foreach ($destinos as $destino){
+				echo '<option value="'.$destino->getIdHotel().'">'.$destino->getUsuario().'</option>';
+			}
+		?>
+		</select>
+	</div>
+
+	<div class="form-group">
+		<div class="form-field">
+			<label for="num_viajeros" class="form-label">Numero de viajeros</label>
+		</div>
+		<input type="number" name="num_viajeros" id="num_viajeros" class="form-control-register" placeholder="Numero de viajeros" required><br>
+	</div>
+
+	<div class="form-group">
+		<div class="form-field">
+			<label for="email_cliente" class="form-label">Email</label>
+		</div>
+		<input <?php  if (isset($email)){echo ' readonly value="'.$email.'"';}; ?> type="email" name="email_cliente" id="email_cliente" class="form-control-register" placeholder="Email" required><br>
+	</div>
+
+	<div class="form-group">
+		<button type="submit" class="btn-bd-primary">Reservar</button><br>
+	</div>
+	
+	<?php if (isset($errorReserva)): ?>
+		<div class="alert alert-danger d-flex justify-content-center align-items-center" role="alert">
+			<?= $errorReserva; ?>
+		</div>
+    <?php endif; ?>
 
 	<input type="hidden" name="request" value="reservar">
 	<input type="hidden" name="tipoReserva" value="<?php echo $tipoReserva?>">
-	<button type="submit">Reservar</button><br>
-	<?php if (isset($errorReserva)){echo $errorReserva;}; ?>
 </form>
-<br>
 
-
-<a href="/">Volver</a>
-
-
-<a href="/">Volver</a>
+</div>
