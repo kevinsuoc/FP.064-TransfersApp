@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: Nov 12, 2024 at 08:47 PM
+-- Generation Time: Nov 17, 2024 at 06:23 PM
 -- Server version: 8.0.39
 -- PHP Version: 8.2.24
 
@@ -35,12 +35,6 @@ CREATE TABLE `transfer_hotel` (
   `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
---
--- Dumping data for table `transfer_hotel`
---
-
-INSERT INTO `transfer_hotel` (`id_hotel`, `id_zona`, `Comision`, `usuario`, `password`) VALUES
-(1, 1, 0, 'Hotelestest', NULL);
 
 -- --------------------------------------------------------
 
@@ -55,12 +49,6 @@ CREATE TABLE `transfer_precios` (
   `Precio` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
---
--- Dumping data for table `transfer_precios`
---
-
-INSERT INTO `transfer_precios` (`id_precios`, `id_vehiculo`, `id_hotel`, `Precio`) VALUES
-(1, 1, 1, 10);
 
 -- --------------------------------------------------------
 
@@ -75,21 +63,20 @@ CREATE TABLE `transfer_reservas` (
   `id_viajero` int DEFAULT NULL COMMENT 'Viejo que realiza la reserva',
   `id_tipo_reserva` int NOT NULL,
   `email_cliente` varchar(50) NOT NULL,
-  `fecha_reserva` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `fecha_modificacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_reserva` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha en la que se realiza la reserva',
+  `fecha_modificacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_destino` int NOT NULL COMMENT 'Hotel de destino y/o recogida',
-  `fecha_entrada` date DEFAULT NULL COMMENT 'Fecha de entrada del vuelo al aeropuerto',
+  `fecha_entrada` date DEFAULT NULL COMMENT 'Fecha de entrada del vuelo al aeropuerto.',
   `hora_entrada` time DEFAULT NULL COMMENT 'Hora de entrada del vuelo al aeropuerto',
   `numero_vuelo_entrada` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `origen_vuelo_entrada` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `hora_recogida` time DEFAULT NULL COMMENT 'Hora de recogida en el hotel hacia el aeropuerto',
   `numero_vuelo_salida` int DEFAULT NULL,
-  `hora_vuelo_salida` timestamp NULL DEFAULT NULL,
+  `hora_vuelo_salida` time DEFAULT NULL,
   `fecha_vuelo_salida` date DEFAULT NULL,
   `num_viajeros` int NOT NULL,
-  `id_vehiculo` int NOT NULL
+  `id_vehiculo` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
 
 -- --------------------------------------------------------
 
@@ -121,15 +108,8 @@ CREATE TABLE `transfer_vehiculo` (
   `id_vehiculo` int NOT NULL,
   `Descripción` varchar(100) NOT NULL,
   `email_conductor` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL
+  `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-
---
--- Dumping data for table `transfer_vehiculo`
---
-
-INSERT INTO `transfer_vehiculo` (`id_vehiculo`, `Descripción`, `email_conductor`, `password`) VALUES
-(1, 'Un vehiculo de 3 ruedas', 'conductor@temp.uoc', '');
 
 -- --------------------------------------------------------
 
@@ -150,6 +130,7 @@ CREATE TABLE `transfer_viajeros` (
   `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
+
 -- --------------------------------------------------------
 
 --
@@ -161,12 +142,6 @@ CREATE TABLE `transfer_zona` (
   `descripcion` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
---
--- Dumping data for table `transfer_zona`
---
-
-INSERT INTO `transfer_zona` (`id_zona`, `descripcion`) VALUES
-(1, 'Un bonito valle');
 
 --
 -- Indexes for dumped tables
@@ -231,7 +206,7 @@ ALTER TABLE `transfer_zona`
 -- AUTO_INCREMENT for table `transfer_hotel`
 --
 ALTER TABLE `transfer_hotel`
-  MODIFY `id_hotel` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_hotel` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `transfer_precios`
@@ -243,7 +218,7 @@ ALTER TABLE `transfer_precios`
 -- AUTO_INCREMENT for table `transfer_reservas`
 --
 ALTER TABLE `transfer_reservas`
-  MODIFY `id_reserva` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id_reserva` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 
 --
 -- AUTO_INCREMENT for table `transfer_tipo_reserva`
@@ -255,19 +230,19 @@ ALTER TABLE `transfer_tipo_reserva`
 -- AUTO_INCREMENT for table `transfer_vehiculo`
 --
 ALTER TABLE `transfer_vehiculo`
-  MODIFY `id_vehiculo` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_vehiculo` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `transfer_viajeros`
 --
 ALTER TABLE `transfer_viajeros`
-  MODIFY `id_viajero` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_viajero` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `transfer_zona`
 --
 ALTER TABLE `transfer_zona`
-  MODIFY `id_zona` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_zona` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
@@ -294,7 +269,7 @@ ALTER TABLE `transfer_reservas`
   ADD CONSTRAINT `FK_RESERVAS_HOTEL` FOREIGN KEY (`id_hotel`) REFERENCES `transfer_hotel` (`id_hotel`),
   ADD CONSTRAINT `FK_RESERVAS_TIPO` FOREIGN KEY (`id_tipo_reserva`) REFERENCES `transfer_tipo_reserva` (`id_tipo_reserva`),
   ADD CONSTRAINT `FK_RESERVAS_VEHICULO` FOREIGN KEY (`id_vehiculo`) REFERENCES `transfer_vehiculo` (`id_vehiculo`),
-  ADD CONSTRAINT `FK_RESERVAS_VIAJERO` FOREIGN KEY (`id_viajero`) REFERENCES `transfer_viajeros` (`id_viajero`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `FK_RESERVAS_VIAJERO` FOREIGN KEY (`id_viajero`) REFERENCES `transfer_viajeros` (`id_viajero`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
