@@ -1,0 +1,126 @@
+
+
+@import 'bootstrap/scss/bootstrap';
+.main-container {
+    position: relative;
+    height: 100vh;
+    background-image: url('https://images.pexels.com/photos/1008155/pexels-photo-1008155.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover;
+    background-position: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+}
+.login-form {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    max-width: 400px;
+    width: 100%;
+}
+.form-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea el formulario a la derecha */
+    height: 40vh; /* Ocupa toda la altura de la ventana */
+    align-items: center; /* Centra verticalmente el formulario */
+    padding-right: 20px; /* Añade un poco de espacio a la derecha */
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Asegúrate de que esté encima de otros elementos */
+    background-color: rgba(0, 0, 0, 0.); /* Opcional: Color de fondo */
+    padding: 10px 0;
+}
+
+
+/* Estilo para el header */
+.header-bar {
+    background-color: rgba(173, 216, 230, 0.4); /* Aumenta la opacidad para mejor contraste */
+    padding: 1rem;
+    color: black; /* Asegura que el texto sea legible */
+    text-align: center;
+}
+
+/* Centrar el mensaje de bienvenida */
+.welcome-message {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Tamaño del texto de bienvenida */
+.welcome-message h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.airlines-title {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    color:rgb(41, 41, 166);
+    font-weight: bold;
+}
+
+.btn-bd-primary {
+    color: white;
+    background-color: rgb(41, 41, 166);
+    border: 2px solid rgb(41, 41, 166); /* Borde del mismo color que el fondo */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 5px 10px; 
+    
+  }
+  
+  .airlines-welcome {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    height: 80vh; /* Ocupa el 80% de la altura de la pantalla */
+    text-align: center; /* Centra el texto dentro del contenedor */
+    color: rgb(41, 41, 166); /* Color del texto */
+    margin: 0; /* Elimina márgenes predeterminados */
+}
+
+/* Contenedor de texto con fondo blanco y bordes redondeados */
+.welcome-text {
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco */
+    padding: 20px; /* Espaciado dentro del contenedor */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave para darle profundidad */
+    max-width: 80%; /* Limita el ancho para que no se vea demasiado grande */
+    width: 600px; /* Establece un ancho fijo */
+}
+
+/* Ajustes para el encabezado dentro del contenedor */
+.welcome-text h1 {
+    color: rgb(41, 41, 166); /* Color del texto */
+    font-weight: bold;
+    font-size: 40px; /* Tamaño del texto */
+    /* Borde de texto */
+}
+
+.containerfromwelcome{
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centra horizontalmente */
+    /* Centra verticalmente */}
