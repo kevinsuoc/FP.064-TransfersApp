@@ -1,3 +1,4 @@
-Error: <?php echo $error;?>
 
-<a href="/">Volver</a>
+<div class="alert alert-danger" role="alert">
+    <?php echo "Error: ".$error; ?>
+</div>
