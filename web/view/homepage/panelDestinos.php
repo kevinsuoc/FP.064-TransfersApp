@@ -69,7 +69,7 @@
                     <button type="submit" class="btn btn-warning">Actualizar</button>
                 </form>
 
-                <form action="/" method="post mb-4">
+                <form action="/" method="post">
                     <input type="hidden" name="id_hotel" value="<?php echo $destino->getIdHotel(); ?>">
                     <input type="hidden" name="request" value="eliminarHotel">
                     <button type="submit" class="btn btn-danger">Eliminar</button>
