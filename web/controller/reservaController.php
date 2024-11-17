@@ -94,6 +94,7 @@ class ReservaController {
 		if ($this->session->getSessionType() == SessionType::regular)
 			$data['id_viajero'] = $this->session->getViajero()->getIdViajero();
 		$this->reserva = new Reserva($data);
+		$this->reserva->validate();
 		$this->reserva->save();
 	}
 
@@ -111,6 +112,7 @@ class ReservaController {
 		if ($this->session->getSessionType() == SessionType::regular)
 			$data['id_viajero'] = $this->session->getViajero()->getIdViajero();
 		$this->reserva = new Reserva($data);
+		$this->reserva->validate();
 		$this->reserva->save();
 	}
 
@@ -138,6 +140,7 @@ class ReservaController {
 		$data['numero_vuelo_salida'] = $_POST['numero_vuelo_salida'];
 
 		$this->reserva = new Reserva($data);
+		$this->reserva->validate();
 		$this->reserva->save();
 	}
 	
@@ -162,18 +165,15 @@ class ReservaController {
 		require __DIR__.'/../view/error.php';
 	}
 
-
-	// Editar reserva 
-    public function editarReserva($id_reserva) {
-        // buscamos reserva por su ID
-        $this->reserva = Reserva::getReservaById($id_reserva);
-        require __DIR__.'/../view/forms/editar-reserva.php'; // Llamamos a la vista
-    }
-
     public function actualizarReserva() {
-		$reserva = new Reserva($_POST);
-		$reserva->save();
-		$_SESSION["mensajeReservaActualizada"] = "Reserva actualizada";
+		try {
+			$reserva = new Reserva($_POST);
+			$reserva->validate();
+			$reserva->save();
+			$_SESSION["mensajeReservaActualizada"] = "Reserva actualizada";
+		} catch (PublicException $e){
+			$_SESSION["mensajeReservaActualizada"] = "No se pudo actualizar: ".$e->getMessage();
+		}
 		header("Location: /"); exit();
     }
 
@@ -183,7 +183,6 @@ class ReservaController {
 		$_SESSION["mensajeReservaEliminada"] = "Reserva eliminada";
 		header("Location: /"); exit();
 	}
-
 }
 
 

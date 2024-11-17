@@ -30,7 +30,7 @@ try {
 		case 'actualizarViajero': // Para editar el perfil
 		case 'logout': require __DIR__.'/../controller/loginController.php'; break;
 		case 'reservar': // Para reservar
-		case 'editarReserva':  // Para editar la reserva
+		case 'actualizarReserva':  // Para editar la reserva
 		case 'eliminarReserva': // Para eliminar una reserva
 		case 'reserva': require __DIR__.'/../controller/reservaController.php'; break;
 		case 'panelReservas':

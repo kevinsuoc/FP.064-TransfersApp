@@ -29,7 +29,6 @@ class Reserva {
 	function __construct($data = null){
 		if ($data) {
 			if (isset($data['id_reserva'])) {$this->setIdReserva($data['id_reserva']);}
-			else {echo 'no';}
 			$this->setLocalizador($data['localizador']);
 			if (isset($data['id_hotel'])) {$this->setIdHotel($data['id_hotel']);};
 			if (isset($data['id_viajero'])) {$this->setIdViajero($data['id_viajero']);};
@@ -84,7 +83,7 @@ class Reserva {
 	public function setFechaEntrada($fecha_entrada){ $this->fecha_entrada = $fecha_entrada;}
 	public function setHoraEntrada($hora_entrada){ $this->hora_entrada = $hora_entrada;}
 	public function setNumeroVueloEntrada($numero_vuelo_entrada){ $this->numero_vuelo_entrada = $numero_vuelo_entrada;}
-	public function setOrigenVueloEntrada($origen_vuelo_entrada){ $this->origen_vuelo_entrada = $origen_vuelo_entrada;}
+	public function setOrigenVueloEntrada($origen_vuelo_entrada){ $this->origen_vuelo_entrada = $origen_vuelo_entrada; }
 	public function setHoraRecogida($hora_recogida){ $this->hora_recogida = $hora_recogida;}
 	public function setNumeroVueloSalida($numero_vuelo_salida){ $this->numero_vuelo_salida = $numero_vuelo_salida;}
 	public function setHoraVueloSalida($hora_vuelo_salida){ $this->hora_vuelo_salida = $hora_vuelo_salida;}
@@ -370,4 +369,42 @@ class Reserva {
 			throw new PrivateException("no se pudo borrar reserva");
 		}
 	}
+
+	public function validate(){
+		if ($this->num_viajeros < 1 || $this->num_viajeros > 3)
+			throw new PublicException("El numero de viajeros debe ser entre uno y tres");
+		if (!filter_var($this->email_cliente, FILTER_VALIDATE_EMAIL))
+				throw new PublicException("El email no es válido");
+		switch ($this->id_tipo_reserva){
+			case 1: $this->validateTipo1(); break;
+			case 2: $this->validateTipo2(); break;
+			case 3: $this->validateTipo3(); break;
+		}
+	}
+
+	private function validateTipo1(){
+		$fechaEntrada = strtotime($this->fecha_entrada);
+		if ($fechaEntrada < time())
+			throw new PublicException("La fecha de entrada no puede ser en el pasado.");
+		if (strlen($this->origen_vuelo_entrada) < 3)
+			throw new PublicException("El aeropuerto de origen debe tener más de 2 caracteres");
+	}
+
+	private function validateTipo2(){
+		$fechaSalida = strtotime($this->fecha_vuelo_salida);
+		if ($fechaEntrada < time())
+			throw new PublicException("La fecha de salida no puede ser en el pasado.");
+	}
+
+	private function validateTipo3(){
+		$this->validateTipo1();
+		$this->validateTipo2();
+		$fechaEntrada = strtotime($this->fecha_entrada);
+		$fechaSalida = strtotime($this->fecha_vuelo_salida);
+		if ($fechaSalida <= $fechaEntrada + 86400) { 
+			throw new PublicException("La fecha de salida debe ser luego de la fecha de entrada.");
+		}
+	}
+
+	validateUpddateTime()d
 }
