@@ -95,6 +95,7 @@ class ReservaController {
 			$data['id_viajero'] = $this->session->getViajero()->getIdViajero();
 		$this->reserva = new Reserva($data);
 		$this->reserva->validate();
+		$this->reserva->validateUpddateTime();
 		$this->reserva->save();
 	}
 
@@ -113,6 +114,7 @@ class ReservaController {
 			$data['id_viajero'] = $this->session->getViajero()->getIdViajero();
 		$this->reserva = new Reserva($data);
 		$this->reserva->validate();
+		$this->reserva->validateUpddateTime();
 		$this->reserva->save();
 	}
 
@@ -141,6 +143,7 @@ class ReservaController {
 
 		$this->reserva = new Reserva($data);
 		$this->reserva->validate();
+		$this->reserva->validateUpddateTime();
 		$this->reserva->save();
 	}
 	
@@ -168,6 +171,7 @@ class ReservaController {
     public function actualizarReserva() {
 		try {
 			$reserva = new Reserva($_POST);
+			$reserva->validateUpddateTime();
 			$reserva->validate();
 			$reserva->save();
 			$_SESSION["mensajeReservaActualizada"] = "Reserva actualizada";

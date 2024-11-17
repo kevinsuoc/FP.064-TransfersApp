@@ -392,7 +392,7 @@ class Reserva {
 
 	private function validateTipo2(){
 		$fechaSalida = strtotime($this->fecha_vuelo_salida);
-		if ($fechaEntrada < time())
+		if ($fechaSalida < time())
 			throw new PublicException("La fecha de salida no puede ser en el pasado.");
 	}
 
@@ -406,5 +406,19 @@ class Reserva {
 		}
 	}
 
-	validateUpddateTime()d
+	public function validateUpddateTime(){
+		switch ($this->id_tipo_reserva){
+			case 1:
+			case 3: $this->validateActualUpddateTime($this->fecha_entrada, $this->hora_entrada); break;
+			case 2: $this->validateActualUpddateTime($this->fecha_vuelo_salida, $this->hora_vuelo_salida); break;
+		}
+	}
+
+	private function validateActualUpddateTime($fecha, $hora){
+		$horaActual = time();
+		$tiempoReseva = strtotime($fecha . ' ' . $hora);
+		if ($tiempoReseva <= $horaActual + (48 * 3600)) {
+			throw new PublicException("Las reservas se deben hacer o modificar en un periodo de 48 horas");
+		}
+	}
 }
