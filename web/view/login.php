@@ -18,6 +18,10 @@
     <input type="password" class="form-control" id="exampleInputPassword1" name= "password" placeholder="contraseña" required><br>
    
   </div>
+  <p>
+    <?php if (isset($loginError)){echo $loginError;}; ?>
+    <?php if (isset($loginMessage)){echo $loginMessage;}; ?>
+  </p>
   <div class="d-flex justify-content-around">
   <input type="hidden" name="request" value="login">
   <button type="submit" value="login" class="btn-bd-primary">Login</button>
@@ -32,5 +36,3 @@
 </div>
 </div>
 
-<?php if (isset($loginError)){echo $loginError;}; ?>
-<?php if (isset($loginMessage)){echo $loginMessage;}; ?>
