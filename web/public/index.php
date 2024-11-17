@@ -20,35 +20,40 @@ session_start();
 // Si no hay solicitud vamos a la homepage
 $request = $_REQUEST['request'] ?? 'homepage';
 
-// De acuerdo al parametro request, seleccionamos el controlador adecuado.
-switch($request){
-	case 'registrarse': // Para registrar un viajero
-	case 'login': // Para iniciar sesion
-	case 'intentoRegistro': // Para registrar un viajero
-	case 'actualizarPassword': // Para cambiar la password
-	case 'actualizarViajero': // Para editar el perfil
-	case 'logout': require __DIR__.'/../controller/loginController.php'; break;
-	case 'reservar': // Para reservar
-	case 'editarReserva':  // Para editar la reserva
-	case 'eliminarReserva': // Para eliminar una reserva
-	case 'reserva': require __DIR__.'/../controller/reservaController.php'; break;
-	case 'panelReservas':
-	case 'panelVehiculos':
-	case 'panelDestinos':
-	case 'filtroReservas':
-	case 'filtroTrayectos':
-	case 'eliminarZona':
-	case 'eliminarHotel':
-	case 'eliminarVehiculo':
-	case 'eliminarReservaAdmin':
-	case 'agregarZona':
-	case 'agregarHotel':
-	case 'agregarVehiculo':
-	case 'actualizarZona':
-	case 'actualizarHotel':
-	case 'actualizarVehiculo':
-	case 'actualizarReservaAdmin':
-	case 'mostrarCalendario': require __DIR__.'/../controller/adminController.php'; break;
-	case 'homepage': // Para la pagina principal
-	default: require __DIR__.'/../controller/homeController.php';
+try {
+	// De acuerdo al parametro request, seleccionamos el controlador adecuado.
+	switch($request){
+		case 'registrarse': // Para registrar un viajero
+		case 'login': // Para iniciar sesion
+		case 'intentoRegistro': // Para registrar un viajero
+		case 'actualizarPassword': // Para cambiar la password
+		case 'actualizarViajero': // Para editar el perfil
+		case 'logout': require __DIR__.'/../controller/loginController.php'; break;
+		case 'reservar': // Para reservar
+		case 'editarReserva':  // Para editar la reserva
+		case 'eliminarReserva': // Para eliminar una reserva
+		case 'reserva': require __DIR__.'/../controller/reservaController.php'; break;
+		case 'panelReservas':
+		case 'panelVehiculos':
+		case 'panelDestinos':
+		case 'filtroReservas':
+		case 'filtroTrayectos':
+		case 'eliminarZona':
+		case 'eliminarHotel':
+		case 'eliminarVehiculo':
+		case 'eliminarReservaAdmin':
+		case 'agregarZona':
+		case 'agregarHotel':
+		case 'agregarVehiculo':
+		case 'actualizarZona':
+		case 'actualizarHotel':
+		case 'actualizarVehiculo':
+		case 'actualizarReservaAdmin':
+		case 'mostrarCalendario': require __DIR__.'/../controller/adminController.php'; break;
+		case 'homepage': // Para la pagina principal
+		default: require __DIR__.'/../controller/homeController.php';
+	}
+} catch (PrivateException $e){
+	$error = "Error con la base de datos: ".$e->getMessage();
+	require __DIR__.'/../view/error.php';
 }

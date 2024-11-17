@@ -67,91 +67,147 @@ class Viajero {
 
 //metodo para guardar el viajero en la base de datos 
 	public function save(){
-		$db = new Database();
-		//insertamos o actualizamos el viajero en la base de datos 
-		$db->query("INSERT INTO transfer_viajeros (nombre, apellido1, apellido2, direccion, codigoPostal, ciudad, pais, email, password)
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-			ON DUPLICATE KEY UPDATE
-			nombre = VALUES(nombre),
-			apellido1 = VALUES(apellido1),
-			apellido2 = VALUES(apellido2),
-			direccion = VALUES(direccion),
-			codigoPostal = VALUES(codigoPostal),
-			ciudad = VALUES(ciudad),
-			pais = VALUES(pais),
-			email = VALUES(email),
-			password = VALUES(password);
-		", [$this->nombre, 
-			$this->apellido1, 
-			$this->apellido2, 
-			$this->direccion,
-			$this->codigoPostal,
-			$this->ciudad,
-			$this->pais,
-			$this->email,
-			$this->password,
-		]);
-		//obtenemos el id del viajero insertado o actualizado 
-		$this->id_viajero = $db->getLastId();
+		try {
+			$db = new Database();
+			//insertamos o actualizamos el viajero en la base de datos 
+			$db->query("INSERT INTO transfer_viajeros (nombre, apellido1, apellido2, direccion, codigoPostal, ciudad, pais, email, password)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", 
+				[$this->nombre, 
+				$this->apellido1, 
+				$this->apellido2, 
+				$this->direccion,
+				$this->codigoPostal,
+				$this->ciudad,
+				$this->pais,
+				$this->email,
+				$this->password,
+			]);
+			//obtenemos el id del viajero insertado o actualizado 
+			$this->id_viajero = $db->getLastId();
+		} catch (PDOException $e){
+			throw new PrivateException("no se pudo modificar o agregar un viajero");
+		}
 	}
 
 	//metodo para obtener un viajero por email y contraseña
 	public static function getViajeroWithUsernameAndPassword($username, $password){
-		$db = new Database();
-		//buscamos el viajero en la base de datos 
-		$db->query("SELECT * FROM transfer_viajeros WHERE email = ?", [$username]);
-		// si no hay viajero con ese email lanzamos una excepcion 
-		if ($db->rowCount() < 1){
-			throw new PublicException("Usuario no encontrado");
+		try {
+			$db = new Database();
+			//buscamos el viajero en la base de datos 
+			$db->query("SELECT * FROM transfer_viajeros WHERE email = ?", [$username]);
+			// si no hay viajero con ese email lanzamos una excepcion 
+			if ($db->rowCount() < 1){
+				throw new PublicException("usuario no encontrado");
+			}
+			// obtenemos los datos del viajero 
+			$viajeroData = $db->fetch();
+			// comprobamos la contraseña 
+			if (!password_verify($password, $viajeroData['password'])){
+				throw new PublicException("contraseña incorrecta");
+			}
+			$viajero = new Viajero($viajeroData);
+			$viajero->setCryptedPassword($viajeroData["password"]);
+			return $viajero;
+		} catch (PDOException $e) {
+			throw new PrivateException("error en la base de datos obteniendo viajero");
 		}
-// obtenemos los datos del viajero 
-		$viajeroData = $db->fetch();
-// comprobamos la contraseña 
-		if (!password_verify($password, $viajeroData['password'])){
-			throw new PublicException("Contraseña incorrecta");
-		}
-	
-		$viajero = new Viajero($viajeroData);
-		$viajero->setCryptedPassword($viajeroData["password"]);
-		return $viajero;
 	}
 
     // método: Obtener viajero por ID
     public static function getViajeroById($id_viajero) {
-        $db = new Database();
-        $db->query("SELECT * FROM transfer_viajeros WHERE id_viajero = ?", [$id_viajero]);
-        // si no hay viajero con ese ID lanzamos una excepcion 
-        if ($db->rowCount() < 1) {
-            throw new PublicException("Viajero no encontrado");
-        }
-// obtenemos los datos del viajero 
-        $viajeroData = $db->fetch();
-		$viajero = new Viajero($viajeroData);
-		$viajero->setCryptedPassword($viajeroData["password"]);
-        return $viajero;
+		try {
+			$db = new Database();
+			$db->query("SELECT * FROM transfer_viajeros WHERE id_viajero = ?", [$id_viajero]);
+			// si no hay viajero con ese ID lanzamos una excepcion 
+			if ($db->rowCount() < 1) {
+				throw new PublicException("viajero no encontrado");
+			}
+			// obtenemos los datos del viajero 
+			$viajeroData = $db->fetch();
+			$viajero = new Viajero($viajeroData);
+			$viajero->setCryptedPassword($viajeroData["password"]);
+			return $viajero;
+		}
+		catch (PDOException $e){
+			throw new PrivateException("no se pudo obtener viajero");
+		}
     }
 
     // método: Actualizar información del usuario
     public function updateUsuario() {
-		// actualizamos los datos del viajero en la base de datos
-        $db = new Database();
-        $db->query("UPDATE transfer_viajeros SET nombre = ?, apellido1 = ?, apellido2 = ?, direccion = ?, codigoPostal = ?, ciudad = ?, pais = ?, email = ? WHERE id_viajero = ?", [
-            $this->nombre, 
-            $this->apellido1, 
-            $this->apellido2, 
-            $this->direccion, 
-            $this->codigoPostal, 
-            $this->ciudad, 
-            $this->pais, 
-            $this->email, 
-            $this->id_viajero
-        ]);
+		try {
+			// actualizamos los datos del viajero en la base de datos
+			$db = new Database();
+			$db->query("UPDATE transfer_viajeros SET nombre = ?, apellido1 = ?, apellido2 = ?, direccion = ?, codigoPostal = ?, ciudad = ?, pais = ?, email = ? WHERE id_viajero = ?", [
+				$this->nombre, 
+				$this->apellido1, 
+				$this->apellido2, 
+				$this->direccion, 
+				$this->codigoPostal, 
+				$this->ciudad, 
+				$this->pais, 
+				$this->email, 
+				$this->id_viajero
+			]);
+		} catch (PDOException $e){
+			throw new PrivateException("no se pudo actualizar el viajero");
+		}
     }
 
     // método: Actualizar contraseña del usuario
     public function updatePassword() {
-		// actualizamos la contraseña del viajero en la base de datos
-        $db = new Database();
-        $db->query("UPDATE transfer_viajeros SET password = ? WHERE id_viajero = ?", [$this->password, $this->id_viajero]);
+		try {
+			// actualizamos la contraseña del viajero en la base de datos
+			$db = new Database();
+			$db->query("UPDATE transfer_viajeros SET password = ? WHERE id_viajero = ?", [$this->password, $this->id_viajero]);
+		} catch (PDOException $e) {
+			throw new PrivateException("no se pudo actualizar la contraseña");
+		}
     }
+
+	public function validate() {
+		if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            throw new PublicException("El email no es válido");
+        }
+		if (strlen($this->nombre ?? '') < 2 || !preg_match("/^[a-zA-Z\s]+$/", $this->nombre)) {
+			throw new PublicException("El nombre debe tener más de 2 caracteres y contener solo letras");
+		}
+		if (strlen($this->apellido1 ?? '') < 2 || !preg_match("/^[a-zA-Z\s]+$/", $this->apellido1)) {
+			throw new PublicException("El primer apellido debe tener más de 2 caracteres y contener solo letras");
+		}
+		if (strlen($this->apellido2 ?? '') < 2 || !preg_match("/^[a-zA-Z\s]+$/", $this->apellido2)) {
+			throw new PublicException("El segundo apellido debe tener más de 2 caracteres y contener solo letras");
+		}
+		if (strlen($this->direccion ?? '') < 5 || !preg_match("/^[a-zA-Z0-9\s]+$/", $this->direccion)) {
+			throw new PublicException("La dirección debe tener más de 5 caracteres y contener solo letras, números y espacios");
+		}
+		if (strlen($this->codigoPostal ?? '') < 3 || !preg_match("/^[a-zA-Z0-9\s]+$/", $this->codigoPostal)) {
+			throw new PublicException("El codigo postal debe tener más de 3 caracteres y contener solo letras, números y espacios");
+		}
+		if (strlen($this->ciudad ?? '') < 2 || !preg_match("/^[a-zA-Z\s]+$/", $this->ciudad)) {
+			throw new PublicException("La ciudad debe tener más de 2 caracteres y contener solo letras");
+		}
+		if (strlen($this->pais ?? '') < 2 || !preg_match("/^[a-zA-Z\s]+$/", $this->pais)) {
+			throw new PublicException("El pais debe tener más de 2 caracteres y contener solo letras o espacios");
+		}
+	}
+
+	public function validateExistingEmail() {
+		try {
+			$db = new Database();
+			$db->query("SELECT email FROM transfer_viajeros WHERE email = ?", [$email]);
+			if ($db->rowCount() > 0){
+				throw new PublicException("Email ya utilizado");
+			}
+		}
+		catch (PDOException $e){
+			throw new PrivateException("no se pudo confirmar la existencia del email");
+		}
+	}
+
+	public static function validatePassword($password){
+		if (strlen($password ?? '') < 8) {
+			throw new PublicException("La contraseña debe tener al menos 8 caracteres");
+		}
+	}
 }

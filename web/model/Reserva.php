@@ -94,226 +94,280 @@ class Reserva {
 
 
 	public function save(){
-		$db = new Database();
-		$db->query("INSERT INTO transfer_reservas 
-		(id_reserva,
-		localizador, 
-		id_hotel, 
-		id_viajero, 
-		id_tipo_reserva, 
-		email_cliente, 
-		id_destino, 
-		fecha_entrada, 
-		hora_entrada, 
-		numero_vuelo_entrada, 
-		origen_vuelo_entrada, 
-		hora_recogida, 
-		numero_vuelo_salida, 
-		hora_vuelo_salida, 
-		fecha_vuelo_salida, 
-		num_viajeros, 
-		id_vehiculo)
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-			ON DUPLICATE KEY UPDATE
-			localizador = VALUES(localizador),
-			id_hotel = VALUES(id_hotel),
-			id_viajero = VALUES(id_viajero),
-			id_tipo_reserva = VALUES(id_tipo_reserva),
-			email_cliente = VALUES(email_cliente),
-			id_destino = VALUES(id_destino),
-			fecha_entrada = VALUES(fecha_entrada),
-			hora_entrada = VALUES(hora_entrada),
-			numero_vuelo_entrada = VALUES(numero_vuelo_entrada),
-			origen_vuelo_entrada = VALUES(origen_vuelo_entrada),
-			hora_recogida = VALUES(hora_recogida),
-			numero_vuelo_salida = VALUES(numero_vuelo_salida),
-			hora_vuelo_salida = VALUES(hora_vuelo_salida),
-			fecha_vuelo_salida = VALUES(fecha_vuelo_salida),
-			num_viajeros = VALUES(num_viajeros),
-			id_vehiculo = VALUES(id_vehiculo),
-			fecha_modificacion = NOW();
-		", [$this->id_reserva,
-			$this->localizador, 
-			$this->id_hotel, 
-			$this->id_viajero,
-			$this->id_tipo_reserva, 
-			$this->email_cliente,
-			$this->id_destino,
-			$this->fecha_entrada,
-			$this->hora_entrada,
-			$this->numero_vuelo_entrada,
-			$this->origen_vuelo_entrada,
-			$this->hora_recogida,
-			$this->numero_vuelo_salida,
-			$this->hora_vuelo_salida,
-			$this->fecha_vuelo_salida,
-			$this->num_viajeros,
-			$this->id_vehiculo,
-		]);
-		$this->id_reserva = $db->getLastId();
-		$this->fecha_modificacion = date('Y-m-d');
+		try {
+			$db = new Database();
+			$db->query("INSERT INTO transfer_reservas 
+			(id_reserva,
+			localizador, 
+			id_hotel, 
+			id_viajero, 
+			id_tipo_reserva, 
+			email_cliente, 
+			id_destino, 
+			fecha_entrada, 
+			hora_entrada, 
+			numero_vuelo_entrada, 
+			origen_vuelo_entrada, 
+			hora_recogida, 
+			numero_vuelo_salida, 
+			hora_vuelo_salida, 
+			fecha_vuelo_salida, 
+			num_viajeros, 
+			id_vehiculo)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+				ON DUPLICATE KEY UPDATE
+				localizador = VALUES(localizador),
+				id_hotel = VALUES(id_hotel),
+				id_viajero = VALUES(id_viajero),
+				id_tipo_reserva = VALUES(id_tipo_reserva),
+				email_cliente = VALUES(email_cliente),
+				id_destino = VALUES(id_destino),
+				fecha_entrada = VALUES(fecha_entrada),
+				hora_entrada = VALUES(hora_entrada),
+				numero_vuelo_entrada = VALUES(numero_vuelo_entrada),
+				origen_vuelo_entrada = VALUES(origen_vuelo_entrada),
+				hora_recogida = VALUES(hora_recogida),
+				numero_vuelo_salida = VALUES(numero_vuelo_salida),
+				hora_vuelo_salida = VALUES(hora_vuelo_salida),
+				fecha_vuelo_salida = VALUES(fecha_vuelo_salida),
+				num_viajeros = VALUES(num_viajeros),
+				id_vehiculo = VALUES(id_vehiculo),
+				fecha_modificacion = NOW();
+			", [$this->id_reserva,
+				$this->localizador, 
+				$this->id_hotel, 
+				$this->id_viajero,
+				$this->id_tipo_reserva, 
+				$this->email_cliente,
+				$this->id_destino,
+				$this->fecha_entrada,
+				$this->hora_entrada,
+				$this->numero_vuelo_entrada,
+				$this->origen_vuelo_entrada,
+				$this->hora_recogida,
+				$this->numero_vuelo_salida,
+				$this->hora_vuelo_salida,
+				$this->fecha_vuelo_salida,
+				$this->num_viajeros,
+				$this->id_vehiculo,
+			]);
+			$this->id_reserva = $db->getLastId();
+			$this->fecha_modificacion = date('Y-m-d');
+		} catch (PDOException $e){
+			throw new PrivateException("no se pudo modificar o agregar una reserva");
+		}
 	}
 
 	public static function getReservas(){
-		$db = new Database();
-		$db->query("SELECT * FROM transfer_reservas");
-
-		$reservaData = $db->fetchAll();
-		$reservas = [];
-		foreach ($reservaData as $reserva){
-			$reservas[] = new Reserva($reserva);
+		try {
+			$db = new Database();
+			$db->query("SELECT * FROM transfer_reservas");
+	
+			$reservaData = $db->fetchAll();
+			$reservas = [];
+			foreach ($reservaData as $reserva){
+				$reservas[] = new Reserva($reserva);
+			}
+			return $reservas;
+		} catch (PDOException $e){
+			throw new PrivateException("no se pudo obtener reservas");
 		}
-		return $reservas;
 	}
 
 
 	public static function getReservasEmail($email){
-		$db = new Database();
-		$db->query("SELECT * FROM transfer_reservas WHERE email_cliente = ?", [$email]);
-
-		$reservaData = $db->fetchAll();
-		$reservas = [];
-		foreach ($reservaData as $reserva){
-			$reservas[] = new Reserva($reserva);
+		try {
+			$db = new Database();
+			$db->query("SELECT * FROM transfer_reservas WHERE email_cliente = ?", [$email]);
+	
+			$reservaData = $db->fetchAll();
+			$reservas = [];
+			foreach ($reservaData as $reserva){
+				$reservas[] = new Reserva($reserva);
+			}
+			return $reservas;
+		} catch (PDOException $e){
+			throw new PrivateException("no se pudo obtener reservas");
 		}
-		return $reservas;
 	}
 
 	public static function getByCreationWeek($year, $week){
-		$db = new Database();
-        $db->query("SELECT *
-					FROM transfer_reservas
-					WHERE YEAR(fecha_reserva) = ?
-  					AND WEEK(fecha_reserva, 1) = ?
-					ORDER BY fecha_reserva ASC;", [$year, $week]
-		);
-
-		$reservaData = $db->fetchAll();
-		$reservas = [];
-		foreach ($reservaData as $reserva){
-			$reservas[] = new Reserva($reserva);
+		try {
+			$db = new Database();
+			$db->query("SELECT *
+						FROM transfer_reservas
+						WHERE YEAR(fecha_reserva) = ?
+						  AND WEEK(fecha_reserva, 1) = ?
+						ORDER BY fecha_reserva ASC;", [$year, $week]
+			);
+	
+			$reservaData = $db->fetchAll();
+			$reservas = [];
+			foreach ($reservaData as $reserva){
+				$reservas[] = new Reserva($reserva);
+			}
+			return $reservas;
+		} catch (PDOException $e){
+			throw new PrivateException("no se pudo filtrar reservas");
 		}
-		return $reservas;
+
+
 	}
 
 	public static function getByCreationMonth($year, $month){
-		$db = new Database();
-        $db->query("SELECT *
-					FROM transfer_reservas
-					WHERE YEAR(fecha_reserva) = ?
-  					AND MONTH(fecha_reserva) = ?
-					ORDER BY fecha_reserva ASC;", [$year, $month]
-		);
-
-		$reservaData = $db->fetchAll();
-		$reservas = [];
-		foreach ($reservaData as $reserva){
-			$reservas[] = new Reserva($reserva);
+		try {
+			$db = new Database();
+			$db->query("SELECT *
+						FROM transfer_reservas
+						WHERE YEAR(fecha_reserva) = ?
+						  AND MONTH(fecha_reserva) = ?
+						ORDER BY fecha_reserva ASC;", [$year, $month]
+			);
+	
+			$reservaData = $db->fetchAll();
+			$reservas = [];
+			foreach ($reservaData as $reserva){
+				$reservas[] = new Reserva($reserva);
+			}
+			return $reservas;
+		} catch (PDOException $e){
+			throw new PrivateException("no se pudo filtrar reservas");
 		}
-		return $reservas;
+
+
 	}
 
 	public static function getByCreationDate($date){
-		$db = new Database();
-        $db->query("SELECT *
-					FROM transfer_reservas
-					WHERE DATE(fecha_reserva) = ?
-					ORDER BY fecha_reserva ASC;", [$date]
-		);
-
-		$reservaData = $db->fetchAll();
-		$reservas = [];
-		foreach ($reservaData as $reserva){
-			$reservas[] = new Reserva($reserva);
+		try {
+			$db = new Database();
+			$db->query("SELECT *
+						FROM transfer_reservas
+						WHERE DATE(fecha_reserva) = ?
+						ORDER BY fecha_reserva ASC;", [$date]
+			);
+	
+			$reservaData = $db->fetchAll();
+			$reservas = [];
+			foreach ($reservaData as $reserva){
+				$reservas[] = new Reserva($reserva);
+			}
+			return $reservas;
+		} catch (PDOException $e){
+			throw new PrivateException("no se pudo filtrar reservas");
 		}
-		return $reservas;
+
+
 	}
 
 	public static function getByTrayectoWeek($year, $week){
-		$db = new Database();
-        $db->query("SELECT *
-					FROM transfer_reservas
-					WHERE YEAR(fecha_entrada) = ? AND WEEK(fecha_entrada, 1) = ?
-					OR  YEAR(fecha_vuelo_salida) = ? AND WEEK(fecha_vuelo_salida, 1) = ?
-					;", [$year, $week, $year, $week]
-		);
-
-		$reservaData = $db->fetchAll();	
-		$reservas = [];
-		foreach ($reservaData as $reserva){
-			$reservas[] = new Reserva($reserva);
+		try {
+			$db = new Database();
+			$db->query("SELECT *
+						FROM transfer_reservas
+						WHERE YEAR(fecha_entrada) = ? AND WEEK(fecha_entrada, 1) = ?
+						OR  YEAR(fecha_vuelo_salida) = ? AND WEEK(fecha_vuelo_salida, 1) = ?
+						;", [$year, $week, $year, $week]
+			);
+	
+			$reservaData = $db->fetchAll();	
+			$reservas = [];
+			foreach ($reservaData as $reserva){
+				$reservas[] = new Reserva($reserva);
+			}
+			return $reservas;
+		} catch (PDOException $e){
+			throw new PrivateException("no se pudo filtrar reservas");
 		}
-		return $reservas;
 	}
 
 	public static function getByTrayectoMonth($year, $month){
-		$db = new Database();
-        $db->query("SELECT *
-					FROM transfer_reservas
-					WHERE YEAR(fecha_entrada) = ? AND MONTH(fecha_entrada) = ?
-					OR  YEAR(fecha_vuelo_salida) = ? AND MONTH(fecha_vuelo_salida) = ?
-					;", [$year, $month, $year, $month]
-		);
-
-		$reservaData = $db->fetchAll();
-		$reservas = [];
-		foreach ($reservaData as $reserva){
-			$reservas[] = new Reserva($reserva);
+		try {
+			$db = new Database();
+			$db->query("SELECT *
+						FROM transfer_reservas
+						WHERE YEAR(fecha_entrada) = ? AND MONTH(fecha_entrada) = ?
+						OR  YEAR(fecha_vuelo_salida) = ? AND MONTH(fecha_vuelo_salida) = ?
+						;", [$year, $month, $year, $month]
+			);
+	
+			$reservaData = $db->fetchAll();
+			$reservas = [];
+			foreach ($reservaData as $reserva){
+				$reservas[] = new Reserva($reserva);
+			}
+			return $reservas;
+		} catch (PDOException $e){
+			throw new PrivateException("no se pudo filtrar reservas");
 		}
-		return $reservas;
 	}
 
 	public static function getByTrayectoDate($date){
-		$db = new Database();
-        $db->query("SELECT *
-					FROM transfer_reservas
-					WHERE DATE(fecha_entrada) = ? OR DATE(fecha_vuelo_salida) = ?;", [$date, $date]
-		);
-
-		$reservaData = $db->fetchAll();
-		$reservas = [];
-		foreach ($reservaData as $reserva){
-			$reservas[] = new Reserva($reserva);
+		try {
+			$db = new Database();
+			$db->query("SELECT *
+						FROM transfer_reservas
+						WHERE DATE(fecha_entrada) = ? OR DATE(fecha_vuelo_salida) = ?;", [$date, $date]
+			);
+	
+			$reservaData = $db->fetchAll();
+			$reservas = [];
+			foreach ($reservaData as $reserva){
+				$reservas[] = new Reserva($reserva);
+			}
+			return $reservas;
+		} catch (PDOException $e){
+			throw new PrivateException("no se pudo filtrar reservas");
 		}
-		return $reservas;
 	}
 
 	// Busca una reserva por su ID
     public static function getReservaById($id_reserva) {
-        $db = new Database();
-        $db->query("SELECT * FROM transfer_reservas WHERE id_reserva = ?", [$id_reserva]);
-        
-        if ($db->rowCount() < 1) {
-            throw new PublicException("Reserva no encontrada");
-        }
-		// obtiene los datos de la reserva
-        $data = $db->fetch();
-        return new Reserva($data); // crea una nueva instancia de Reserva
+		try {
+			$db = new Database();
+			$db->query("SELECT * FROM transfer_reservas WHERE id_reserva = ?", [$id_reserva]);
+			
+			if ($db->rowCount() < 1) {
+				throw new PublicException("Reserva no encontrada");
+			}
+			// obtiene los datos de la reserva
+			$data = $db->fetch();
+			return new Reserva($data); // crea una nueva instancia de Reserva
+		} catch (PDOException $e){
+			throw new PrivateException("no se puedo obtener reserva");
+		}
     }
 
 	// Actualiza los datos de la reserva en la base de datos 
     public function update() {
-        $db = new Database();
+		try {
+			$db = new Database();
 
-		// actualizamos los datos de la reserva en la base de datos 
-        $db->query("UPDATE transfer_reservas SET id_tipo_reserva = ?, email_cliente = ?, id_destino = ?, fecha_entrada = ?, hora_entrada = ?, numero_vuelo_entrada = ?, origen_vuelo_entrada = ?, fecha_vuelo_salida = ?, hora_vuelo_salida = ?, num_viajeros = ?, id_vehiculo = ? WHERE id_reserva = ?", [
-            $this->id_tipo_reserva,
-            $this->email_cliente,
-            $this->id_destino,
-            $this->fecha_entrada,
-            $this->hora_entrada,
-            $this->numero_vuelo_entrada,
-            $this->origen_vuelo_entrada,
-            $this->fecha_vuelo_salida,
-            $this->hora_vuelo_salida,
-            $this->num_viajeros,
-            $this->id_vehiculo,
-            $this->id_reserva
-        ]);
+			// actualizamos los datos de la reserva en la base de datos 
+			$db->query("UPDATE transfer_reservas SET id_tipo_reserva = ?, email_cliente = ?, id_destino = ?, fecha_entrada = ?, hora_entrada = ?, numero_vuelo_entrada = ?, origen_vuelo_entrada = ?, fecha_vuelo_salida = ?, hora_vuelo_salida = ?, num_viajeros = ?, id_vehiculo = ? WHERE id_reserva = ?", [
+				$this->id_tipo_reserva,
+				$this->email_cliente,
+				$this->id_destino,
+				$this->fecha_entrada,
+				$this->hora_entrada,
+				$this->numero_vuelo_entrada,
+				$this->origen_vuelo_entrada,
+				$this->fecha_vuelo_salida,
+				$this->hora_vuelo_salida,
+				$this->num_viajeros,
+				$this->id_vehiculo,
+				$this->id_reserva
+			]);
+		} catch (PDOException $e){
+			throw new PrivateException("no se pudo actualizar reserva");
+		}
     }
 
 	public static function DeleteById($id_reserva){
-		$db = new Database();
-		$db->query("DELETE FROM transfer_reservas WHERE id_reserva = ?", [$id_reserva]);
+		try {
+			$db = new Database();
+			$db->query("DELETE FROM transfer_reservas WHERE id_reserva = ?", [$id_reserva]);
+		} catch (PDOException $e){
+			throw new PrivateException("no se pudo borrar reserva");
+		}
 	}
 }

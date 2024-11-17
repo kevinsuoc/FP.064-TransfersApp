@@ -14,7 +14,7 @@
 	<input type="text" name="direccionViajero" id="direccionViajero" required><br>
 
 	<label for="codigoPostal">Codigo postal</label>
-	<input type="number" name="codigoPostal" id="codigoPostal" required><br>
+	<input type="text" name="codigoPostal" id="codigoPostal" required><br>
 
 	<label for="ciudadViajero">Ciudad</label>
 	<input type="text" name="ciudadViajero" id="ciudadViajero" required><br>

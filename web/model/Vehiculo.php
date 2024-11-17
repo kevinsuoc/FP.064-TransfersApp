@@ -28,45 +28,61 @@ class Vehiculo {
 	public function getPassword(){return $this->password;}
 
 	public function save(){
-		$db = new Database();
-		$db->query("INSERT INTO transfer_vehiculo (id_vehiculo, Descripción, email_conductor, password)
-			VALUES (?, ?, ?, ?)
-			ON DUPLICATE KEY UPDATE
-			Descripción = VALUES(Descripción),
-			email_conductor = VALUES(email_conductor),
-			password = VALUES(password);
-		", [$this->id_vehiculo,
-			$this->descripcion,
-			$this->email_conductor,
-			$this->password,
-		]);
-		$this->id_vehiculo = $db->getLastId();
+		try {
+			$db = new Database();
+			$db->query("INSERT INTO transfer_vehiculo (id_vehiculo, Descripción, email_conductor, password)
+				VALUES (?, ?, ?, ?)
+				ON DUPLICATE KEY UPDATE
+				Descripción = VALUES(Descripción),
+				email_conductor = VALUES(email_conductor),
+				password = VALUES(password);
+			", [$this->id_vehiculo,
+				$this->descripcion,
+				$this->email_conductor,
+				$this->password,
+			]);
+			$this->id_vehiculo = $db->getLastId();
+		} catch (PDOException $e){
+			throw new PrivateException("no se pudo modificar o agregar un vehiculo");
+		}
 	}
 
 	public static function getVehiculoById($id_vehiculo){
-		$db = new Database();
-		$db->query("SELECT * FROM transfer_vehiculo WHERE id_vehiculo = ?", [$id_vehiculo]);
-		
-		if ($db->rowCount() < 1){
-			throw new PublicException("Vehiculo no encontrado");
+		try {
+			$db = new Database();
+			$db->query("SELECT * FROM transfer_vehiculo WHERE id_vehiculo = ?", [$id_vehiculo]);
+			
+			if ($db->rowCount() < 1){
+				throw new PublicException("Vehiculo no encontrado");
+			}
+			return new Vehiculo($db->fetch());
+		} catch (PDOException $e) {
+			throw new PrivateException("no se pudo obtener vehiculo");
 		}
-		return new Vehiculo($db->fetch());
 	}
 
 	public static function getVehiculos(){
-		$db = new Database();
-		$db->query("SELECT * FROM transfer_vehiculo");
-
-		$vehiculoData = $db->fetchAll();
-		$vehiculos = [];
-		foreach ($vehiculoData as $vehiculo){
-			$vehiculos[] = new Vehiculo($vehiculo);
+		try {
+			$db = new Database();
+			$db->query("SELECT * FROM transfer_vehiculo");
+	
+			$vehiculoData = $db->fetchAll();
+			$vehiculos = [];
+			foreach ($vehiculoData as $vehiculo){
+				$vehiculos[] = new Vehiculo($vehiculo);
+			}
+			return $vehiculos;
+		} catch (PDOException $e) {
+			throw new PrivateException("no se pudo obtener vehiculos");
 		}
-		return $vehiculos;
 	}
 
 	public static function deleteById($id_vehiculo){
-		$db = new Database();
-		$db->query("DELETE FROM transfer_vehiculo WHERE id_vehiculo = ?", [$id_vehiculo]);
+		try {
+			$db = new Database();
+			$db->query("DELETE FROM transfer_vehiculo WHERE id_vehiculo = ?", [$id_vehiculo]);
+		} catch (PDOException $e) {
+			throw new PrivateException("no se pudo eliminar vehiculo");
+		}
 	}
 }

@@ -48,21 +48,26 @@ class Hotel {
 		una clave (usuario) repetidos.
 	*/
 	public function save(){
-		$db = new Database();
-		$db->query("INSERT INTO transfer_hotel (id_hotel, id_zona, comision, usuario, password)
-			VALUES (?, ?, ?, ?, ?)
-			ON DUPLICATE KEY UPDATE
-			id_zona = VALUES(id_zona),
-			comision = VALUES(comision),
-			usuario = VALUES(usuario),
-			password = VALUES(password)
-		", [$this->id_hotel,
-			$this->id_zona, 
-			$this->comision,
-			$this->usuario,
-			$this->password,
-		]);
-		$this->id_hotel = $db->getLastId();
+		try {
+			$db = new Database();
+			$db->query("INSERT INTO transfer_hotel (id_hotel, id_zona, comision, usuario, password)
+				VALUES (?, ?, ?, ?, ?)
+				ON DUPLICATE KEY UPDATE
+				id_zona = VALUES(id_zona),
+				comision = VALUES(comision),
+				usuario = VALUES(usuario),
+				password = VALUES(password)
+			", [$this->id_hotel,
+				$this->id_zona, 
+				$this->comision,
+				$this->usuario,
+				$this->password,
+			]);
+			$this->id_hotel = $db->getLastId();
+		} catch (PDOException $e){
+			throw new PublicException("no se pudo modificar o agregar un hotel");
+		}
+
 	}
 
 
@@ -70,33 +75,46 @@ class Hotel {
 		Busca un hotel por el ID, devuelve una instancia Hotel
 	 */
 	public static function getHotelById($id_hotel){
-		$db = new Database();
-		$db->query("SELECT * FROM transfer_hotel WHERE id_hotel = ?", [$id_hotel]);
-		
-		if ($db->rowCount() != 1){
-			throw new PublicException("Hotel no encontrado");
+		try {
+			$db = new Database();
+			$db->query("SELECT * FROM transfer_hotel WHERE id_hotel = ?", [$id_hotel]);
+			
+			if ($db->rowCount() != 1){
+				throw new PublicException("Hotel no encontrado");
+			}
+			return new Hotel($db->fetch());
+		} catch (PDOException $e){
+			throw new PublicException("no se pudo obtener hotel");
 		}
-		return new Hotel($db->fetch());
+
 	}
 
 	/*
 		Busca todos los hoteles. Devuelve un array de instancias de Hotel
 	*/
 	public static function getHotels(){
-		$db = new Database();
-		$db->query("SELECT * FROM transfer_hotel");
-
-		$hotelData = $db->fetchAll();
-		$hotels = [];
-		foreach ($hotelData as $hotel){
-			$hotels[] = new Hotel($hotel);
+		try {
+			$db = new Database();
+			$db->query("SELECT * FROM transfer_hotel");
+	
+			$hotelData = $db->fetchAll();
+			$hotels = [];
+			foreach ($hotelData as $hotel){
+				$hotels[] = new Hotel($hotel);
+			}
+			return $hotels;
+		} catch (PDOException $e){
+			throw new PublicException("no se pudo obtener hoteles");
 		}
-		return $hotels;
 	}
 
 	public static function deleteById($id_hotel){
-		$db = new Database();
-		$db->query("DELETE FROM transfer_hotel WHERE id_hotel = ?", [$id_hotel]);
+		try {
+			$db = new Database();
+			$db->query("DELETE FROM transfer_hotel WHERE id_hotel = ?", [$id_hotel]);
+		} catch (PDOException $e){
+			throw new PublicException("no se pudo obtener hotel");
+		}
 	}
 	
 }

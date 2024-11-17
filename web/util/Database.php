@@ -1,8 +1,7 @@
 <?php
 
 require_once __DIR__.'/PublicException.php';
-
-class DatabaseException extends PublicException {};
+require_once __DIR__.'/PrivateException.php';
 
 class Database {
 	private $host;
@@ -26,7 +25,7 @@ class Database {
 		try {
 			$this->pdo = new PDO($dir, $this->user, $this->pass);
 		} catch (PDOException $e){
-			throw new DatabaseException($e->getMessage());
+			throw new PrivateException("Error estableciendo conexion con la base de datos");
 		}
 	}
 

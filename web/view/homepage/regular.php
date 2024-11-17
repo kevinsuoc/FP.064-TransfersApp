@@ -19,7 +19,7 @@ Regular !
 	<button type="submit">Perfil</button>
 </form>
 
-<p><?php if (isset($mensajeReservaEliminada)) {echo $mensajeReservaEliminada	;} ?></p>
+<p><?php if (isset($mensajeReservaEliminada)) {echo $mensajeReservaEliminada;} ?></p>
 
 <!-- Ventaja de perfil (Temporal) -->
 <div style="border: 1px solid blue;">

@@ -45,6 +45,9 @@ class LoginController {
 		
 		try {
 			$viajero = new Viajero($data);
+			Viajero::validatePassword($data['password']);
+			$viajero->validate();
+			$viajero->validateExistingEmail();
 			$viajero->save();
 			$this->mostrarFormularioLogin("Usuario registrado correctamente");
 		} catch (PublicException $e){
@@ -70,13 +73,13 @@ class LoginController {
 	}
 
 	public function actualizarViajero(){
-		
 		try {
 			$viajero = new Viajero($_POST);
+			$viajero->validate();
 			$viajero->updateUsuario();
 			$_SESSION['userSession']->setViajero($viajero);
 			$_SESSION["mensajeActualizarViajero"] = "Perfil actualizado";
-		} catch (Exception $e){
+		} catch (PublicException $e){
 			$_SESSION["mensajeActualizarViajero"] = "Error: ".$e->getMessage();
 		}
 		header("location: /"); exit();
@@ -84,13 +87,16 @@ class LoginController {
 
 	public function actualizarPassword(){
 		$viajero =  $_SESSION['userSession']->getViajero();
-		if (password_verify($_POST['oldPassword'], $viajero->getPassword())){
+		try {
+			if (!password_verify($_POST['oldPassword'], $viajero->getPassword()))
+				throw new PublicException("Contraseña incorrecta");
+			Viajero::validatePassword($_POST['newPassword']);
 			$viajero->setPassword($_POST['newPassword']);
 			$viajero->updatePassword();
 			$_SESSION['userSession']->setViajero($viajero);
 			$_SESSION["mensajeActualizarPassword"] = "Contraseña actualizada";
-		} else {
-			$_SESSION["mensajeActualizarPassword"] = "Contraseña incorrecta";
+		} catch (PublicException $e) {
+			$_SESSION["mensajeActualizarPassword"] = "$e->getMessage()";
 		}
 		header("location: /"); exit();
 	}
