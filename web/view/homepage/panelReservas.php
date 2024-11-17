@@ -1,5 +1,3 @@
-<a href="/">Volver</a>
-
 <div>
 	<?php
 	if (isset($_SESSION['respuestaAdmin'])){
