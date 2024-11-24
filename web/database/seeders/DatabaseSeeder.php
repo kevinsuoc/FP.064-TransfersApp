@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        DB::table('p3_transfer_tipo_reserva')->insert([
+            ['descripcion' => 'aeropuerto-hotel'],
+            ['descripcion' => 'hotel-aeropuerto'],
+            ['descripcion' => 'ida-y-vuelta'],
         ]);
     }
 }

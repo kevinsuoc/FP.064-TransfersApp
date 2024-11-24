@@ -9,21 +9,17 @@ services:
      - 8000:8000
   database:
     image: mysql:8.0.39
-    container_name: mysql
+    container_name: mysql-laravel
     restart: always
     env_file:
       .env
     volumes:
       - ./database:/var/lib/mysql/
-    networks:
-      - proyectnet
   phpmyadmin:
     image: phpmyadmin:5.2.1
-    container_name: phpmyadmin
+    container_name: phpmyadmin-laravel
     restart: always
     ports:
       - 8080:80
-    networks:
-      - proyectnet
     env_file:
       .env
