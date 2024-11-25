@@ -36,9 +36,17 @@ return [
     */
 
     'guards' => [
-        'web' => [
+        'regular' =>[
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'regular',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admin',
+        ],
+        'corporate'=>[
+            'driver' => 'session',
+            'provider' => 'corporate',
         ],
     ],
 
@@ -60,9 +68,17 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'regular' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Viajero::class,
+        ],
+        'admin' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'corporate' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Hotel::class,
         ],
 
         // 'users' => [
