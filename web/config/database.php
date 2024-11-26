@@ -106,7 +106,7 @@ return [
     |
     */
 
-    'migrations' => 'migrations',
+    'migrations' => 'p3_transfer_migrations',
 
     /*
     |--------------------------------------------------------------------------

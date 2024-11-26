@@ -11,5 +11,4 @@ class Vehiculo extends Model
     protected $table = 'p3_transfer_vehiculo';
     protected $primaryKey = 'id_vehiculo';
     public $timestamps = false;
-
 }
