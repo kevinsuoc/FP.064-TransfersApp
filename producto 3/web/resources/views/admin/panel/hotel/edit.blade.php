@@ -17,14 +17,14 @@
             </select>
 
             <label for="comision">Comision</label>
-            <input value="{{$hotel->descripcion}}" type="number" name="comision" id="comision" required>
-            @error('descripcion', 'comision')
+            <input value="{{$hotel->comision}}" type="number" name="comision" id="comision" required>
+            @error('comision', 'valodacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label for="usuario">Usuario</label>
             <input value="{{$hotel->usuario}}" type="text" name="usuario" id="usuario" required>
-            @error('descripcion', 'usuario')
+            @error('usuario', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 

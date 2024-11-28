@@ -17,9 +17,7 @@ class HomeController extends Controller
     }
 
     public function admin(){
-        $tiposReserva = TipoReserva::all();
-
-        return  view ('homepage.admin', ['tiposReserva' => $tiposReserva]);
+        return  view ('homepage.admin');
     }
 
 }

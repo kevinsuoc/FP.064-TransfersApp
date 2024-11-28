@@ -36,7 +36,8 @@ class HotelController extends Controller
     public function edit(string $id)
     {
         $zonas = Zona::all();
-        return view('admin.panel.hotel.edit', ['zonas' => $zonas]);
+        $hotel = Hotel::find($id);
+        return view('admin.panel.hotel.edit', ['hotel' => $hotel, 'zonas' => $zonas]);
     }
 
 
@@ -63,6 +64,7 @@ class HotelController extends Controller
     }
 
     private function setData(Request $request, Hotel $hotel){
+        $hotel->id_zona = $request->id_zona;
         $hotel->comision = $request->comision;
         $hotel->usuario = $request->usuario;
         if ($request->filled('password')){

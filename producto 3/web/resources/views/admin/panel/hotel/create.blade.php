@@ -18,19 +18,19 @@
 
             <label for="comision">Comision</label>
             <input value="{{ old('comision') }}" type="number" name="comision" id="comision" required>
-            @error('descripcion', 'comision')
+            @error('comision', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label for="usuario">Usuario</label>
             <input value="{{ old('usuario') }}" type="text" name="usuario" id="usuario" required>
-            @error('descripcion', 'usuario')
+            @error('usuario', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label for="password">Contraseña</label>
             <input type="password" name="password" id="password">
-            @error('descripcion', 'password')
+            @error('password', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 

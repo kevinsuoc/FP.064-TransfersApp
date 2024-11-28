@@ -31,7 +31,7 @@ Route::middleware(['appAuth:guest'])->group(function () {
 
     Route::post( "/authenticateLogin", [LoginController::class, 'authenticate'])->name('authenticateLogin');
 
-    Route::get( "/registrarse", [RegistroController::class, 'registrarse'])->name('registrarse');
+    Route::get( "/registrarse",  [RegistroController::class, 'registrarse'])->name('registrarse');
 
     Route::post( "/registrarRegular",  [RegistroController::class, 'registrarRegular'])->name('registrarRegular');
 });

@@ -11,7 +11,7 @@ class ZonaController extends Controller
     public function index()
     {
         $zonas = Zona::all();
-        return view('admin.panel.zona.index', ['zonas' => $zonas]);
+        return view('admin.panel.zona.index', data: ['zonas' => $zonas]);
     }
 
     // Muestra el formulario de creación
