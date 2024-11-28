@@ -15,6 +15,9 @@
             <option value="{{$zona->id_zona}}" @if($zona->id_zona == $hotel->zona->id_zona) selected @endif>{{$zona->descripcion}}</option>
             @endforeach
             </select>
+            @error('id_zona', 'validacion')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
 
             <label for="comision">Comision</label>
             <input value="{{$hotel->comision}}" type="number" name="comision" id="comision" required>

@@ -27,4 +27,12 @@ class Precio extends Model
                     ->where('id_vehiculo', $vehiculo)
                     ->exists();
     }
+    
+    public static function isUniqueAndDifferent($hotel, $vehiculo, $precio)
+    {
+        return !self::where('id_hotel', $hotel)
+                    ->where('id_vehiculo', $vehiculo)
+                    ->where('id_precio', '!=', $precio)
+                    ->exists();
+    }
 }

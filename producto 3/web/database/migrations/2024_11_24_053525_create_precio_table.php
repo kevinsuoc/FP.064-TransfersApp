@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_precio');
             $table->unsignedBigInteger('id_vehiculo');
             $table->unsignedBigInteger('id_hotel');
-            $table->bigInteger('precio');
+            $table->decimal('precio');
 
             $table->foreign('id_vehiculo')->references('id_vehiculo')->on('p3_transfer_vehiculo');
             $table->foreign('id_hotel')->references( 'id_hotel')->on('p3_transfer_hotel');

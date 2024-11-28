@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Hotel;
 use App\Models\Precio;
 use App\Models\Vehiculo;
-use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
+
+// Todo: Los precios se agregan como enteros
 
 // Mas detalles acerca de cada método se encuentran en la clase Zona (Son análogos) y documentación.
 // https://laravel.com/docs/10.x/controllers#restful-partial-resource-routes
@@ -29,6 +29,9 @@ class PrecioController extends Controller
     public function store(Request $request)
     {
         $this->validar($request);
+        if (!Precio::isUnique($request->id_hotel, $request->id_vehiculo)){
+            return redirect()->back()->withErrors(['precio_unico' => 'El hotel y vehículo ya tienen precio.'], 'validacion');
+        }
         $this->setData($request, new Precio());
         return redirect()->route('precio.index')->with('success', 'Precio creado');
     }
@@ -44,24 +47,25 @@ class PrecioController extends Controller
     public function update(Request $request, string $id)
     {
         $this->validar($request);
-        $this->setData($request, Precio::find($id)); 
+        if (!Precio::isUniqueAndDifferent($request->id_hotel, $request->id_vehiculo, $id)){
+            return redirect()->back()->withErrors(['precio_unico' => 'El hotel y vehículo ya tienen precio.'], 'validacion');
+        }
+        $this->setData($request, Precio::find($id));
+        return redirect()->back()->with('success', 'Precio actualizado');
     }
 
     public function destroy(string $id)
     {
         Precio::destroy($id);
-        return redirect()->route('precio.index')->with('success', 'Precio eliminado');
+        return redirect()->route( 'precio.index')->with('success', 'Precio eliminado');
     }
 
     private function validar(Request $request){
         $request->validateWithBag('validacion',[
             'id_hotel' => ['required'],
             'id_vehiculo' => ['required'],
-            'precio' => ['required', 'numeric', 'min:0'],
+            'precio' => ['required', 'decimal:0,2', 'min:0'],
         ]);
-        if (!Precio::isUnique($request->id_hotel, $request->id_vehiculo)){
-            return redirect()->back()->withErrors(['precio_unico' => 'El hotel y vehículo ya tienen precio.'], 'validacion');
-        }
     }
 
     private function setData(Request $request, Precio $precio){

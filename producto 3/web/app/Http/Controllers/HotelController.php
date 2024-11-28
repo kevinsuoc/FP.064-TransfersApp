@@ -56,6 +56,7 @@ class HotelController extends Controller
 
     private function validar(Request $request){
         $request->validateWithBag('validacion', [
+            'id_zona' => ['required'],
             'comision' => ['required', 'between:0,100', 'numeric'],
             'usuario' => ['required', 'between:2,50', 'string'],
             'password' => ['nullable', Password::min(8)],
