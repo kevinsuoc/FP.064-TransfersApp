@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hotel;
+use App\Models\Precio;
 use App\Models\TipoReserva;
 use App\Models\Vehiculo;
 use Illuminate\Http\Request;
@@ -19,8 +20,8 @@ class ReservaController extends Controller
     public function create()
     {
         $tiposReserva = TipoReserva::all();
-        $vehiculos = Vehiculo::all();
-        $hoteles = Hotel::add();
+        $precios = Precio::all();
+        return view ('panel.reserva.create', ['tiposReserva' => $tiposReserva, 'precios' => $precios]);
     }
 
     public function store(Request $request)
