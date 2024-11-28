@@ -44,7 +44,7 @@ class RegistroController extends Controller
     }
 
     public function registrarCorporate(Request $request){
-        $request->validate();
+      //  $request->validate();
 
 
         return redirect()->route('homepage.corporate');

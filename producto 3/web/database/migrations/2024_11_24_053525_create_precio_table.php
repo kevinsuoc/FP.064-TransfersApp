@@ -18,7 +18,8 @@ return new class extends Migration
             $table->bigInteger('precio');
 
             $table->foreign('id_vehiculo')->references('id_vehiculo')->on('p3_transfer_vehiculo');
-            $table->foreign('id_hotel')->references(columns: 'id_hotel')->on('p3_transfer_hotel');
+            $table->foreign('id_hotel')->references( 'id_hotel')->on('p3_transfer_hotel');
+            $table->unique('id_vehiculo', 'id_hotel');
         });
     }
 

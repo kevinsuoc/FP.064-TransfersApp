@@ -21,4 +21,10 @@ class Precio extends Model
         return $this->belongsTo(Hotel::class, 'id_hotel', 'id_hotel');
     }
 
+    public static function isUnique($hotel, $vehiculo)
+    {
+        return !self::where('id_hotel', $hotel)
+                    ->where('id_vehiculo', $vehiculo)
+                    ->exists();
+    }
 }

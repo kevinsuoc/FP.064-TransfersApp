@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Hotel;
 use App\Models\Precio;
 use App\Models\Vehiculo;
+use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 // Mas detalles acerca de cada método se encuentran en la clase Zona (Son análogos) y documentación.
 // https://laravel.com/docs/10.x/controllers#restful-partial-resource-routes
@@ -52,12 +54,20 @@ class PrecioController extends Controller
     }
 
     private function validar(Request $request){
-        $request->validateWithBag('validacion', []);
+        $request->validateWithBag('validacion',[
+            'id_hotel' => ['required'],
+            'id_vehiculo' => ['required'],
+            'precio' => ['required', 'numeric', 'min:0'],
+        ]);
+        if (!Precio::isUnique($request->id_hotel, $request->id_vehiculo)){
+            return redirect()->back()->withErrors(['precio_unico' => 'El hotel y vehículo ya tienen precio.'], 'validacion');
+        }
     }
 
     private function setData(Request $request, Precio $precio){
         $precio->id_hotel = $request->id_hotel;
         $precio->id_vehiculo = $request->id_vehiculo;
+        $precio->precio = $request->precio;
         $precio->save();
     }
 }

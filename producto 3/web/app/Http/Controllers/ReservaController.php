@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\TipoReserva;
+use App\Models\Vehiculo;
 use Illuminate\Http\Request;
 
 // Mas detalles acerca de cada método se encuentran en la clase Zona (Son análogos) y documentación.
@@ -17,7 +18,7 @@ class ReservaController extends Controller
     public function create()
     {
         $tiposReserva = TipoReserva::all();
-        $vehiculos = Vehiculos::all();
+        $vehiculos = Vehiculo::all();
     }
 
     public function store(Request $request)
