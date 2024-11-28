@@ -11,7 +11,7 @@ class TrayectoController extends Controller
      */
     public function index()
     {
-        return view('admin.panel.trayectos.index');
+        return view('panel.trayectos.index');
     }
 
     /**

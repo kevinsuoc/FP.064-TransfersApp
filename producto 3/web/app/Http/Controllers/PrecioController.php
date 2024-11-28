@@ -16,14 +16,18 @@ class PrecioController extends Controller
     public function index()
     {
         $precios = Precio::all();
-        return view('admin.panel.precio.index', ['precios' => $precios]);    
+        return view('panel.precio.index', ['precios' => $precios]);    
     }
 
+    public function show(){
+
+    }
+    
     public function create()
     {
         $vehiculos = Vehiculo::all();
         $hoteles = Hotel::all();
-        return view ('admin.panel.precio.create', ['vehiculos' => $vehiculos, 'hoteles' => $hoteles]);
+        return view ('panel.precio.create', ['vehiculos' => $vehiculos, 'hoteles' => $hoteles]);
     }
 
     public function store(Request $request)
@@ -41,7 +45,7 @@ class PrecioController extends Controller
         $vehiculos = Vehiculo::all();
         $hoteles = Hotel::all();
         $precio = Precio::find($id);
-        return view ('admin.panel.precio.edit', ['precio' => $precio, 'vehiculos' => $vehiculos, 'hoteles' => $hoteles]);
+        return view ('panel.precio.edit', ['precio' => $precio, 'vehiculos' => $vehiculos, 'hoteles' => $hoteles]);
     }
 
     public function update(Request $request, string $id)

@@ -17,13 +17,13 @@ class HotelController extends Controller
     {  
         $zonas = Zona::all();
         $hoteles = Hotel::all();
-        return view('admin.panel.hotel.index', ['hoteles' => $hoteles, 'zonas' => $zonas]);
+        return view('panel.hotel.index', ['hoteles' => $hoteles, 'zonas' => $zonas]);
     }
 
     public function create()
     {
         $zonas = Zona::all();
-        return view('admin.panel.hotel.create', ['zonas' => $zonas]);
+        return view('panel.hotel.create', ['zonas' => $zonas]);
     }
 
     public function store(Request $request)
@@ -37,7 +37,7 @@ class HotelController extends Controller
     {
         $zonas = Zona::all();
         $hotel = Hotel::find($id);
-        return view('admin.panel.hotel.edit', ['hotel' => $hotel, 'zonas' => $zonas]);
+        return view('panel.hotel.edit', ['hotel' => $hotel, 'zonas' => $zonas]);
     }
 
 

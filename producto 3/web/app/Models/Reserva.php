@@ -22,16 +22,8 @@ class Reserva extends Model
         return $this->belongsTo(Hotel::class, 'id_hotel', 'id_hotel');
     }
 
-    public function destino(): BelongsTo {
-        return $this->belongsTo(Hotel::class, 'id_destino', 'id_hotel');
-    }
-
-    public function origen(): BelongsTo {
-        return $this->belongsTo(Hotel::class, 'id_origen', 'id_hotel');
-    }
-
-    public function vehiculo(): BelongsTo {
-        return $this->belongsTo(Vehiculo::class, 'id_vehiculo', 'id_vehiculo');
+    public function precio(): BelongsTo {
+        return $this->belongsTo(Precio::class, 'id_precio', 'id_precio');
     }
 
     public function tipoReserva(): BelongsTo {

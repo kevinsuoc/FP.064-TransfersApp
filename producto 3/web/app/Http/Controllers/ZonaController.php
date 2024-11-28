@@ -11,13 +11,13 @@ class ZonaController extends Controller
     public function index()
     {
         $zonas = Zona::all();
-        return view('admin.panel.zona.index', data: ['zonas' => $zonas]);
+        return view('panel.zona.index', data: ['zonas' => $zonas]);
     }
 
     // Muestra el formulario de creación
     public function create()
     {
-        return view('admin.panel.zona.create');
+        return view('panel.zona.create');
     }
 
     // Guarda lo nuevo
@@ -32,7 +32,7 @@ class ZonaController extends Controller
     public function edit(string $id)
     {
         $zona = Zona::find($id);
-        return view('admin.panel.zona.edit', ['zona' => $zona]);
+        return view('panel.zona.edit', ['zona' => $zona]);
     }
 
     // Actualiza el recurso

@@ -12,12 +12,12 @@ class VehiculoController extends Controller
     public function index()
     {
         $vehiculos = Vehiculo::all();
-        return view('admin.panel.vehiculo.index', ['vehiculos' => $vehiculos]);
+        return view('panel.vehiculo.index', ['vehiculos' => $vehiculos]);
     }
 
     public function create()
     {
-        return view('admin.panel.vehiculo.create');
+        return view('panel.vehiculo.create');
     }
 
     public function store(Request $request)
@@ -30,7 +30,7 @@ class VehiculoController extends Controller
     public function edit(string $id)
     {
         $vehiculo = Vehiculo::find($id);
-        return view('admin.panel.vehiculo.edit', ['vehiculo' => $vehiculo]);
+        return view('panel.vehiculo.edit', ['vehiculo' => $vehiculo]);
     }
 
     public function update(Request $request, string $id)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hotel;
 use App\Models\TipoReserva;
 use App\Models\Vehiculo;
 use Illuminate\Http\Request;
@@ -12,13 +13,14 @@ class ReservaController extends Controller
 {
     public function index()
     {
-        return view('admin.panel.reserva.index');
+        return view('panel.reserva.index');
     }
 
     public function create()
     {
         $tiposReserva = TipoReserva::all();
         $vehiculos = Vehiculo::all();
+        $hoteles = Hotel::add();
     }
 
     public function store(Request $request)
