@@ -3,7 +3,10 @@
 <div class = "main-container">
 @include('header')
 
-<form>
+<form action="{{route('reserva.store')}}" method="POST">
+    @csrf
+    @method('POST')
+
     <select id="id_tipo_reserva" name="id_tipo_reserva" required onchange="mostrarDatosReserva()">
     <option value="" disabled selected>Elige un tipo de reserva</option>
     @foreach ($tiposReserva as $tipoReserva)
@@ -66,8 +69,14 @@
         <label for="hora_recogida">Hora de recogida del hotel</label>
         <input id="hora_recogida" name="hora_recogida" value="{{old('hora_recogida')}}" type="time" required><br>
     </div>
-</form>
 
+    <button type="submit">Crear</button>
+    
+</form>
+<form action="{{ route('vehiculo.index') }}" class="list-group-item">
+        @csrf
+        <button type="submit" class="btn btn-info w-100">Panel reservas</button>
+</form>
 <script>
 
 function mostrarDatosReserva(){
