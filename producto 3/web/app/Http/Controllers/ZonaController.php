@@ -60,5 +60,4 @@ class ZonaController extends Controller
         $zona->descripcion = $request->descripcion;
         $zona->save();
     }
-
 }

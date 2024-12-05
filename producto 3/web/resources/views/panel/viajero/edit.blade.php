@@ -9,49 +9,49 @@
             @method('PUT')
 
             <label for="nombre">Nombre</label>
-            <input value="{{$viajero->nombre}}" type="text" name="nombre" id="nombre" required>
+            <input value="{{$viajero->nombre}}" type="text" name="nombre" id="nombre" required><br>
             @error('nombre', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label for="apellido1">apellido1</label>
-            <input value="{{$viajero->apellido1}}" type="text" name="apellido1" id="apellido1" required>
+            <input value="{{$viajero->apellido1}}" type="text" name="apellido1" id="apellido1" required><br>
             @error('apellido1', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label for="apellido2">apellido2</label>
-            <input value="{{$viajero->apellido2}}" type="text" name="apellido2" id="apellido2" required>
+            <input value="{{$viajero->apellido2}}" type="text" name="apellido2" id="apellido2" required><br>
             @error('apellido2', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label for="direccion">direccion</label>
-            <input value="{{$viajero->direccion}}" type="text" name="direccion" id="direccion" required>
+            <input value="{{$viajero->direccion}}" type="text" name="direccion" id="direccion" required><br>
             @error('direccion', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label for="codigo_postal">Codigo postal</label>
-            <input value="{{$viajero->codigo_postal}}" type="text" name="codigo_postal" id="codigo_postal" required>
+            <input value="{{$viajero->codigo_postal}}" type="text" name="codigo_postal" id="codigo_postal" required><br>
             @error('codigo_postal', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label for="ciudad">Ciudad</label>
-            <input value="{{$viajero->ciudad}}" type="text" name="ciudad" id="ciudad" required>
+            <input value="{{$viajero->ciudad}}" type="text" name="ciudad" id="ciudad" required><br>
             @error('ciudad', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label for="pais">pais</label>
-            <input value="{{$viajero->pais}}" type="text" name="pais" id="pais" required>
+            <input value="{{$viajero->pais}}" type="text" name="pais" id="pais" required><br>
             @error('pais', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label for="email">email</label>
-            <input value="{{$viajero->email}}" type="text" name="email" id="email" required>
+            <input value="{{$viajero->email}}" type="text" name="email" id="email" required><br>
             @error('email', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -66,18 +66,29 @@
         </form>
         
         <p>Cambiar contraseña</p>
-        <form>
+        <form action="{{route('perfil.changePassword',$viajero->id_viajero)}}" method="POST">
+            @csrf
+            @method('PUT')
+
+
             <label for="password">Contraseña</label>
-            <input type="text" name="password" id="password" required>
+            <input type="password" name="password" id="password" required><br>
+
+
+            <label for="password_confirmation">Confirmar contraseña</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" required><br>
+
+            <button type="submit">Aceptar</button>
+            
             @error('password', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
-            <label for="password_confirmation">Confirmar contraseña</label>
-            <input type="text" name="password_confirmation" id="password_confirmation" required>
-            @error('password_confirmation', 'validacion')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
+            @if (session('success-password'))
+                <div class="alert alert-success">
+                    {{ session('success-password') }}
+                </div>
+            @endif
         </form>
         <form action="{{ route('perfil.show', $viajero->id_viajero) }}" class="list-group-item">
                 @csrf

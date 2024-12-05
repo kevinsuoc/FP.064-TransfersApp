@@ -70,7 +70,9 @@ Route::middleware(['appAuth:admin'])->prefix("admin/panel/")->group(function () 
 
 // Viajero - Perfil
 Route::prefix('user/')->middleware('appAuth:self')->group(function () {
-    Route::resource('perfil', ViajeroController::class)->only(['show', 'update', 'edit', 'destroy']);
+    Route::resource('perfil', ViajeroController::class)->only(['show', 'update', 'edit']);
+
+    Route::put('perfil/{perfil}/changePassword', [ViajeroController::class, 'changePassword'])->name('perfil.changePassword');
 });
 
 
