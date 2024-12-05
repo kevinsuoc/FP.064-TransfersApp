@@ -6,6 +6,7 @@ use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\TrayectoController;
 use App\Http\Controllers\VehiculoController;
+use App\Http\Controllers\ViajeroController;
 use App\Http\Controllers\ZonaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -66,5 +67,11 @@ Route::middleware(['appAuth:admin'])->prefix("admin/panel/")->group(function () 
     // Precios
     Route::resource('precio', PrecioController::class)->except(['show']);
 });
+
+// Viajero - Perfil
+Route::prefix('user/')->middleware('appAuth:self')->group(function () {
+    Route::resource('perfil', ViajeroController::class)->only(['show', 'update', 'edit', 'destroy']);
+});
+
 
 Route::fallback(function () {return redirect()->route('homepage');});

@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Hotel;
 use App\Models\Precio;
 use App\Models\Reserva;
 use App\Models\TipoReserva;
-use App\Models\Vehiculo;
 use Illuminate\Http\Request;
 
 // Mas detalles acerca de cada método se encuentran en la clase Zona (Son análogos) y documentación.
@@ -15,7 +13,7 @@ class ReservaController extends Controller
 {
     public function index()
     {
-        return view('panel.reserva.index');
+        return view('panel.reserva.index', ['reservas' => Reserva::all()]);
     }
 
     public function create()
@@ -40,17 +38,21 @@ class ReservaController extends Controller
 
     public function edit(string $id)
     {
-        //
+        $reserva = Reserva::find($id);
+        return view('panel.reserva.edit', ['reserva' => $reserva]);
     }
 
     public function update(Request $request, string $id)
     {
-        //
+        $this->validar($request);
+        $this->setData($request, Reserva::find($id)); 
+        return redirect()->back()->with('success', 'Reserva actualizada');
     }
 
     public function destroy(string $id)
     {
-        //
+        Reserva::destroy($id);
+        return redirect()->route('reserva.index')->with('success', 'Reserva eliminada');  
     }
 
     private function setDataTipo1(Request $request, Reserva $reserva){
@@ -58,11 +60,11 @@ class ReservaController extends Controller
         $reserva->email_cliente = $request->email_cliente;
         $reserva->num_viajeros = $request->num_viajeros;
         $reserva->id_precio = $request->id_precio;
-    //    $reserva->id_viajero = $request->id_viajero;
-    //    $reserva->id_hotel = $request->id_hotel;
+        $reserva->id_viajero = $request->id_viajero;
+        $reserva->id_hotel = $request->id_hotel;
 
         $reserva->fecha_entrada = $request->fecha_entrada;
-        $reserva->hora_entada = $request->hora_entrada;
+        $reserva->hora_entrada = $request->hora_entrada;
         $reserva->numero_vuelo_entrada = $request->numero_vuelo_entrada;
         $reserva->origen_vuelo_entrada = $request->origen_vuelo_entrada;
 
@@ -74,8 +76,8 @@ class ReservaController extends Controller
         $reserva->email_cliente = $request->email_cliente;
         $reserva->num_viajeros = $request->num_viajeros;
         $reserva->id_precio = $request->id_precio;
-    //    $reserva->id_viajero = $request->id_viajero;
-    //    $reserva->id_hotel = $request->id_hotel;
+        $reserva->id_viajero = $request->id_viajero;
+        $reserva->id_hotel = $request->id_hotel;
 
         $reserva->fecha_salida = $request->fecha_salida;
         $reserva->hora_salida = $request->hora_salida;
@@ -90,11 +92,11 @@ class ReservaController extends Controller
         $reserva->email_cliente = $request->email_cliente;
         $reserva->num_viajeros = $request->num_viajeros;
         $reserva->id_precio = $request->id_precio;
-    //    $reserva->id_viajero = $request->id_viajero;
-    //    $reserva->id_hotel = $request->id_hotel;
+        $reserva->id_viajero = $request->id_viajero;
+        $reserva->id_hotel = $request->id_hotel;
 
         $reserva->fecha_entrada = $request->fecha_entrada;
-        $reserva->hora_entada = $request->hora_entrada;
+        $reserva->hora_entrada = $request->hora_entrada;
         $reserva->numero_vuelo_entrada = $request->numero_vuelo_entrada;
         $reserva->origen_vuelo_entrada = $request->origen_vuelo_entrada;
 

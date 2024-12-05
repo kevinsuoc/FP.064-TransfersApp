@@ -17,16 +17,22 @@
     <div id="todos_los_tipos" hidden>
         <h3>Datos generales</h3>
         <!-- Viajero reservador -->
-        <label for="email_cliente" value="{{old('email_cliete')}}">Email del cliente</label>
-        <input type="email" name="email_cliente" id="email_cliente" required><br>
+        <label for="email_cliente">Email del cliente</label>
+        <input type="email" name="email_cliente" id="email_cliente" required value="{{old('email_cliente')}}"><br>
+        @error('email_cliente', 'validacion')
+                <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
 
-        <label for="num_viajeros" value="{{old('num_viajeros')}}">Numero de viajeros</label>
-        <input type="number" name="num_viajeros" id="num_viajeros" required><br>
+        <label for="num_viajeros">Numero de viajeros</label>
+        <input type="number" name="num_viajeros" id="num_viajeros" required  value="{{old('num_viajeros')}}"><br>
+        @error('num_viajeros', 'validacion')
+                <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
 
-        <select id="id_precio" name="id_precio">
-        <option selected value="">Selecciona un destino/origen</option>
+        <select id="id_precio" name="id_precio" required>
+        <option selected disabled value="">Selecciona un destino/origen</option>
         @foreach ($precios as $precio)
-        <option value="{{$precio->id_precio}}" @if(old('id_precio') === $precio->id_precio) selected @endif>
+        <option value="{{$precio->id_precio}}" @if(old('id_precio') == $precio->id_precio) selected @endif>
             Zona: {{$precio->hotel->zona->descripcion}}
             Hotel: {{$precio->hotel->usuario}}
             Vehiculo: {{$precio->vehiculo->descripcion}}
@@ -44,30 +50,56 @@
         <h3>Datos de ida</h3>
         <label for="fecha_entrada">Fecha de llegada del vuelo</label>
         <input id="fecha_entrada" name="fecha_entrada" value="{{old('fecha_entrada')}}" type="date" required><br>
+        @error('fecha_entrada', 'validacion')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
 
         <label for="hora_entrada">Hora de llegada del vuelo</label>
         <input id="hora_entrada" name="hora_entrada" value="{{old('hora_entrada')}}" type="time" required><br>
+        @error('hora_entrada', 'validacion')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
 
         <label for="numero_vuelo_entrada">Numero del vuelo de entrada</label>
         <input id="numero_vuelo_entrada" name="numero_vuelo_entrada" value="{{old('numero_vuelo_entrada')}}" type="text" required><br>
-      
+        @error('numero_vuelo_entrada', 'validacion')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
         <label for="origen_vuelo_entrada">Origen del vuelo de entrada</label>
         <input id="origen_vuelo_entrada" name="origen_vuelo_entrada" value="{{old('origen_vuelo_entrada')}}" type="text" required><br>
+        @error('origen_vuelo_entrada', 'validacion')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
     </div>
 
     <div id="vuelta" hidden>
         <h3>Datos de vuelta</h3>
         <label for="fecha_salida">Fecha de salida del vuelo</label>
         <input id="fecha_salida" name="fecha_salida" value="{{old('fecha_salida')}}" type="date" required><br>
+        @error('fecha_salida', 'validacion')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
 
         <label for="hora_salida">Hora de salida del vuelo</label>   
         <input id="hora_salida" name="hora_salida" value="{{old('hora_salida')}}" type="time" required><br>
-
+        @error('hora_salida', 'validacion')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        
         <label for="numero_vuelo_salida">Numero del vuelo de salida</label>
         <input id="numero_vuelo_salida" name="numero_vuelo_salida" value="{{old('numero_vuelo_salida')}}" type="text" required><br>
-      
+        @error('numero_vuelo_salida', 'validacion')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
         <label for="hora_recogida">Hora de recogida del hotel</label>
         <input id="hora_recogida" name="hora_recogida" value="{{old('hora_recogida')}}" type="time" required><br>
+        @error('hora_recogida', 'validacion')
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+
     </div>
 
     <button type="submit">Crear</button>

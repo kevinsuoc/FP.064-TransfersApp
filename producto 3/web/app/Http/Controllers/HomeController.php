@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TipoReserva;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-
 class HomeController extends Controller
 {
     public function user(){
-        return  view ('homepage.user');
+        return  view ('homepage.user', ['viajero' => session()->get('user')]);
     }
 
     public function corporate(){
