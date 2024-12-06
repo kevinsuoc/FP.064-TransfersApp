@@ -4,6 +4,7 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\PrecioController;
 use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\ReservaUserController;
 use App\Http\Controllers\TrayectoController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\ViajeroController;
@@ -69,10 +70,18 @@ Route::middleware(['appAuth:admin'])->prefix("admin/panel/")->group(function () 
 });
 
 // Viajero - Perfil
-Route::prefix('user/')->middleware('appAuth:self')->group(function () {
-    Route::resource('perfil', ViajeroController::class)->only(['show', 'update', 'edit']);
+Route::prefix('user/')->group(function () {
+    Route::middleware('appAuth:self')->group(function () {
+        Route::resource('perfil', ViajeroController::class)->only(['show', 'update', 'edit']);
+        Route::put('perfil/{perfil}/changePassword', [ViajeroController::class, 'changePassword'])->name('perfil.changePassword');
+    });
 
-    Route::put('perfil/{perfil}/changePassword', [ViajeroController::class, 'changePassword'])->name('perfil.changePassword');
+    // Reservas
+    Route::middleware('appAuth:reserva')->group(function () {
+        Route::resource('userReserva', ReservaUserController::class)->only(['update', 'edit', 'destroy']);
+    });
+
+    Route::resource('userReserva', ReservaUserController::class)->only(['index', 'store', 'create']);
 });
 
 

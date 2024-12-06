@@ -63,5 +63,6 @@ class ViajeroController extends Controller
         $viajero->pais = $request->pais;
         $viajero->direccion = $request->direccion;
         $viajero->save();
+        $request->session()->put('user',  $viajero);
     }
 }

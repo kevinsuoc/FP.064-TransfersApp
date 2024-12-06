@@ -5,10 +5,7 @@
     <div class="container mt-4">
         <h2>Panel de control</h2>
         <div class="list-group">
-
-
-            <!-- <form action="{{ route('reserva.index') }}" class="list-group-item"> -->
-            <form action="" class="list-group-item">
+            <form action="{{ route('userReserva.index') }}" class="list-group-item">
                 @csrf
                 <button type="submit" class="btn btn-info w-100">Panel reservas</button>
             </form>

@@ -42,11 +42,4 @@ class RegistroController extends Controller
         
         return redirect()->route('login')->with('success', 'Registrado correctamente');;
     }
-
-    public function registrarCorporate(Request $request){
-      //  $request->validate();
-
-
-        return redirect()->route('homepage.corporate');
-    }
 }

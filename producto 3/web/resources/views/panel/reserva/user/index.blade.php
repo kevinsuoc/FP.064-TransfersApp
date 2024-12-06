@@ -10,7 +10,7 @@
         </div>
     @endif
 
-    <form action="{{route('reserva.create')}}">
+    <form action="{{route('userReserva.create')}}">
             @csrf
             <button type="submit">Agregar reserva</button>
     </form>
@@ -20,9 +20,9 @@
             <p>Datos generales</p>
             <p><strong>Reservador: </strong>
             @if ($reserva->id_viajero)
-                Viajero {{$reserva->viajero()->email}}
+                {{$reserva->viajero->email}}
             @elseif ($reserva->id_hotel)
-                Hotel {{$reserva->hotel()->usuario}}
+                {{$reserva->hotel->usuario}}
             @else
                 Administrador
             @endif
@@ -55,11 +55,11 @@
             <p><strong>Numero de vuelo: </strong>{{$reserva->numero_vuelo_salida}}</p>
             @endif
 
-            <form action="{{route('reserva.edit',$reserva->id_reserva)}}">
+            <form action="{{route('userReserva.edit',$reserva->id_reserva)}}">
                 @csrf
                 <button type="submit">Editar</button>
             </form>
-            <form action="{{route('reserva.destroy', $reserva->id_reserva)}}" method="POST">
+            <form action="{{route('userReserva.destroy', $reserva->id_reserva)}}" method="POST">
                 @csrf
                 @method('DELETE')
                 <button type="submit">Borrar</button>

@@ -22,6 +22,7 @@ class AppAuth
             case 'user':
             case 'corporate':
             case 'guest': return $this->handleTypeAuth($request, $next, $instruction);
+            case 'reserva': return $this->handleReservaAuth($request, $next);
         }
         return redirect()->route('homepage');
     }
@@ -50,6 +51,13 @@ class AppAuth
             }
         } else if ($userType === 'guest'){
             return $next($request);
+        }
+        return redirect()->route('homepage');
+    }
+
+    private function handleReservaAuth(Request $request, Closure $next){
+        return $next($request);
+        if ($request->session()->has('userType')){
         }
         return redirect()->route('homepage');
     }

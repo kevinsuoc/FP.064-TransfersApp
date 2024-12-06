@@ -7,7 +7,7 @@ use App\Models\Precio;
 use App\Models\Vehiculo;
 use Illuminate\Http\Request;
 
-// Todo: Los precios se agregan como enteros
+// TODO: Los precios se agregan como enteros
 
 // Mas detalles acerca de cada método se encuentran en la clase Zona (Son análogos) y documentación.
 // https://laravel.com/docs/10.x/controllers#restful-partial-resource-routes
@@ -22,7 +22,7 @@ class PrecioController extends Controller
     public function show(){
 
     }
-    
+
     public function create()
     {
         $vehiculos = Vehiculo::all();

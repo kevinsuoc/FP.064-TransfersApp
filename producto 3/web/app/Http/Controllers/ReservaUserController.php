@@ -2,25 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Precio;
 use App\Models\Reserva;
 use App\Models\TipoReserva;
+use App\Models\Viajero;
+use Exception;
 use Illuminate\Http\Request;
 
-// Mas detalles acerca de cada método se encuentran en la clase Zona (Son análogos) y documentación.
-// https://laravel.com/docs/10.x/controllers#restful-partial-resource-routes
-class ReservaController extends Controller
+//TODO: Time control
+class ReservaUserController extends Controller
 {
     public function index()
     {
-        return view('panel.reserva.admin.index', ['reservas' => Reserva::all()]);
+        $reservas = Reserva::where('email_cliente', operator: session()->get('user')->email)->get();
+      //   logger(session()->get('user')->email);
+      //   logger("Res: ".$reservas);
+      //  throw new Exception();
+         return view('panel.reserva.user.index', ['reservas' => $reservas]);
     }
 
     public function create()
     {
         $tiposReserva = TipoReserva::all();
         $precios = Precio::all();
-        return view ('panel.reserva.admin.create', ['tiposReserva' => $tiposReserva, 'precios' => $precios]);
+        return view ('panel.reserva.user.create', ['tiposReserva' => $tiposReserva, 'precios' => $precios]);
     }
 
     public function store(Request $request)
@@ -32,14 +38,14 @@ class ReservaController extends Controller
             case 2: $this->validarTipo2($request); $this->setDataTipo2($request, $reserva); break;
             case 3: $this->validarTipo3($request); $this->setDataTipo3($request, $reserva); break;
         };
-        return redirect()->route('reserva.index')->with('success', 'Reserva creada');
+        return redirect()->route('userReserva.index')->with('success', 'Reserva creada');
 
     }
 
     public function edit(string $id)
     {
         $reserva = Reserva::find($id);
-        return view('panel.reserva.admin.edit', ['reserva' => $reserva]);
+        return view('panel.reserva.user.edit', ['reserva' => $reserva]);
     }
 
     public function update(Request $request, string $id)
@@ -52,12 +58,13 @@ class ReservaController extends Controller
     public function destroy(string $id)
     {
         Reserva::destroy($id);
-        return redirect()->route('reserva.index')->with('success', 'Reserva eliminada');  
+        return redirect()->route('userReserva.index')->with('success', 'Reserva eliminada');  
     }
 
     private function setDataTipo1(Request $request, Reserva $reserva){
+        $reserva->id_viajero = session()->get('user')->id_viajero;
         $reserva->id_tipo_reserva = $request->id_tipo_reserva;
-        $reserva->email_cliente = $request->email_cliente;
+        $reserva->email_cliente = session()->get('user')->email;
         $reserva->num_viajeros = $request->num_viajeros;
         $reserva->id_precio = $request->id_precio;
 
@@ -70,8 +77,9 @@ class ReservaController extends Controller
     }
 
     private function setDataTipo2(Request $request, Reserva $reserva){
+        $reserva->id_viajero = session()->get('user')->id_viajero;
         $reserva->id_tipo_reserva = $request->id_tipo_reserva;
-        $reserva->email_cliente = $request->email_cliente;
+        $reserva->email_cliente = session()->get('user')->email;
         $reserva->num_viajeros = $request->num_viajeros;
         $reserva->id_precio = $request->id_precio;
 
@@ -84,8 +92,9 @@ class ReservaController extends Controller
     }
     
     private function setDataTipo3(Request $request, Reserva $reserva){
+        $reserva->id_viajero = session()->get('user')->id_viajero;
         $reserva->id_tipo_reserva = $request->id_tipo_reserva;
-        $reserva->email_cliente = $request->email_cliente;
+        $reserva->email_cliente = session()->get('user')->email;
         $reserva->num_viajeros = $request->num_viajeros;
         $reserva->id_precio = $request->id_precio;
 
@@ -105,7 +114,6 @@ class ReservaController extends Controller
     private function validarTipo1(Request $request){
         $request->validateWithBag('validacion', [
             'id_tipo_reserva' => ['required'],
-            'email_cliente' => ['required',  'email'],
             'num_viajeros' => ['required', 'numeric', 'between:1,3'],
             'id_precio' => ['required'],
 
@@ -119,7 +127,6 @@ class ReservaController extends Controller
     private function validarTipo2(Request $request){
         $request->validateWithBag('validacion', [
             'id_tipo_reserva' => ['required'],
-            'email_cliente' => ['required',  'email'],
             'num_viajeros' => ['required', 'numeric', 'between:1,3'],
             'id_precio' => ['required'],
 
@@ -133,7 +140,6 @@ class ReservaController extends Controller
     private function validarTipo3(Request $request){
         $request->validateWithBag('validacion', [
             'id_tipo_reserva' => ['required'],
-            'email_cliente' => ['required',  'email'],
             'num_viajeros' => ['required', 'numeric', 'between:1,3'],
             'id_precio' => ['required'],
 
