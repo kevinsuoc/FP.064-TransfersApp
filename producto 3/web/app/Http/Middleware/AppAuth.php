@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Reserva;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,8 +57,15 @@ class AppAuth
     }
 
     private function handleReservaAuth(Request $request, Closure $next){
-        return $next($request);
         if ($request->session()->has('userType')){
+            $userType = $request->session()->get('userType');
+            $user = $request->session()->get('user');
+            $reserva = Reserva::find($request->route('id'));
+            if ($userType == 'user' && $user->email == $reserva->email_cliente){
+                return $next($request);
+            } else if ($userType == 'corporate' && ($user->id_hotel == $reserva->precio->id_hotel || $user->id_hotel == $reserva->id_hotel)){
+                return $next($request);
+            }
         }
         return redirect()->route('homepage');
     }

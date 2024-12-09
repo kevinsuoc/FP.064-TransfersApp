@@ -20,9 +20,9 @@
             <p>Datos generales</p>
             <p><strong>Reservador: </strong>
             @if ($reserva->id_viajero)
-                {{$reserva->viajero()->email}}
+                {{$reserva->viajero->email}}
             @elseif ($reserva->id_hotel)
-                {{$reserva->hotel()->usuario}}
+                {{$reserva->hotel->usuario}}
             @else
                 Administrador
             @endif

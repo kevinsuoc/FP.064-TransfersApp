@@ -4,7 +4,6 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\PrecioController;
 use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\ReservaController;
-use App\Http\Controllers\ReservaUserController;
 use App\Http\Controllers\TrayectoController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\ViajeroController;
@@ -78,10 +77,10 @@ Route::prefix('user/')->group(function () {
 
     // Reservas
     Route::middleware('appAuth:reserva')->group(function () {
-        Route::resource('userReserva', ReservaUserController::class)->only(['update', 'edit', 'destroy']);
+        Route::resource('userReserva', ReservaController::class)->only(['update', 'edit', 'destroy']);
     });
 
-    Route::resource('userReserva', ReservaUserController::class)->only(['index', 'store', 'create']);
+    Route::resource('userReserva', ReservaController::class)->only(['index', 'store', 'create']);
 });
 
 
