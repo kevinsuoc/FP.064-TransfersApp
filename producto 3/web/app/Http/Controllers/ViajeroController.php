@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Reserva;
 use App\Models\Viajero;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -57,6 +58,9 @@ class ViajeroController extends Controller
         $viajero->nombre = $request->nombre;
         $viajero->apellido1 = $request->apellido1;
         $viajero->apellido2 = $request->apellido2;
+        if ($viajero->email != $request->email){
+            Reserva::where('email_cliente', $viajero->email)->update(['email_cliente' => $request->email]);
+        }
         $viajero->email = $request->email;
         $viajero->codigo_postal = $request->codigo_postal;
         $viajero->ciudad = $request->ciudad;

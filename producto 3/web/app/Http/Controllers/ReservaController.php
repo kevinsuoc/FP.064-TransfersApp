@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Precio;
 use App\Models\Reserva;
 use App\Models\TipoReserva;
+use DateTime;
 use Illuminate\Http\Request;
 
 // Mas detalles acerca de cada método se encuentran en la clase Zona (Son análogos) y documentación.
@@ -51,6 +52,9 @@ class ReservaController extends Controller
     {
         $reserva = New Reserva();
         $reserva->localizador = substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 5);
+        if (!$this->validarFechaYHoraFromData($request)){
+            return redirect()->back()->withErrors(['fecha' => 'Se deben agregar reservas con 48 horas de antelación'], 'validacion');
+        }
         switch ($request->id_tipo_reserva){
             case 1: $this->validarTipo1($request); $this->setDataTipo1($request, $reserva); break;
             case 2: $this->validarTipo2($request); $this->setDataTipo2($request, $reserva); break;
@@ -80,6 +84,9 @@ class ReservaController extends Controller
     public function update(Request $request, string $id)
     {
         $reserva = Reserva::find($id);
+        if (!$this->validarFechaYHoraFromData($request) || !$this->validarFechaYHoraFromData($reserva)){
+            return redirect()->back()->withErrors(['fecha' => 'Se deben modificar reservas con 48 horas de antelación'], 'validacion');
+        }
         switch ($reserva->id_tipo_reserva){
             case 1:
                 $this->validarTipo1($request);
@@ -203,5 +210,29 @@ class ReservaController extends Controller
         ];
 
         $request->validateWithBag('validacion', $rules);
+    }
+
+    private function validarFechaYHoraFromData($data){
+        if ($this->userType != 'user')
+            return true;
+        switch ($data->id_tipo_reserva){
+            case 1:
+                $diaReserva = $data->dia_llegada;
+                $horaReserva = $data->hora_llegada;
+                break;
+            case 2:
+            case 3:
+            default:
+                $diaReserva = $data->dia_salida;
+                $horaReserva = $data->hora_salida;
+                break ;
+        }
+
+        $fechaHoraReserva = DateTime::createFromFormat('Y-m-d H:i:s', "$diaReserva $horaReserva");
+        $fechaHoraActual = new DateTime();
+
+        $diferenciaHoras = $fechaHoraActual->diff($fechaHoraReserva)->h + $fechaHoraActual->diff($fechaHoraReserva)->days * 24;
+
+        return $diferenciaHoras >= 48;
     }
 }
