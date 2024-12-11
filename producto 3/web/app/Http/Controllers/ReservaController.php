@@ -2,48 +2,132 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hotel;
 use App\Models\Precio;
 use App\Models\Reserva;
 use App\Models\TipoReserva;
 use DateTime;
+use Exception;
 use Illuminate\Http\Request;
 
 // Mas detalles acerca de cada método se encuentran en la clase Zona (Son análogos) y documentación.
 // https://laravel.com/docs/10.x/controllers#restful-partial-resource-routes
 class ReservaController extends Controller
 {
-    private $userType; 
-
-    public function __construct()
+    public function index(Request $request)
     {
-        $this->userType = session('userType');
-    }
-
-    public function index()
-    {
-        switch ($this->userType){
+        switch (session('userType')){
             case 'admin':
-                return view('panel.reserva.admin.index', ['reservas' => Reserva::all()]);
+                return $this->indexAdmin($request);
             case 'user':
                 $reservas = Reserva::where('email_cliente', operator: session()->get('user')->email)->get();
                 return view('panel.reserva.user.index', ['reservas' => $reservas]);
             case 'corporate':
-                //
+                return $this->indexCorporate($request);
             default: return redirect()->route('homepage');
         }
+    }
+
+    private function indexCorporate(Request $request){
+        if ($request->mes){
+            $reservas = Reserva::where(function ($query) use ($request) {
+                $query->whereRaw('YEAR(fecha_entrada) = ?', [$request->anyo])
+                      ->whereRaw('MONTH(fecha_entrada) = ?', [$request->mes])
+                ->orWhere(function ($query) use ($request) {
+                    $query->whereRaw('YEAR(fecha_salida) = ?', [$request->anyo])
+                          ->whereRaw('MONTH(fecha_salida) = ?', [$request->mes]);
+                });
+            })
+            ->where('id_hotel', session('user')->id_hotel)
+            ->get();
+            $totalComisiones = 0;
+            foreach($reservas as $reserva){
+                if ($reserva->id_tipo_reserva == 3){
+                    $diaEntrada = new DateTime($reserva->fecha_entrada);
+                    $diaSalida = new DateTime($reserva->fecha_salida);
+                    if ($diaEntrada->format('Y') == $request->anyo && 
+                    $diaEntrada->format('m') == str_pad($request->mes, 2, '0', STR_PAD_LEFT)) {
+                        $totalComisiones += ($reserva->precio->precio) * session('user')->comision / 100;
+                    }
+                    if ($diaSalida->format('Y') == $request->anyo && 
+                    $diaSalida->format('m') == str_pad($request->mes, 2, '0', STR_PAD_LEFT)) {
+                        $totalComisiones += ($reserva->precio->precio) * session('user')->comision / 100;
+                    }
+                }
+                else{ 
+                    $totalComisiones += ($reserva->precio->precio) * session('user')->comision / 100;
+                }
+            }
+            return view('panel.reserva.corporate.index', [
+                'reservas' => $reservas,
+                'mes' => $request->mes,
+                'anyo' => $request->anyo,
+                'totalComisiones' => $totalComisiones]);
+        }
+        $reservas = Reserva::where('id_hotel', 
+        session('user')->id_hotel)->orWhereHas('precio',
+        function($query) {
+            $query->where('id_hotel', session('user')->id_hotel);
+        })->get();
+        return view('panel.reserva.corporate.index', ['reservas' => $reservas]);
+    }
+
+    private function indexAdmin($request){
+        if ($request->mes){
+            $hotel = Hotel::find($request->id_hotel);
+            $reservas = Reserva::where(function ($query) use ($request) {
+                $query->whereRaw('YEAR(fecha_entrada) = ?', [$request->anyo])
+                      ->whereRaw('MONTH(fecha_entrada) = ?', [$request->mes])
+                ->orWhere(function ($query) use ($request) {
+                    $query->whereRaw('YEAR(fecha_salida) = ?', [$request->anyo])
+                          ->whereRaw('MONTH(fecha_salida) = ?', [$request->mes]);
+                });
+            })
+            ->where('id_hotel', $hotel->id_hotel)
+            ->get();
+            $totalComisiones = 0;
+            foreach($reservas as $reserva){
+                if ($reserva->id_tipo_reserva == 3){
+                    $diaEntrada = new DateTime($reserva->fecha_entrada);
+                    $diaSalida = new DateTime($reserva->fecha_salida);
+                    if ($diaEntrada->format('Y') == $request->anyo && 
+                    $diaEntrada->format('m') == str_pad($request->mes, 2, '0', STR_PAD_LEFT)) {
+                        $totalComisiones += ($reserva->precio->precio) * $hotel->comision / 100;
+                    }
+                    if ($diaSalida->format('Y') == $request->anyo && 
+                    $diaSalida->format('m') == str_pad($request->mes, 2, '0', STR_PAD_LEFT)) {
+                        $totalComisiones += ($reserva->precio->precio) * $hotel->comision / 100;
+                    }
+                }
+                else{ 
+                    $totalComisiones += ($reserva->precio->precio) * $hotel->comision / 100;
+                }
+            }
+            return view('panel.reserva.admin.index', [
+            'reservas' => $reservas,
+            'mes' => $request->mes,
+            'anyo' => $request->anyo,
+            'hotel' => $hotel,
+            'id_hotel' => $request->id_hotel,
+            'hoteles' => Hotel::all(), 
+            'totalComisiones' => $totalComisiones]);
+        }
+        return view('panel.reserva.admin.index', ['reservas' => Reserva::all(), 'hoteles' => Hotel::all()]);
     }
 
     public function create()
     {
         $tiposReserva = TipoReserva::all();
-        $precios = Precio::all();
-        switch ($this->userType){
+        switch (session('userType')){
             case 'admin':
+                $precios = Precio::all();
                 return view ('panel.reserva.admin.create', ['tiposReserva' => $tiposReserva, 'precios' => $precios]);
             case 'user':
+                $precios = Precio::all();
                 return view ('panel.reserva.user.create', ['tiposReserva' => $tiposReserva, 'precios' => $precios]);
             case 'corporate':
-                return view ('panel.reserva.admin.create', ['tiposReserva' => $tiposReserva, 'precios' => $precios]);
+                $precios = Precio::where('id_hotel', session('user')->id_hotel)->get();
+                return view ('panel.reserva.corporate.create', ['tiposReserva' => $tiposReserva, 'precios' => $precios]);
             default: return redirect()->route('homepage');
         }
     }
@@ -53,17 +137,18 @@ class ReservaController extends Controller
         $reserva = New Reserva();
         $reserva->localizador = substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 5);
         if (!$this->validarFechaYHoraFromData($request)){
-            return redirect()->back()->withErrors(['fecha' => 'Se deben agregar reservas con 48 horas de antelación'], 'validacion');
+            return redirect()->back()->withErrors(['fecha' => 'Se deben agregar reservas con 48 horas de antelación'], 'validacion')->withInput();
         }
         switch ($request->id_tipo_reserva){
-            case 1: $this->validarTipo1($request); $this->setDataTipo1($request, $reserva); break;
+            case 1: $this->validarTipo1($request); $this->setDataTipo1($request, $reserva); break; 
             case 2: $this->validarTipo2($request); $this->setDataTipo2($request, $reserva); break;
             case 3: $this->validarTipo3($request); $this->setDataTipo3($request, $reserva); break;
         };
-        switch ($this->userType){
+        $reserva->save();
+        switch (session('userType')){
             case 'admin': return redirect()->route('reserva.index')->with('success', 'Reserva creada');
             case 'user': return redirect()->route('userReserva.index')->with('success', 'Reserva creada');
-            case 'corporate': //
+            case 'corporate': return redirect()->route('corporateReserva.index')->with('success', 'Reserva creada');
             default: return redirect()->route('homepage');
         }
     }
@@ -71,15 +156,19 @@ class ReservaController extends Controller
     public function edit(string $id)
     {
         $reserva = Reserva::find($id);
-        $precios = Precio::all();
-        switch ($this->userType){
-            case 'admin':  return view('panel.reserva.admin.edit', ['reserva' => $reserva, 'precios' => $precios]);
-            case 'user': return view('panel.reserva.user.edit', ['reserva' => $reserva, 'precios' => $precios]);;
-            case 'corporate': //
+        switch (session('userType')){
+            case 'admin':
+                $precios = Precio::all();
+                return view('panel.reserva.admin.edit', ['reserva' => $reserva, 'precios' => $precios]);
+            case 'user':
+                $precios = Precio::all();
+                return view('panel.reserva.user.edit', ['reserva' => $reserva, 'precios' => $precios]);
+            case 'corporate':
+                $precios = Precio::where('id_hotel', session('user')->id_hotel)->get(); 
+                return view('panel.reserva.corporate.edit', ['reserva' => $reserva, 'precios' => $precios]);
             default: return redirect()->route('homepage');
         }
     }
-
 
     public function update(Request $request, string $id)
     {
@@ -108,17 +197,21 @@ class ReservaController extends Controller
 
     public function destroy(string $id)
     {
+        $reserva = Reserva::find($id);
+        if (!$this->validarFechaYHoraFromData($reserva)){
+            return redirect()->back()->withErrors(['fecha' => 'Se deben eliminar reservas con 48 horas de antelación'], 'validacion');
+        }
         Reserva::destroy($id);
-        switch($this->userType){
+        switch(session('userType')){
             case 'admin': return redirect()->route('reserva.index')->with('success', 'Reserva eliminada');
             case 'user': return redirect()->route('userReserva.index')->with('success', 'Reserva eliminada');
-            case 'corporate':
+            case 'corporate': return redirect()->route('corporateReserva.index')->with('success', 'Reserva eliminada');
             default: return redirect()->route('homepage');
         }
     }
 
     private function setDataOfAllTypes(Request $request, Reserva $reserva){
-        switch ($this->userType){
+        switch (session('userType')){
             case 'admin':
                 $reserva->email_cliente = $request->email_cliente;
                 break;
@@ -127,6 +220,8 @@ class ReservaController extends Controller
                 $reserva->id_viajero = session()->get('user')->id_viajero;
                 break;
             case 'corporate':
+                $reserva->email_cliente = $request->email_cliente;
+                $reserva->id_hotel = session()->get('user')->id_hotel;
                 break;
         }
         $reserva->id_tipo_reserva = $request->id_tipo_reserva;
@@ -156,13 +251,11 @@ class ReservaController extends Controller
         $this->setDataOfAllTypes($request, $reserva);
         $this->setDataTipo1($request, $reserva);
         $this->setDataTipo2($request, $reserva);
-        $reserva->save();
     }
 
     private function validarTipo1(Request $request){
         $rules = [
             'id_tipo_reserva' => ['required'],
-            'email_cliente' => ['required',  'email'],
             'num_viajeros' => ['required', 'numeric', 'between:1,3'],
             'id_precio' => ['required'],
 
@@ -172,13 +265,16 @@ class ReservaController extends Controller
             'origen_vuelo_entrada' => ['required', 'between:2,50', 'string'],
         ];
 
+        if (session('userType') != 'user'){
+            $rules['email_cliente'] = ['required', 'email'];
+        }
+
         $request->validateWithBag('validacion', $rules);
     }
 
     private function validarTipo2(Request $request){
         $rules = [
             'id_tipo_reserva' => ['required'],
-            'email_cliente' => ['required',  'email'],
             'num_viajeros' => ['required', 'numeric', 'between:1,3'],
             'id_precio' => ['required'],
 
@@ -188,13 +284,16 @@ class ReservaController extends Controller
             'hora_recogida' => ['required'],
         ];
 
+        if (session('userType') != 'user'){
+            $rules['email_cliente'] = ['required', 'email'];
+        }
+
         $request->validateWithBag('validacion', $rules);
     }
 
     private function validarTipo3(Request $request){
         $rules = [
             'id_tipo_reserva' => ['required'],
-            'email_cliente' => ['required',  'email'],
             'num_viajeros' => ['required', 'numeric', 'between:1,3'],
             'id_precio' => ['required'],
 
@@ -209,26 +308,34 @@ class ReservaController extends Controller
             'hora_recogida' => ['required'], 
         ];
 
+        if (session('userType') != 'user'){
+            $rules['email_cliente'] = ['required', 'email'];
+        }
+
         $request->validateWithBag('validacion', $rules);
     }
 
     private function validarFechaYHoraFromData($data){
-        if ($this->userType != 'user')
+        if (session('userType') != 'user')
             return true;
         switch ($data->id_tipo_reserva){
             case 1:
-                $diaReserva = $data->dia_llegada;
-                $horaReserva = $data->hora_llegada;
+                $diaReserva = $data->fecha_entrada;
+                $horaReserva = $data->hora_entrada;
                 break;
             case 2:
             case 3:
             default:
-                $diaReserva = $data->dia_salida;
+                $diaReserva = $data->fecha_salida;
                 $horaReserva = $data->hora_salida;
                 break ;
         }
 
-        $fechaHoraReserva = DateTime::createFromFormat('Y-m-d H:i:s', "$diaReserva $horaReserva");
+        if (strlen($horaReserva) == 8) {
+            $horaReserva = substr($horaReserva, 0, 5);
+        }
+        
+        $fechaHoraReserva = DateTime::createFromFormat('Y-m-d H:i', "$diaReserva $horaReserva");
         $fechaHoraActual = new DateTime();
 
         $diferenciaHoras = $fechaHoraActual->diff($fechaHoraReserva)->h + $fechaHoraActual->diff($fechaHoraReserva)->days * 24;
