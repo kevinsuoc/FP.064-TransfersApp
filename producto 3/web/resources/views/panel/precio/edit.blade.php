@@ -10,17 +10,17 @@
             @csrf
             @method('PUT')
 
-            <div class="form-group">
-            <select name="id_hotel" id="id_hotel" required>
-            <option value="" disabled selected>Selecciona una hotel</option>
-            @foreach ($hoteles as $hotel)
-            <option value="{{$hotel->id_hotel}}" @if($hotel->id_hotel == $precio->id_hotel) selected @endif>{{$hotel->usuario}}</option>
-            @endforeach
-            </select>
-            @error('id_hotel', 'validacion')
-                <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
-            </div>
+                <div class="form-group">
+                    <select name="id_hotel" id="id_hotel" required>
+                    <option value="" disabled selected>Selecciona una hotel</option>
+                    @foreach ($hoteles as $hotel)
+                    <option value="{{$hotel->id_hotel}}" @if($hotel->id_hotel == $precio->id_hotel) selected @endif>{{$hotel->usuario}}</option>
+                    @endforeach
+                    </select>
+                    @error('id_hotel', 'validacion')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
+                  </div>
             <div class="form-group mt-3">
             <select name="id_vehiculo" id="id_vehiculo" required>
             <option value="" disabled selected>Selecciona un vehiculo</option>

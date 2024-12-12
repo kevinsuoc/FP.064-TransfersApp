@@ -10,17 +10,17 @@
                 @csrf
                 @method('POST')
 
-                <div class="form-group">
-                    <label for="id_hotel">Selecciona un hotel</label>
-                    <select name="id_hotel" id="id_hotel" class="form-select" required>
+                    <div class="form-group">
+                        <label for="id_hotel">Selecciona un hotel</label>
+                        <select name="id_hotel" id="id_hotel" class="form-select" required>
                         <option value="" disabled selected>Elige una opción</option>
                         @foreach ($hoteles as $hotel)
                             <option value="{{$hotel->id_hotel}}" @if($hotel->id_hotel == old('id_hotel')) selected @endif>{{$hotel->usuario}}</option>
                         @endforeach
-                    </select>
-                    @error('id_hotel', 'validacion')
+                        </select>
+                        @error('id_hotel', 'validacion')
                         <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
+                        @enderror
                     </div>
 
                     <div class="form-group mt-3">
@@ -49,12 +49,12 @@
 
                     <button type="submit" class="btn-bd-primary mt-4">Crear</button>
                            
-            </form>
-            </div> 
-            <form action="{{ route('precio.index') }}" class="mt-4">
-                @csrf
+                    </form>
+                    </div> 
+                     <form action="{{ route('precio.index') }}" class="mt-4">
+                     @csrf
                 <button type="submit" class="btn-bd-primary w-100">Panel precios</button>
-            </form>
-        </div>
-    </div>
+                 </form>
+             </div>
+            </div>
 </div>
