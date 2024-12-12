@@ -112,19 +112,19 @@
     cursor: pointer;
     text-align: center;
 }
-.btn-custom-secondary {
-    background-color: #0e3c13 !important;
-    color: white !important;
-    border: none !important;
-    padding: 10px 20px !important;
-    font-size: 16px !important;
-    border-radius: 5px !important;
-    cursor: pointer !important;
-    text-align: center !important;
+.bd-custom {
+    background-color: #093f10 ;
+    color: #ffffff ;
+    border: black ;
+    padding: 10px 20px ;
+    font-size: 16px ;
+    border-radius: 5px ;
+    cursor: pointer ;
+    text-align: center ;
 }
-.btn-custom-secondary:hover {
-    background-color: #ffffff !important;
-    color: black !important;
+.bd-custom:hover {
+    background-color: #ffffff ;
+    color: black ;
 }
 
   .headerDos h2{
