@@ -1,6 +1,6 @@
 <header class="header-bar d-flex justify-content-between align-items-center">
 
-    <h2 class="airlines-title">CODECRAFTER AIRLINES</h2> 
+    <h2 class="airlines-title">CODECRAFTER TRANSFERS</h2> 
 
     <div>
         <a href="/" class="btn btn-primary">Homepage</a>
