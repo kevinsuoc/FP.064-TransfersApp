@@ -110,7 +110,9 @@
     padding: 5px 10px; 
     
   }
-  
+  .headerDos h2{
+    color: rgb(41, 41, 166);
+}
   .airlines-welcome {
     display: flex;
     justify-content: center; /* Centra horizontalmente */
@@ -188,4 +190,17 @@
 
 #perfilSection.active, #reservasSection.active, #editSection.active {
     display: block;
+}
+
+.form-select option {
+    background: #f0f8ff;  /* Azul claro */
+    color: #333;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+/* Opciones cuando se seleccionan */
+.form-select option:checked {
+    background: #007bff; /* Azul intenso */
+    color: white;
 }
