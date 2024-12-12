@@ -39,7 +39,10 @@ class LoginController extends Controller
 
         $user = Hotel::where('usuario', $credentials['username'])->first();
         if ($user){
-            if ($this->validatePassword($user->password, $credentials['password'])){
+            if  (!$user->password){
+                return $this->loginError('Usuario corporativo no en alta. Hable con el administrador');
+            }
+            if ($this->validatePassword( $credentials['password'], $user->password, )){
                 $request->session()->put('user', $user);
                 return $this->redirectValidAuth($request, 'corporate');
             }

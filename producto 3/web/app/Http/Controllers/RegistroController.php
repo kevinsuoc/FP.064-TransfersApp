@@ -1,5 +1,7 @@
 <?php
 
+//TODO: Boton registrarse
+
 namespace App\Http\Controllers;
 
 use App\Models\Viajero;

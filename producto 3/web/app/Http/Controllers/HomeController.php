@@ -9,7 +9,7 @@ class HomeController extends Controller
     }
 
     public function corporate(){
-        return  view ('homepage.corporate');
+        return  redirect("/");
     }
 
     public function admin(){
