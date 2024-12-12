@@ -13,7 +13,7 @@
                 <div class="form-group">
                     <label for="id_hotel">Selecciona un hotel</label>
                     <select name="id_hotel" id="id_hotel" class="form-select" required>
-                        <option value="" disabled selected>Selecciona un hotel</option>
+                        <option value="" disabled selected>Elige una opción</option>
                         @foreach ($hoteles as $hotel)
                             <option value="{{$hotel->id_hotel}}" @if($hotel->id_hotel == old('id_hotel')) selected @endif>{{$hotel->usuario}}</option>
                         @endforeach
@@ -26,7 +26,7 @@
                 <div class="form-group mt-3">
                     <label for="id_vehiculo">Selecciona un vehículo</label>
                     <select name="id_vehiculo" id="id_vehiculo" class="form-select" required>
-                        <option value="" disabled selected>Selecciona un vehículo</option>
+                        <option value="" disabled selected>Elige una opción</option>
                         @foreach ($vehiculos as $vehiculo)
                             <option value="{{$vehiculo->id_vehiculo}}" @if($vehiculo->id_vehiculo == old('id_vehiculo')) selected @endif>{{$vehiculo->descripcion}}, {{$vehiculo->email_conductor}}</option>
                         @endforeach
