@@ -19,13 +19,14 @@
     @foreach ($vehiculos as $vehiculo)
     <div>
     <div class="mt-4">
+        <h5>Vehículo:</h5>
             <p><strong>Descripción: </strong>{{$vehiculo->descripcion}}</p>
             <p><strong>Email conductor: </strong>{{$vehiculo->email_conductor}}</p>
-            <form action="{{route('vehiculo.edit',$vehiculo->id_vehiculo)}}">
+            <form action="{{route('vehiculo.edit',$vehiculo->id_vehiculo)}}"class="d-inline-block me-2>
                 @csrf
                 <button type="submit"class="btn-bd-primary">Editar</button>
             </form>
-            <form action="{{route('vehiculo.destroy', $vehiculo->id_vehiculo)}}" method="POST">
+            <form action="{{route('vehiculo.destroy', $vehiculo->id_vehiculo)}}" class="d-inline-block" method="POST">
                 @csrf
                 @method('DELETE')
                 <button type="submit"class="btn-bd-primary">Borrar</button>

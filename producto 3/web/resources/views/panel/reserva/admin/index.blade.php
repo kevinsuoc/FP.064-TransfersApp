@@ -2,7 +2,8 @@
 
 <div class = "main-container">
     @include('header')
-    <p>reservas</p>
+    <div class="container mt-5 p-4 shadow-sm rounded" style="max-width: 400px; background: #f8f9fa;">
+    <h2 class="mb-4 text-center">Reservas</h2>
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -12,11 +13,12 @@
 
     <form action="{{route('reserva.create')}}">
             @csrf
-            <button type="submit">Agregar reserva</button>
+            <button type="submit" class="btn-bd-primary">Agregar reserva</button>
     </form>
 
     @foreach ($reservas as $reserva)
-    <div>
+    <div class="mt-4">
+    <h5>Reserva:</h5>
             <p>Datos generales</p>
             <p><strong>Reservador: </strong>
             @if ($reserva->id_viajero)
@@ -55,16 +57,17 @@
             <p><strong>Numero de vuelo: </strong>{{$reserva->numero_vuelo_salida}}</p>
             @endif
 
-            <form action="{{route('reserva.edit',$reserva->id_reserva)}}">
+            <form action="{{route('reserva.edit',$reserva->id_reserva)}}"class="d-inline-block me-2">
                 @csrf
-                <button type="submit">Editar</button>
+                <button type="submit"class="btn-bd-primary">Editar</button>
             </form>
-            <form action="{{route('reserva.destroy', $reserva->id_reserva)}}" method="POST">
+            <form action="{{route('reserva.destroy', $reserva->id_reserva)}}"class="d-inline-block"method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit">Borrar</button>
+                <button type="submit"class="btn-bd-primary">Borrar</button>
             </form>
     </div><br>
     @endforeach
 
+</div>
 </div>

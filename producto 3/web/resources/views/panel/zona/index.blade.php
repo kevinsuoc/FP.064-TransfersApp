@@ -18,7 +18,7 @@
 
     @foreach ($zonas as $zona)
     <div class="mt-4">
-        <h5>Zonas agregadas:</h5>
+        <h5>Zona:</h5>
                 <p><strong>Descripción: </strong>{{$zona->descripcion}}</p>
                 <form action="{{route('zona.edit',$zona->id_zona)}}" class="d-inline-block me-2">
                     @csrf
