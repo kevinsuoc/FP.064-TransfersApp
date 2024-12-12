@@ -48,6 +48,7 @@
                     {{ session('success') }}
                 </div>
             @endif
+</div>
         </form>
         <form action="{{ route('precio.index') }}" class="list-group-item">
                 @csrf

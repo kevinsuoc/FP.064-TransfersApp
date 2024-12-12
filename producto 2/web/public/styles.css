@@ -103,13 +103,28 @@
 }
 
 .btn-bd-primary {
+    background-color: #4c4cff; /* Azul */
     color: white;
-    background-color: rgb(41, 41, 166);
-    border: 2px solid rgb(41, 41, 166); /* Borde del mismo color que el fondo */
-    border-radius: 5px; /* Bordes redondeados */
-    padding: 5px 10px; 
-    
-  }
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+.btn-bd-secondary {
+    background-color: #6c757d; /* Gris */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    border: none;
+}
+.btn-bd-secondary:hover {
+    background-color: #5a6268; /* Gris oscuro */
+}
+
   .headerDos h2{
     color: rgb(41, 41, 166);
 }

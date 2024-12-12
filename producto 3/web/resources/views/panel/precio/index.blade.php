@@ -17,20 +17,21 @@
     </form>
 </div>
     @foreach ($precios as $precio)
-    <div>
+    <div class="mt-4">
             <p><strong>Hotel: </strong>{{$precio->hotel->usuario}}</p>
             <p><strong>Vehiculo: </strong>{{$precio->vehiculo->descripcion}}, {{$precio->vehiculo->email_conductor}}</p>
             <p><strong>Precio: </strong>{{$precio->precio}}</p>
             <form action="{{route('precio.edit',$precio->id_precio)}}">
                 @csrf
-                <button type="submit">Editar</button>
+                <button type="submit"class="btn-bd-primary">Editar</button>
             </form>
             <form action="{{route('precio.destroy', $precio->id_precio)}}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit">Borrar</button>
+                <button type="submit"class="btn-bd-primary">Borrar</button>
             </form>
     </div><br>
     @endforeach
 
+</div>
 </div>

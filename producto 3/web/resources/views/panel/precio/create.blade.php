@@ -21,9 +21,9 @@
                     @error('id_hotel', 'validacion')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
-                </div>
+                    </div>
 
-                <div class="form-group mt-3">
+                    <div class="form-group mt-3">
                     <label for="id_vehiculo">Selecciona un vehículo</label>
                     <select name="id_vehiculo" id="id_vehiculo" class="form-select" required>
                         <option value="" disabled selected>Elige una opción</option>
@@ -34,9 +34,9 @@
                     @error('id_vehiculo', 'validacion')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
-                </div>
+                    </div>
 
-                <div class="form-group mt-3">
+                 <div class="form-group mt-3">
                     <label for="precio">Precio</label>
                     <input value="{{old('precio')}}" type="number" step="0.01" name="precio" id="precio" class="form-control" required>
                     @error('precio', 'validacion')
@@ -45,11 +45,12 @@
                     @error('precio_unico', 'validacion')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
-                </div>
+               
 
-                <button type="submit" class="btn-bd-primary mt-4">Crear</button>
+                    <button type="submit" class="btn-bd-primary mt-4">Crear</button>
+                           
             </form>
-
+            </div> 
             <form action="{{ route('precio.index') }}" class="mt-4">
                 @csrf
                 <button type="submit" class="btn-bd-primary w-100">Panel precios</button>
