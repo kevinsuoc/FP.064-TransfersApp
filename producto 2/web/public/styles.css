@@ -112,17 +112,19 @@
     cursor: pointer;
     text-align: center;
 }
-.btn-bd-secondary {
-    background-color: #6c757d; /* Gris */
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 16px;
-    border: none;
+.btn-custom-secondary {
+    background-color: #0e3c13 !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    font-size: 16px !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    text-align: center !important;
 }
-.btn-bd-secondary:hover {
-    background-color: #5a6268; /* Gris oscuro */
+.btn-custom-secondary:hover {
+    background-color: #ffffff !important;
+    color: black !important;
 }
 
   .headerDos h2{
@@ -172,6 +174,7 @@
     background-color: #fff;
     color: black;
 }
+
 .form-group{
     display: flex;
     flex-wrap: wrap;

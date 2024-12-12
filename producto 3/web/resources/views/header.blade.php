@@ -3,7 +3,7 @@
     <h2 class="airlines-title">CODECRAFTER TRANSFERS</h2> 
 
     <div>
-        <a href="/" class="btn btn-primary">Homepage</a>
+        <a href="/" class="btn-bd-primary">Homepage</a>
 
         @if(session('userType'))
         <a href="{{route('logout')}}" class="btn btn-warning">Desconectarse</a>
