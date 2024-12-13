@@ -13,7 +13,7 @@
 
     <form action="{{route('zona.create')}}">
             @csrf
-            <button type="submit"class="btn-bd-primary">Agregar zona</button>
+            <button type="submit"class="btn-bd-primary" style="display: block; margin: 0 auto;">Agregar zona</button>
     </form>
 
     @foreach ($zonas as $zona)
