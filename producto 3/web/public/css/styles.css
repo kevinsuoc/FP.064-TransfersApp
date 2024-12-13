@@ -187,3 +187,20 @@
 #perfilSection.active, #reservasSection.active, #editSection.active {
     display: block;
 }
+
+/* Ajustar tamaño del botón "Registrarse" */
+form .btn-register-btn {
+    background-color: #1c4a27 !important; /* Verde */
+    border: 2px solid #1c4a27 !important; /* Borde del mismo color */
+    color: white !important;
+    padding: 6px 12px; /* Reducir padding */
+    font-size: 14px; /* Reducir tamaño de la fuente */
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+form .btn-register-btn:hover {
+    background-color: #1c4a27 !important; /* Verde más oscuro */
+    color: #fff !important; /* Texto blanco */
+}

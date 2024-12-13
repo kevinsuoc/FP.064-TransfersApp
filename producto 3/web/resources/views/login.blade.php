@@ -38,7 +38,8 @@
                     <form action="/registrarse">
                         @csrf
                         @method('GET')
-                        <button type="submit" class="btn-bd-primary  ">Registrarse</button>
+                        <button type="submit" class="btn-register-btn">Registrarse</button>
+
                     </form>
                     </div>
                 <div>
