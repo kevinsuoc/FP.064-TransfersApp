@@ -19,17 +19,20 @@
     @foreach ($zonas as $zona)
     <div class="mt-4">
         <h5>Zona:</h5>
-                <p><strong>Descripción: </strong>{{$zona->descripcion}}</p>
-                <form action="{{route('zona.edit',$zona->id_zona)}}" class="d-inline-block me-2">
-                    @csrf
-                    <button type="submit" class="btn-bd-primary">Editar</button>
-                </form>
-                <form action="{{route('zona.destroy', $zona->id_zona)}}" method="POST" class="d-inline-block">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn-bd-primary">Borrar</button>
-                </form>
-            </div><br>
+        <p><strong>Descripción: </strong>{{$zona->descripcion}}</p>
+        <div style="display: flex; justify-content: center; gap: 15px; margin-top: 10px;">
+            <form action="{{route('zona.edit', $zona->id_zona)}}" method="GET">
+                @csrf
+                <button type="submit" class="btn-bd-primary">Editar</button>
+            </form>
+            <form action="{{route('zona.destroy', $zona->id_zona)}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn-bd-primary">Borrar</button>
+            </form>
+        </div>
+    </div>
+ </div><br>
     @endforeach
 
 </div>
