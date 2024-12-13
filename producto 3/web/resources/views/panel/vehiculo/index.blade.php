@@ -11,10 +11,13 @@
         </div>
     @endif
 
-    <form action="{{route('vehiculo.create')}}">
+    <div class="text-center"> <!-- Contenedor para centrar -->
+        <form action="{{ route('vehiculo.create') }}">
             @csrf
-            <button type="submit"class="btn-bd-primary">Agregar vehiculo</button>
-    </form>
+            <button type="submit" class="btn-bd-primary">Agregar vehiculo</button>
+        </form>
+    </div>
+    
 
     @foreach ($vehiculos as $vehiculo)
     <div>
@@ -24,7 +27,7 @@
             <p><strong>Email conductor: </strong>{{$vehiculo->email_conductor}}</p>
             <form action="{{route('vehiculo.edit',$vehiculo->id_vehiculo)}}"class="d-inline-block me-2>
                 @csrf
-                <button type="submit"class="btn-bd-primary">Editar</button>
+                <button type="submit"class="btn-bd-primary" >Editar</button>
             </form>
             <form action="{{route('vehiculo.destroy', $vehiculo->id_vehiculo)}}" class="d-inline-block" method="POST">
                 @csrf
