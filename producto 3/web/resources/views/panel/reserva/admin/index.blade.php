@@ -13,7 +13,7 @@
 
     <form action="{{route('reserva.create')}}">
             @csrf
-            <button type="submit" class="btn-bd-primary">Agregar reserva</button>
+            <button type="submit" class="btn-bd-primary" style="display: block; margin: 0 auto;">Agregar reserva</button>
     </form>
 
     @foreach ($reservas as $reserva)
