@@ -11,10 +11,11 @@
         </div>
     @endif
 
-    <form action="{{route('precio.create')}}">
-            @csrf
-            <button type="submit"class="btn-bd-primary" >Agregar precio</button>
+    <form action="{{ route('precio.create') }}">
+        @csrf
+        <button type="submit" class="btn-bd-primary" style="display: block; margin: 0 auto;">Agregar precio</button>
     </form>
+    
 </div>
     @foreach ($precios as $precio)
     <div class="mt-4">
