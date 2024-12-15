@@ -6,7 +6,7 @@
         <h2>Panel de control</h2>
         <div class="list-group">
 
-            <form action="{{ route('trayectos.index') }}" class="list-group-item">
+            <form action="{{ route('calendario.index') }}" class="list-group-item">
                 @csrf
                 <button type="submit" class="btn btn-info w-100">Calendario de trayectos</button>
             </form>

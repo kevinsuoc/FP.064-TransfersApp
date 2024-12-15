@@ -11,6 +11,7 @@ use App\Http\Controllers\ZonaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\CalendarioController;
 
 
 /*
@@ -50,7 +51,7 @@ Route::name('homepage.')->group(function () {
 
 Route::middleware(['appAuth:admin'])->prefix("admin/panel/")->group(function () {
     // Trayectos
-    Route::resource('trayectos', TrayectoController::class)->only(['index']);
+    Route::resource('calendario', CalendarioController::class)->only(['index']);
 
     // Reservas
     Route::resource('reserva', ReservaController::class)->except(['show']);
@@ -66,6 +67,9 @@ Route::middleware(['appAuth:admin'])->prefix("admin/panel/")->group(function () 
 
     // Precios
     Route::resource('precio', PrecioController::class)->except(['show']);
+
+    Route::post('calendario', [CalendarioController::class, 'index'])->name('calendario.index');
+
 });
 
 // Viajero - Perfil
