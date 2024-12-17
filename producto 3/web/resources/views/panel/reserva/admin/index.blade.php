@@ -2,7 +2,7 @@
 
 <div class = "main-container">
     @include('header')
-    <div class="container mt-5 p-4 shadow-sm rounded" style="max-width: 400px; background: #f8f9fa;">
+    <div class="container mt-5 p-4 shadow-sm rounded" style="max-width: 500px; background: #f8f9fa;">
     <h2 class="mb-4 text-center">Reservas</h2>
 
     @if (session('success'))
@@ -19,7 +19,8 @@
     @foreach ($reservas as $reserva)
     <div class="mt-4">
     <h5>Reserva:</h5>
-            <p>Datos generales</p>
+    <div id="todos_los_tipos"class="p-3 mb-4 border rounded" >
+    <h3 class="mb-3">Datos generales</h3>
             <p><strong>Reservador: </strong>
             @if ($reserva->id_viajero)
                 {{$reserva->viajero->email}}
@@ -43,19 +44,24 @@
             <p><strong>Zona: </strong>{{ $reserva->precio->hotel->zona->descripcion }}</p>
 
             @if ($reserva->id_tipo_reserva == 1 || $reserva->id_tipo_reserva == 3)
-            <p>Datos de ida</p>
+            </div>
+            <div id="todos_los_tipos"class="p-3 mb-4 border rounded" >
+            <h3 class="mb-3">Datos generales</h3>
             <p><strong>Fecha de llegada al aeropuerto: </strong>{{$reserva->fecha_entrada}}</p>
             <p><strong>Hora de llegada al aeropuerto: </strong>{{$reserva->hora_entrada}}</p>
             <p><strong>Numero de vuelo: </strong>{{$reserva->numero_vuelo_entrada}}</p>
             <p><strong>Aeropuerto de origen: </strong>{{$reserva->origen_vuelo_entrada}}</p>
             @endif
             @if ($reserva->id_tipo_reserva == 2 || $reserva->id_tipo_reserva == 3)
-            <p>Datos de vuelta</p>
+            </div>
+            <div id="todos_los_tipos"class="p-3 mb-4 border rounded" >
+            <h3 class="mb-3">Datos generales</h3>
             <p><strong>Fecha de departura: </strong>{{$reserva->fecha_salida}}</p>
             <p><strong>Hora de departura: </strong>{{$reserva->hora_salida}}</p>
             <p><strong>Hora de recogida en hotel: </strong>{{$reserva->hora_recogida}}</p>
             <p><strong>Numero de vuelo: </strong>{{$reserva->numero_vuelo_salida}}</p>
             @endif
+</div>
 
             <form action="{{route('reserva.edit',$reserva->id_reserva)}}"class="d-inline-block me-2">
                 @csrf
