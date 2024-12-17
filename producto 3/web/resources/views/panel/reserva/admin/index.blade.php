@@ -2,7 +2,8 @@
 
 <div class = "main-container">
     @include('header')
-    <p>reservas</p>
+    <div class="container mt-5 p-4 shadow-sm rounded" style="max-width: 500px; background: #f8f9fa;">
+    <h2 class="mb-4 text-center">Reservas</h2>
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -12,12 +13,14 @@
 
     <form action="{{route('reserva.create')}}">
             @csrf
-            <button type="submit">Agregar reserva</button>
+            <button type="submit" class="btn-bd-primary">Agregar reserva</button>
     </form>
 
     @foreach ($reservas as $reserva)
-    <div>
-            <p>Datos generales</p>
+    <div class="mt-4">
+    <h5>Reserva:</h5>
+    <div id="todos_los_tipos"class="p-3 mb-4 border rounded" >
+    <h3 class="mb-3">Datos generales</h3>
             <p><strong>Reservador: </strong>
             @if ($reserva->id_viajero)
                 {{$reserva->viajero->email}}
@@ -41,30 +44,36 @@
             <p><strong>Zona: </strong>{{ $reserva->precio->hotel->zona->descripcion }}</p>
 
             @if ($reserva->id_tipo_reserva == 1 || $reserva->id_tipo_reserva == 3)
-            <p>Datos de ida</p>
+            </div>
+            <div id="todos_los_tipos"class="p-3 mb-4 border rounded" >
+            <h3 class="mb-3">Datos generales</h3>
             <p><strong>Fecha de llegada al aeropuerto: </strong>{{$reserva->fecha_entrada}}</p>
             <p><strong>Hora de llegada al aeropuerto: </strong>{{$reserva->hora_entrada}}</p>
             <p><strong>Numero de vuelo: </strong>{{$reserva->numero_vuelo_entrada}}</p>
             <p><strong>Aeropuerto de origen: </strong>{{$reserva->origen_vuelo_entrada}}</p>
             @endif
             @if ($reserva->id_tipo_reserva == 2 || $reserva->id_tipo_reserva == 3)
-            <p>Datos de vuelta</p>
+            </div>
+            <div id="todos_los_tipos"class="p-3 mb-4 border rounded" >
+            <h3 class="mb-3">Datos generales</h3>
             <p><strong>Fecha de departura: </strong>{{$reserva->fecha_salida}}</p>
             <p><strong>Hora de departura: </strong>{{$reserva->hora_salida}}</p>
             <p><strong>Hora de recogida en hotel: </strong>{{$reserva->hora_recogida}}</p>
             <p><strong>Numero de vuelo: </strong>{{$reserva->numero_vuelo_salida}}</p>
             @endif
+</div>
 
-            <form action="{{route('reserva.edit',$reserva->id_reserva)}}">
+            <form action="{{route('reserva.edit',$reserva->id_reserva)}}"class="d-inline-block me-2">
                 @csrf
-                <button type="submit">Editar</button>
+                <button type="submit"class="btn-bd-primary">Editar</button>
             </form>
-            <form action="{{route('reserva.destroy', $reserva->id_reserva)}}" method="POST">
+            <form action="{{route('reserva.destroy', $reserva->id_reserva)}}"class="d-inline-block"method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit">Borrar</button>
+                <button type="submit"class="btn-bd-primary">Borrar</button>
             </form>
     </div><br>
     @endforeach
 
+</div>
 </div>

@@ -3,7 +3,7 @@
         <!-- Header con franja de color azul claro semitransparente -->
         <header class="header-bar d-flex justify-content-between align-items-center">
             <!-- Text aligned to the left -->
-            <h2 class="airlines-title">CODECRAFTER AIRLINES</h2> 
+            <h2 class="airlines-title">CODECRAFTER TRANSFERS</h2> 
             
             <!-- Group buttons together and push them to the right -->
             <div class="ml-auto">

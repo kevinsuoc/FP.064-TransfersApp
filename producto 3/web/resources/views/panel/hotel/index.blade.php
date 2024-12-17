@@ -2,7 +2,8 @@
 
 <div class = "main-container">
 @include('header')
-<p>Hoteles</p>
+<div class="container mt-5 p-4 shadow-sm rounded" style="max-width: 400px; background: #f8f9fa;">
+        <h2 class="mb-4 text-center">Hoteles</h2>
 
 @if (session('success'))
     <div class="alert alert-success">
@@ -12,24 +13,26 @@
 
 <form action="{{route('hotel.create')}}">
         @csrf
-        <button type="submit">Agregar hotel</button>
+        <button type="submit" class="btn-bd-primary">Agregar hotel</button>
 </form>
 
 @foreach ($hoteles as $hotel)
-<div>
+<div class="mt-4">
+    <h5>Hotel:</h5>
     <p><strong>Zona: </strong>{{$hotel->zona->descripcion}}</p>
     <p><strong>Comision: </strong>{{$hotel->comision}} %</p>
     <p><strong>Usuario: </strong>{{$hotel->usuario}}</p>
-    <form action="{{route('hotel.edit',$hotel->id_hotel)}}">
+    <form action="{{route('hotel.edit',$hotel->id_hotel)}}"class="d-inline-block me-2">
         @csrf
-        <button type="submit">Editar</button>
+        <button type="submit"class="btn-bd-primary">Editar</button>
     </form>
-    <form action="{{route('hotel.destroy', $hotel->id_hotel)}}" method="POST">
+    <form action="{{route('hotel.destroy', $hotel->id_hotel)}}" method="POST"class="d-inline-block">
         @csrf
         @method('DELETE')
-        <button type="submit">Borrar</button>
+        <button type="submit"class="btn-bd-primary">Borrar</button>
     </form>
 </div><br>
 @endforeach
 
+</div>
 </div>

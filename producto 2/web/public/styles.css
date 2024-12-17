@@ -103,14 +103,33 @@
 }
 
 .btn-bd-primary {
+    background-color: #4c4cff; /* Azul */
     color: white;
-    background-color: rgb(41, 41, 166);
-    border: 2px solid rgb(41, 41, 166); /* Borde del mismo color que el fondo */
-    border-radius: 5px; /* Bordes redondeados */
-    padding: 5px 10px; 
-    
-  }
-  
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+.bd-custom {
+    background-color: #093f10 ;
+    color: #ffffff ;
+    border: black ;
+    padding: 10px 20px ;
+    font-size: 16px ;
+    border-radius: 5px ;
+    cursor: pointer ;
+    text-align: center ;
+}
+.bd-custom:hover {
+    background-color: #ffffff ;
+    color: black ;
+}
+
+  .headerDos h2{
+    color: rgb(41, 41, 166);
+}
   .airlines-welcome {
     display: flex;
     justify-content: center; /* Centra horizontalmente */
@@ -155,6 +174,7 @@
     background-color: #fff;
     color: black;
 }
+
 .form-group{
     display: flex;
     flex-wrap: wrap;
@@ -188,4 +208,17 @@
 
 #perfilSection.active, #reservasSection.active, #editSection.active {
     display: block;
+}
+
+.form-select option {
+    background: #f0f8ff;  /* Azul claro */
+    color: #333;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+/* Opciones cuando se seleccionan */
+.form-select option:checked {
+    background: #007bff; /* Azul intenso */
+    color: white;
 }
