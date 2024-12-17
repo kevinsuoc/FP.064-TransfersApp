@@ -90,5 +90,6 @@ function mostrarDatosReserva() {
         todosLosTipos.hidden = ida.hidden = vuelta.hidden = false;
     }
 }
+mostrarDatosReserva() 
 </script>
 </div>
