@@ -69,6 +69,10 @@ class PrecioController extends Controller
             'id_hotel' => ['required'],
             'id_vehiculo' => ['required'],
             'precio' => ['required', 'decimal:0,2', 'min:0'],
+        ], [
+            'between' => 'El campo debe ser entre :min y :max.',
+            'decimal' => 'Formto de precio incorrecto',
+            'min' => 'El precio minimo es 0',
         ]);
     }
 

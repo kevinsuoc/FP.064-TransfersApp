@@ -265,11 +265,17 @@ class ReservaController extends Controller
             'origen_vuelo_entrada' => ['required', 'between:2,50', 'string'],
         ];
 
+        $mensajes = [
+            'between' => 'El campo debe ser entre :min y :max.',
+            'email.unique' => 'El correo electrónico ya está registrado.',
+            'after' => 'La fecha debe ser luego de hoy'
+        ];
+
         if (session('userType') != 'user'){
             $rules['email_cliente'] = ['required', 'email'];
         }
 
-        $request->validateWithBag('validacion', $rules);
+        $request->validateWithBag('validacion', $rules, $mensajes);
     }
 
     private function validarTipo2(Request $request){
@@ -284,11 +290,17 @@ class ReservaController extends Controller
             'hora_recogida' => ['required'],
         ];
 
+        $mensajes = [
+            'between' => 'El campo debe ser entre :min y :max.',
+            'email.unique' => 'El correo electrónico ya está registrado.',
+            'after' => 'La fecha debe ser luego de hoy'
+        ];
+
         if (session('userType') != 'user'){
             $rules['email_cliente'] = ['required', 'email'];
         }
 
-        $request->validateWithBag('validacion', $rules);
+        $request->validateWithBag('validacion', $rules, $mensajes);
     }
 
     private function validarTipo3(Request $request){
@@ -308,11 +320,18 @@ class ReservaController extends Controller
             'hora_recogida' => ['required'], 
         ];
 
+        $mensajes = [
+            'between' => 'El campo debe ser entre :min y :max.',
+            'email.unique' => 'El correo electrónico ya está registrado.',
+            'after.fecha_entrada' => 'La fecha debe ser luego de hoy',
+            'after.fecha_salida' => 'La fecha de salida debe ser luego que la de entrada',
+        ];
+
         if (session('userType') != 'user'){
             $rules['email_cliente'] = ['required', 'email'];
         }
 
-        $request->validateWithBag('validacion', $rules);
+        $request->validateWithBag('validacion', $rules, $mensajes);
     }
 
     private function validarFechaYHoraFromData($data){

@@ -60,7 +60,10 @@ class HotelController extends Controller
             'comision' => ['required', 'between:0,100', 'numeric'],
             'usuario' => ['required', 'between:2,50', 'string'],
             'password' => ['nullable', Password::min(8)],
-            //'password' => ['required', Password::min(8)->numbers()->mixedCase()],
+        ], [
+            'between' => 'El campo debe ser entre :min y :max.',
+            'email.unique' => 'El correo electrónico ya está registrado.',
+            'password' => 'La contraseña debe tener más de 7 caracteres',
         ]);
     }
 

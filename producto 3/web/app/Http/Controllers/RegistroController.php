@@ -26,8 +26,12 @@ class RegistroController extends Controller
             'direccion' => ['required', 'between:2,50'],
             'codigo_postal' => ['required', 'between:2,50'],
             'password' => ['required', 'confirmed',Password::min(8)],
-//            'password' => ['required', 'confirmed',Password::min(8)->numbers()->mixedCase()],
+        ],  [
+            'between' => 'El campo debe ser entre :min y :max.',
+            'email.unique' => 'El correo electrónico ya está registrado.',
+            'password' => 'La contraseña debe tener más de 7 caracteres',
         ]);
+
         $viajero = new Viajero();
 
         $viajero->nombre = $request->nombre;

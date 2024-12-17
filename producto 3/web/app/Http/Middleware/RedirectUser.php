@@ -20,7 +20,7 @@ class RedirectUser
         switch($type){
             case 'user': return redirect()->route('homepage.user');
             case 'admin': return redirect()->route('homepage.admin');
-            case 'corporate': return redirect()->route('homepage.corporate');
+            case 'corporate': return redirect()->route('corporateReserva.index');
             default: return redirect()->route('login');
         }
     }

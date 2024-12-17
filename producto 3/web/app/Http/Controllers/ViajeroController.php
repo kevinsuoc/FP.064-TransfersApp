@@ -51,6 +51,9 @@ class ViajeroController extends Controller
             'pais' => ['required', 'between:2,50', 'string'],
             'direccion' => ['required', 'between:2,50'],
             'codigo_postal' => ['required', 'between:2,50'],
+        ], [
+            'between' => 'El campo debe tener entre :min y :max caracteres.',
+            'email.unique' => 'El correo electrónico ya está registrado.',
         ]);
     }
 

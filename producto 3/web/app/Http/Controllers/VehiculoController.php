@@ -50,7 +50,10 @@ class VehiculoController extends Controller
     private function validar(Request $request){
         $request->validateWithBag('validacion', [
             'descripcion' => ['required', 'between:2,50', 'string'],
-            'email_conductor' => ['required', 'email', 'unique:App\Models\Vehiculo,email_conductor']
+            'email_conductor' => ['required', 'email', 'unique:App\Models\Vehiculo,email_conductor'],
+        ], [
+            'between' => 'El campo debe tener entre :min y :max caracteres.',
+            'email.unique' => 'El correo electrónico ya está registrado.',
         ]);
     }
 

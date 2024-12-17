@@ -4,14 +4,13 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\PrecioController;
 use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\ReservaController;
-use App\Http\Controllers\TrayectoController;
+use App\Http\Controllers\CalendarioController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\ViajeroController;
 use App\Http\Controllers\ZonaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\CalendarioController;
 
 
 /*
@@ -67,13 +66,10 @@ Route::middleware(['appAuth:admin'])->prefix("admin/panel/")->group(function () 
 
     // Precios
     Route::resource('precio', PrecioController::class)->except(['show']);
-
-    Route::post('calendario', [CalendarioController::class, 'index'])->name('calendario.index');
-
 });
 
 // Viajero - Perfil
-Route::prefix('user/')->group(function () {
+Route::prefix('user/')->middleware('appAuth:user')->group(function () {
     Route::middleware('appAuth:self')->group(function () {
         Route::resource('perfil', ViajeroController::class)->only(['show', 'update', 'edit']);
         Route::put('perfil/{perfil}/changePassword', [ViajeroController::class, 'changePassword'])->name('perfil.changePassword');
@@ -85,6 +81,16 @@ Route::prefix('user/')->group(function () {
     });
 
     Route::resource('userReserva', ReservaController::class)->only(['index', 'store', 'create']);
+});
+
+// Hotel - Perfil
+Route::prefix('corporate')->middleware('appAuth:corporate')->group(function () {
+    // Reservas
+    Route::middleware('appAuth:reserva')->group(function () {
+        Route::resource('corporateReserva', ReservaController::class)->only(['update', 'edit', 'destroy']);
+    });
+
+    Route::resource('corporateReserva', ReservaController::class)->only(['index', 'store', 'create']);
 });
 
 
