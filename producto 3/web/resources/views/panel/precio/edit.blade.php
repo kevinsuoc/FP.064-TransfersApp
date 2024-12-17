@@ -33,8 +33,8 @@
             @enderror
             </div>
             <div class="form-group mt-3">
-            <label for="precio">Precio</label>
-            <input value="{{$precio->precio}}" type="number" step="0.01" name="precio" id="precio" required>
+            <label class="form-label" for="precio">Precio</label>
+            <input  class="form-select mb-3" value="{{$precio->precio}}" type="number" step="0.01" name="precio" id="precio" required>
             @error('precio', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror

@@ -15,15 +15,16 @@
             @csrf
             <button type="submit"class="btn-bd-primary" >Agregar precio</button>
     </form>
-</div>
+
     @foreach ($precios as $precio)
     <div class="mt-4">
             <p><strong>Hotel: </strong>{{$precio->hotel->usuario}}</p>
             <p><strong>Vehiculo: </strong>{{$precio->vehiculo->descripcion}}, {{$precio->vehiculo->email_conductor}}</p>
             <p><strong>Precio: </strong>{{$precio->precio}}</p>
+            <div class="mt-4 d-flex container justify-content-between">
             <form action="{{route('precio.edit',$precio->id_precio)}}">
                 @csrf
-                <button type="submit"class="btn-bd-primary">Editar</button>
+                <button type="submit"class="btn-bd-primary  ">Editar</button>
             </form>
             <form action="{{route('precio.destroy', $precio->id_precio)}}" method="POST">
                 @csrf
@@ -32,6 +33,7 @@
             </form>
     </div><br>
     @endforeach
-
+</div>
+</div>
 </div>
 </div>
