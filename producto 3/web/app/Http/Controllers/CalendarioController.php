@@ -28,13 +28,12 @@ class CalendarioController extends Controller
             ]);
         }
         return $this->mostrarCalendario($request);
-        //return view('panel.calendario.index', compact('filtroData', 'filtroData'));
     }
     private function mostrarCalendario($request)
     {
         
         $filtroData = $this->obtenerDataFiltro($request);
-        //error_log(print_r($filtroData,true));
+
         //Preparar los trayectos
         $reservas = match ($filtroData['tipo']) {
             'diaria' => Reserva::getByTrayectoDate($filtroData['dia']),
@@ -44,9 +43,6 @@ class CalendarioController extends Controller
         };
 
         $trayectos = $this->procesarTrayectos($reservas, $filtroData);
-
-        error_log(print_r($filtroData,true));
-        error_log(print_r($trayectos,true));
 
         return view('panel.calendario.index', ['trayectos'=>$trayectos, 'filtroData'=>$filtroData]);
     }
@@ -64,8 +60,6 @@ class CalendarioController extends Controller
 
     private function procesarTrayectos(Collection $reservas, array $filtroData): array
     {
-        //error_log('He llegado a procesar trayectos');
-
         $trayectos = [];
 
         foreach ($reservas as $reserva) {
@@ -112,10 +106,7 @@ class CalendarioController extends Controller
             $trayectos[] = $trayecto;
         }
 		}
-        //print_r($trayectos);
 		usort($trayectos, callback: [$this, 'comparar']);
-        //print_r($trayectos);
-
 
         return $trayectos;
     }
