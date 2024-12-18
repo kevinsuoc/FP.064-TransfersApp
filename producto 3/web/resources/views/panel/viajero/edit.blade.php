@@ -10,49 +10,49 @@
             @method('PUT')
         <div class="p-3 mb-4 border rounded">
             <label for="nombre"class="form-label">Nombre</label>
-            <input value="{{$viajero->nombre}}"class="form-select mb-3" type="text" name="nombre" id="nombre" required><br>
+            <input value="{{$viajero->nombre}}"class="form-control mb-3" type="text" name="nombre" id="nombre" required><br>
             @error('nombre', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label class="form-label"for="apellido1">Apellido</label>
-            <input value="{{$viajero->apellido1}}" class="form-select mb-3"type="text" name="apellido1" id="apellido1" required><br>
+            <input value="{{$viajero->apellido1}}" class="form-control mb-3"type="text" name="apellido1" id="apellido1" required><br>
             @error('apellido1', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label class="form-label"for="apellido2">Segundo apellido</label>
-            <input value="{{$viajero->apellido2}}" class="form-select mb-3"type="text" name="apellido2" id="apellido2" required><br>
+            <input value="{{$viajero->apellido2}}" class="form-control mb-3"type="text" name="apellido2" id="apellido2" required><br>
             @error('apellido2', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label class="form-label" for="direccion">direccion</label>
-            <input value="{{$viajero->direccion}}" class="form-select mb-3"type="text" name="direccion" id="direccion" required><br>
+            <input value="{{$viajero->direccion}}" class="form-control mb-3"type="text" name="direccion" id="direccion" required><br>
             @error('direccion', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label class="form-label" for="codigo_postal">Codigo postal</label>
-            <input value="{{$viajero->codigo_postal}}" class="form-select mb-3"type="text" name="codigo_postal" id="codigo_postal" required><br>
+            <input value="{{$viajero->codigo_postal}}" class="form-control mb-3"type="text" name="codigo_postal" id="codigo_postal" required><br>
             @error('codigo_postal', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label class="form-label" for="ciudad">Ciudad</label>
-            <input value="{{$viajero->ciudad}}"class="form-select mb-3" type="text" name="ciudad" id="ciudad" required><br>
+            <input value="{{$viajero->ciudad}}"class="form-control mb-3" type="text" name="ciudad" id="ciudad" required><br>
             @error('ciudad', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label class="form-label" for="pais">pais</label>
-            <input value="{{$viajero->pais}}" class="form-select mb-3"type="text" name="pais" id="pais" required><br>
+            <input value="{{$viajero->pais}}" class="form-control mb-3"type="text" name="pais" id="pais" required><br>
             @error('pais', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
 
             <label class="form-label" for="email">email</label>
-            <input value="{{$viajero->email}}" class="form-select mb-3"type="text" name="email" id="email" required><br>
+            <input value="{{$viajero->email}}" class="form-control mb-3"type="text" name="email" id="email" required><br>
             @error('email', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -74,11 +74,11 @@
 
 
             <label class="form-label" for="password">Contraseña</label>
-            <input class="form-select mb-3" type="password" name="password" id="password" required><br>
+            <input class="form-control mb-3" type="password" name="password" id="password" required><br>
 
 
             <label class="form-label"for="password_confirmation">Confirmar contraseña</label>
-            <input class="form-select mb-3" type="password" name="password_confirmation" id="password_confirmation" required><br>
+            <input class="form-control mb-3" type="password" name="password_confirmation" id="password_confirmation" required><br>
 
             <button class="btn-bd-primary" type="submit">Aceptar</button>
             

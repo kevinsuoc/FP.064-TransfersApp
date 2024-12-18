@@ -267,7 +267,6 @@ class ReservaController extends Controller
 
         $mensajes = [
             'between' => 'El campo debe ser entre :min y :max.',
-            'email.unique' => 'El correo electrónico ya está registrado.',
             'after' => 'La fecha debe ser luego de hoy'
         ];
 
@@ -323,8 +322,8 @@ class ReservaController extends Controller
         $mensajes = [
             'between' => 'El campo debe ser entre :min y :max.',
             'email.unique' => 'El correo electrónico ya está registrado.',
-            'after.fecha_entrada' => 'La fecha debe ser luego de hoy',
-            'after.fecha_salida' => 'La fecha de salida debe ser luego que la de entrada',
+            'fecha_salida.after' => 'La fecha de salida debe ser luego que la de entrada',
+            'fecha_entrada.after' => 'La fecha debe ser luego de hoy',
         ];
 
         if (session('userType') != 'user'){

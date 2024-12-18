@@ -11,7 +11,7 @@
         </div>
     @endif
 
-    <div class="mt-4">
+    <div class="p-3 mt-4 border rounded">
         <p><strong>Nombre: </strong>{{$viajero->nombre}}</p>
         <p><strong>Apellido 1: </strong>{{$viajero->apellido1}}</p>
         <p><strong>Apellido 2: </strong>{{$viajero->apellido2}}</p>
@@ -22,7 +22,7 @@
         <p><strong>Email: </strong>{{$viajero->email}}</p>
         <form action="{{route('perfil.edit', $viajero->id_viajero)}}">
         @csrf
-        <button type="submit"class="btn-bd-primary">Editar perfil</button>
+        <button type="submit"class="btn-bd-primary">Editar</button>
         </form>
     </div>
 </div>

@@ -8,14 +8,14 @@
     @csrf
     @method('POST')
     <div class="form-group">
-    <select id="id_tipo_reserva" name="id_tipo_reserva" class="form-select mb-4" onchange="mostrarDatosReserva()">
+    <select id="id_tipo_reserva" name="id_tipo_reserva" class="form-select mb-4 w-100" onchange="mostrarDatosReserva()">
     <option value="" disabled selected>Elige un tipo de reserva</option>
     @foreach ($tiposReserva as $tipoReserva)
     <option value="{{$tipoReserva->id_tipo_reserva}}" @if(old('id_tipo_reserva') == $tipoReserva->id_tipo_reserva) selected @endif>{{$tipoReserva->descripcion}}</option>
     @endforeach
     </select>
 
-    <div id="todos_los_tipos"class="p-3 mb-4 border rounded" hidden>
+    <div id="todos_los_tipos"class="p-3 mb-4 border rounded w-100" hidden>
     <h3 class="mb-3">Datos generales</h3>
         <!-- Viajero reservador -->
         <label for="num_viajeros">Numero de viajeros</label>
@@ -24,21 +24,21 @@
                 <div class="alert alert-danger">{{ $message }}</div>
         @enderror
 
-        <select id="id_precio" name="id_precio" >
+        <select id="id_precio" name="id_precio" class="form-control">
         <option selected disabled value="">Selecciona un destino/origen</option>
         @foreach ($precios as $precio)
         <option value="{{$precio->id_precio}}" @if(old('id_precio') == $precio->id_precio) selected @endif>
-            Zona: {{$precio->hotel->zona->descripcion}}
+            Hotel: {{$precio->hotel->usuario}} ({{$precio->precio}} $ Por trayecto)
             
         </option>
         @endforeach
-        </select><br>
-
-        <!-- Viajero reservador -->
-        <!-- Hotel reservador -->
+        </select>
+        @error('id_precio', 'validacion')
+                <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
     </div>
 
-    <div id="ida" class="p-3 mb-4 border rounded" hidden>
+    <div id="ida" class="p-3 mb-4 border rounded w-100" hidden>
     <h3 class="mb-3">Datos de ida</h3>
         <label for="fecha_entrada"class="form-label">Fecha de llegada del vuelo</label>
         <input id="fecha_entrada" class="form-control mb-3" name="fecha_entrada" value="{{old('fecha_entrada')}}" type="date" class="form-control mb-3"><br>
@@ -66,7 +66,7 @@
 
     </div>
 
-    <div id="vuelta" hidden>
+    <div id="vuelta" class="p-3 mb-4 border rounded w-100" hidden>
         <h3>Datos de vuelta</h3>
         <label for="fecha_salida"class="form-label" >Fecha de salida del vuelo</label>
         <input id="fecha_salida"  class="form-control mb-3" name="fecha_salida" value="{{old('fecha_salida')}}" type="date" ><br>
@@ -93,6 +93,10 @@
         @enderror
 
     </div>
+
+    @error('fecha', 'validacion')
+        <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
 
     <button type="submit"class="btn-bd-primary w-100">Crear</button>
     </div>
