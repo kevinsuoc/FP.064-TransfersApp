@@ -110,6 +110,11 @@
             </div>
         </div>
     </div>
+    <!-- Contenedor del Calendario -->
+<div id="calendar" class="mt-5"></div>
+
+
+
 </div>
 
 
@@ -137,7 +142,38 @@
         const modal = new bootstrap.Modal(document.getElementById('detalleModal'));
         modal.show();
     }
-</script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const calendarEl = document.getElementById('calendar'); // Contenedor del calendario
+
+        // Asegúrate de que los eventos lleguen en formato JSON correcto desde PHP
+        const eventos = [
+            {"title": "LGEZT", "start": "2024-12-20T13:14:00", "description": "elopezestr@uoc.edu"},
+            {"title": "DHKJC", "start": "2024-12-25T23:58:00", "description": "elopezestr@uoc.edu"}
+        ];
+
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth', // Vista inicial: mensual
+            locale: 'es', // Cambia el idioma a español
+            events: eventos, // Carga de eventos
+
+            // Evento al hacer clic en un evento del calendario
+            eventClick: function (info) {
+                const trayecto = eventos.find(event => event.title === info.event.title);
+                if (trayecto) {
+                    alert('Detalles del trayecto:\n' +
+                          'Localizador: ' + trayecto.title + '\n' +
+                          'Fecha: ' + trayecto.start + '\n' +
+                          'Email: ' + trayecto.description);
+                }
+            }
+        });
+
+        calendar.render(); // Renderizar el calendario
+    });
+    </script>
+    <!-- FullCalendar Styles and Scripts -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 
 

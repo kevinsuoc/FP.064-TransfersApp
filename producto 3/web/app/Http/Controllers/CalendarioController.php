@@ -29,23 +29,42 @@ class CalendarioController extends Controller
         }
         return $this->mostrarCalendario($request);
     }
-    private function mostrarCalendario($request)
-    {
-        
-        $filtroData = $this->obtenerDataFiltro($request);
+    public function mostrarCalendario($request)
+{
+    $filtroData = $this->obtenerDataFiltro($request);
 
-        //Preparar los trayectos
-        $reservas = match ($filtroData['tipo']) {
-            'diaria' => Reserva::getByTrayectoDate($filtroData['dia']),
-            'mensual' => Reserva::getByTrayectoMonth($filtroData['anyo'], $filtroData['mes']),
-            'semanal' => Reserva::getByTrayectoWeek($filtroData['anyo'], $filtroData['semana']),
-            default => [],
-        };
+    // Preparar los trayectos
+    $reservas = match ($filtroData['tipo']) {
+        'diaria' => Reserva::getByTrayectoDate($filtroData['dia']),
+        'mensual' => Reserva::getByTrayectoMonth($filtroData['anyo'], $filtroData['mes']),
+        'semanal' => Reserva::getByTrayectoWeek($filtroData['anyo'], $filtroData['semana']),
+        default => [],
+    };
 
-        $trayectos = $this->procesarTrayectos($reservas, $filtroData);
+    $trayectos = $this->procesarTrayectos($reservas, $filtroData);
 
-        return view('panel.calendario.index', ['trayectos'=>$trayectos, 'filtroData'=>$filtroData]);
+    // Inicializar eventos como array vacío
+    $eventos = [];
+
+    // Preparar eventos para FullCalendar si hay trayectos
+    if (!empty($trayectos)) {
+        $eventos = array_map(function ($trayecto) {
+            return [
+                'title' => $trayecto['localizador'],
+                'start' => $trayecto['dia'] . 'T' . $trayecto['hora'],
+                'description' => $trayecto['email'],
+            ];
+        }, $trayectos);
     }
+
+    // Enviar datos a la vista
+    return view('panel.calendario.index', [
+        'trayectos' => $trayectos, 
+        'filtroData' => $filtroData, 
+        'eventos' => json_encode($eventos), // Asegurarse de enviar JSON
+    ]);
+}
+
 
     private function obtenerDataFiltro($request): array
     {
