@@ -4,6 +4,7 @@
 
 <div class="main-container">
 @include('header')
+<div class="container mt-5 p-4 shadow-sm rounded" style="max-width: 1000px; background: #f8f9fa;">
     <div class="container mt-4">
         
         @if (session('success'))
@@ -58,7 +59,7 @@
 
             <input type="hidden" name="request" value="filtroTrayectos">
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Filtrar</button>
+                <button type="submit" class="btn-bd-primary">Filtrar</button>
             </div>
         </form>
 
@@ -70,13 +71,14 @@
                         <p><strong>Fecha:</strong> {{ $trayecto['dia'] }} {{ $trayecto['hora'] }}</p>
                         <p><strong>Localizador:</strong> {{ $trayecto['localizador'] }}</p>
                         <p><strong>Email viajero:</strong> {{ $trayecto['email'] }}</p>
-                        <button class="btn btn-info" onclick="verDetalle({{ json_encode($trayecto) }})">Ver más</button>
+                        <button class="btn-bd-primary" onclick="verDetalle({{ json_encode($trayecto) }})">Ver más</button>
                     </div>
                 </div>
             @endforeach
         </div>
     </div>
 
+</div>
 </div>
 
 <!-- Modal para ver detalles -->
@@ -104,7 +106,7 @@
                 <p><strong>Número de vuelo de Salida:</strong> <span id="detalleVueloSalida"></span></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn-bd-primary" data-bs-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
