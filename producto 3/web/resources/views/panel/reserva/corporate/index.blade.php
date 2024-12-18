@@ -2,29 +2,37 @@
 
 <div class = "main-container">
     @include('header')
-
-    <div>
+    <div class="container mt-5 p-4 shadow-sm rounded" style="max-width: 500px; background: #f8f9fa;">
+    <h2 class="mb-4 text-center">Información y consulta de reserva</h2>
+    <div class="container mt-5 p-4 shadow-sm rounded">
         <p>Hotel: {{session('user')->usuario}}</p>
         <p>Comision: {{session('user')->comision}} %</p>
         @if(isset($totalComisiones))
         <p>Total de comisiones de este mes: {{$totalComisiones}}</p>
         @endif
+        <form action="{{route('corporateReserva.index')}}"class="d-inline-block me-2">
+            @csrf
+            <label class="form-label" for="mes">Mes</label>
+            <input class="form-select mb-3" id="mes" name="mes" type="number" min="1" max="12" @if(isset($mes)) value="{{$mes}}" @endif>
+
+            <label class="form-label" for="anyo">Año</label>
+            <input class="form-select mb-3" id="anyo" name="anyo" type="number" min="2020" max="2050" @if(isset($anyo)) value="{{$anyo}}" @endif>
+            <div class="row gy-5">
+            <div class="col-6">
+            <button class="btn-bd-primary" type="submit">Ver reservas del mes y suma de comisiones</button><br>
+        </form>
+        
         <form action="{{route('corporateReserva.index')}}">
             @csrf
-            <label for="mes">Mes</label>
-            <input id="mes" name="mes" type="number" min="1" max="12" @if(isset($mes)) value="{{$mes}}" @endif>
-
-            <label for="anyo">Año</label>
-            <input id="anyo" name="anyo" type="number" min="2020" max="2050" @if(isset($anyo)) value="{{$anyo}}" @endif>
-
-            <button type="submit">Ver reservas del mes y suma de comisiones</button><br>
+</div>
+            <div class="col-6">
+            <button class="btn-bd-primary" type="submit">Ver todas las reservas</button><br>
         </form>
-        <form action="{{route('corporateReserva.index')}}">
-            @csrf
-            <button type="submit">Ver todas las reservas</button><br>
-        </form>
-    </div>
-    <p>reservas</p>
+</div>
+</div>
+</div>
+    <div class="container mt-5 p-4 shadow-sm rounded">
+    <h2 class="mb-4 text-center">Reservas</h2>
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -34,17 +42,17 @@
 
     <form action="{{route('corporateReserva.create')}}">
             @csrf
-            <button type="submit">Agregar reserva</button>
+            <button class="btn-bd-primary" type="submit">Agregar reserva</button>
     </form>
-
+</div>
     
 	@error('fecha', 'validacion')
         <div class="alert alert-danger">{{ $message }}</div>
     @enderror
 
     @foreach ($reservas as $reserva)
-    <div>
-            <p>Datos generales</p>
+    <div class="container mt-5 p-4 shadow-sm rounded">
+    <h2 class="mb-4 text-center">Datos generales</h2>
             <p><strong>Reservador: </strong>
             @if ($reserva->id_viajero)
                 {{$reserva->viajero->email}}
@@ -89,16 +97,22 @@
             <p><strong>Hora de recogida en hotel: </strong>{{$reserva->hora_recogida}}</p>
             <p><strong>Numero de vuelo: </strong>{{$reserva->numero_vuelo_salida}}</p>
             @endif
-
+            <div class="row gy-5">
+            <div class="col-6">
             <form action="{{route('corporateReserva.edit',$reserva->id_reserva)}}">
                 @csrf
-                <button type="submit">Editar</button>
+             
+                <button class="btn-bd-primary"type="submit">Editar</button>
             </form>
+</div>
+<div class="col-6">
             <form action="{{route('corporateReserva.destroy', $reserva->id_reserva)}}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit">Borrar</button>
+                <button class="btn-bd-primary" type="submit">Borrar</button>
             </form>
+</div>
+</div>
     </div><br>
     @endforeach
 
