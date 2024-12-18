@@ -2,38 +2,39 @@
 
 <div class = "main-container">
 @include('header')
-<div>
-    <div class="container mt-5 p-4 shadow-sm rounded" style="max-width: 850px; background: #f8f9fa;">
-    <h2 class="mb-4 text-center">Editar datos viajero y vehículo</h2>
+<div class="container mt-5 p-4 shadow-sm rounded" style="max-width: 600px; background: #f8f9fa;">
+    <div>
+    <h2 class="mb-4 text-center">Editar Reserva</h2>
     <form action="{{route('corporateReserva.update',$reserva->id_reserva)}}" method="POST">
         @csrf
         @method('PUT')
-        <div class="p-3 mb-4 border rounded">
-        <input class="form-select mb-3" type="email" name="email_cliente" id="email_cliente"  value="{{$reserva->email_cliente}}"><br>
-        @error('email_cliente', 'validacion')
-                <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
         
-        <label class="form-label" for="num_viajeros">Numero de viajeros</label>
-        <input class="form-select mb-3" type="number" name="num_viajeros" id="num_viajeros" value="{{$reserva->num_viajeros}}"><br>
-        @error('num_viajeros', 'validacion')
-                <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
+        <div class="p-3 mb-4">
+            <div class="container p-3 mb-4 border rounded">
+                    <h2 class="mb-4 text-center">Datos generales</h2>
+                <input class="form-control mb-3" type="email" name="email_cliente" id="email_cliente"  value="{{$reserva->email_cliente}}"><br>
+                @error('email_cliente', 'validacion')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                
+                <label class="form-label" for="num_viajeros">Numero de viajeros</label>
+                <input class="form-control mb-3" type="number" name="num_viajeros" id="num_viajeros" value="{{$reserva->num_viajeros}}"><br>
+                @error('num_viajeros', 'validacion')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
 
-        <select id="id_precio" name="id_precio" >
-        <option selected disabled value="">Selecciona un destino/origen</option>
-        @foreach ($precios as $precio)
-        <option value="{{$precio->id_precio}}" @if($reserva->id_precio == $precio->id_precio) selected @endif>
-            Vehiculo: {{$precio->vehiculo->descripcion}}
-            Email del conductor: {{$precio->vehiculo->email_conductor}}
-            Precio: {{$precio->precio}}
-            Comision: {{  (session('user')->comision / 100) * $precio->precio }}
-        </option>
-        @endforeach
-        </select><br>
-    
+                <select id="id_precio" name="id_precio" class="form-control mb-3">
+                <option selected disabled value="">Selecciona un precio</option>
+                @foreach ($precios as $precio)
+                <option value="{{$precio->id_precio}}" @if($reserva->id_precio == $precio->id_precio) selected @endif>
+                Precio: {{$precio->precio}}.
+                Conductor:  {{$precio->vehiculo->email_conductor}} ({{$precio->vehiculo->descripcion}})
+                </option>
+                @endforeach
+                </select>
+            </div>
         @if($reserva->id_tipo_reserva == 1 || $reserva->id_tipo_reserva == 3)
-        <div class="container mt-5 p-4 shadow-sm rounded">
+        <div class="container p-3 mb-4 border rounded">
         <h2 class="mb-4 text-center">Datos de ida</h2>
         <label class="form-label" for="fecha_entrada">Fecha de llegada del vuelo</label>
         <input id="fecha_entrada" name="fecha_entrada" value="{{$reserva->fecha_entrada}}" type="date" ><br>
@@ -59,10 +60,10 @@
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         @endif
-
+        </div>
         @if($reserva->id_tipo_reserva == 2 || $reserva->id_tipo_reserva == 3)
-</div>
-        <div class="container mt-5 p-4 shadow-sm rounded">
+
+        <div class="container p-3 mb-4 border rounded">
         <h2 class="mb-4 text-center">Datos de vuelta</h2>
         <label class="form-label" for="fecha_salida">Fecha de salida del vuelo</label>
         <input class="form-select mb-3" id="fecha_salida" name="fecha_salida" value="{{$reserva->fecha_salida}}" type="date" ><br>
@@ -87,6 +88,7 @@
         @error('hora_recogida', 'validacion')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
+        </div>
         @endif
 
 		@error('fecha', 'validacion')
@@ -95,9 +97,10 @@
     
 
         <input class="form-select mb-3" type="hidden" name="id_tipo_reserva" value="{{$reserva->id_tipo_reserva}}">
-        <div class="row gy-5">
-        <div class="col-6">
-        <button class="btn-bd-primary" type="submit">Aceptar</button>
+
+        <div class="d-flex justify-content-center mb-4">
+            <button class="btn-bd-primary" type="submit">Aceptar</button>
+        </div>
 
         @error('descripcion', 'validacion')
             <div class="alert alert-danger">{{ $message }}</div>
@@ -109,14 +112,12 @@
         @endif
 
     </form>
-
-</div>
-
-<div class="col-6">
-    <form action="{{ route('corporateReserva.index') }}" class="list-group-item">
+    <form action="{{ route('corporateReserva.index') }}" class="list-group-item w-100">
             @csrf
-            <button class="btn-bd-primary w100" type="submit" class="btn btn-info w-100">Panel Reservas</button>
+        <div class="d-flex justify-content-center w-100">
+        <button class="btn-bd-primary w-100" type="submit">Panel Reservas</button>
+        </div>
     </form>
-
 </div>
+
 </div>

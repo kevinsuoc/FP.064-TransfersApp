@@ -2,7 +2,7 @@
 
 <div class = "main-container">
 @include('header')
-<div class="container mt-5 p-4 shadow-sm rounded" style="max-width: 850px; background: #f8f9fa;">
+<div class="container mt-5 p-4 shadow-sm rounded" style="max-width: 600px; background: #f8f9fa;">
 <h2 class="mb-4 text-center">Reservas</h2>
 <form action="{{route('corporateReserva.store')}}" method="POST">
     @csrf
@@ -15,7 +15,7 @@
     @endforeach
     </select>
 
-    <div id="todos_los_tipos" class="p-3 mb-4 border rounded" hidden>
+    <div id="todos_los_tipos" class="p-3 mb-4 border rounded w-100" hidden>
         
         <h3  class="mb-4 text-center" >Datos generales</h3>
         <!-- Viajero reservador -->
@@ -32,14 +32,12 @@
                 <div class="alert alert-danger">{{ $message }}</div>
         @enderror
 
-        <select id="id_precio" name="id_precio" >
+        <select id="id_precio" name="id_precio" class="form-select">
         <option selected disabled value="">Selecciona un precio</option>
         @foreach ($precios as $precio)
         <option value="{{$precio->id_precio}}" @if(old('id_precio') == $precio->id_precio) selected @endif>
-            Vehiculo: {{$precio->vehiculo->descripcion}}
-            Email del conductor: {{$precio->vehiculo->email_conductor}}
-            Precio: {{$precio->precio}}
-            Comision: {{  (session('user')->comision / 100) * $precio->precio }}
+            Precio: {{$precio->precio}}.
+            Conductor {{$precio->vehiculo->email_conductor}} ({{$precio->vehiculo->descripcion}})
         </option>
         @endforeach
         </select><br>
@@ -48,7 +46,7 @@
         <!-- Hotel reservador -->
     </div>
 
-    <div id="ida" class="p-3 mb-4 border rounded"  hidden>
+    <div id="ida" class="p-3 mb-4 border rounded w-100"  hidden>
     <h3 class="mb-3">Datos de ida</h3>
         <label  class="form-label" for="fecha_entrada">Fecha de llegada del vuelo</label>
         <input class="form-control mb-3" id="fecha_entrada" name="fecha_entrada" value="{{old('fecha_entrada')}}" type="date" ><br>
@@ -76,7 +74,7 @@
 
     </div>
 
-    <div id="vuelta" class="p-3 mb-4 border rounded" hidden>
+    <div id="vuelta" class="p-3 mb-4 border rounded w-100" hidden>
     <h3 class="mb-3">Datos de vuelta</h3>
         <label  class="form-label" for="fecha_salida">Fecha de salida del vuelo</label>
         <input class="form-control mb-3" id="fecha_salida" name="fecha_salida" value="{{old('fecha_salida')}}" type="date" ><br>
@@ -108,19 +106,22 @@
         <div class="alert alert-danger">{{ $message }}</div>
     @enderror
 </div>
-    <div class="row gy-5">
-    <div class="col-6">
+    <div class="d-flex justify-content-center">
     <button type="submit"class="btn-bd-primary" >Crear</button>
-    
+    </div>
 </form>
-</div>
-<div class="col-6">
-<form action="{{ route('corporateReserva.index') }}" class="list-group-item">
+
+<form action="{{ route('corporateReserva.index') }}" class="list-group-item mt-4">
         @csrf
-        <button type="submit" class="btn-bd-primary w-100">Panel reservas</button>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn-bd-primary w-100">Panel reservas</button>
+        </div>
 </form>
 
 </div>
+
+
+
 <script>
 
 function mostrarDatosReserva(){
