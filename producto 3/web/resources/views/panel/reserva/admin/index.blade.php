@@ -13,14 +13,15 @@
 
     <form action="{{route('reserva.create')}}">
             @csrf
+        <div class="d-flex justify-content-center mb-4">
             <button type="submit" class="btn-bd-primary">Agregar reserva</button>
+        </div>
     </form>
 
     @foreach ($reservas as $reserva)
-    <div class="mt-4">
-    <h5>Reserva:</h5>
-    <div id="todos_los_tipos"class="p-3 mb-4 border rounded" >
-    <h3 class="mb-3">Datos generales</h3>
+    <div class="p-3 mb-4 border rounded">
+    <div id="todos_los_tipos" class="p-1 mb-2 border rounded">
+    <h3 class="mb-3">Datos generales - reserva</h3>
             <p><strong>Reservador: </strong>
             @if ($reserva->id_viajero)
                 {{$reserva->viajero->email}}
@@ -45,8 +46,8 @@
 
             @if ($reserva->id_tipo_reserva == 1 || $reserva->id_tipo_reserva == 3)
             </div>
-            <div id="todos_los_tipos"class="p-3 mb-4 border rounded" >
-            <h3 class="mb-3">Datos generales</h3>
+            <div id="todos_los_tipos" class="p-3 mb-4 border rounded">
+            <h3 class="mb-3">Datos de ida</h3>
             <p><strong>Fecha de llegada al aeropuerto: </strong>{{$reserva->fecha_entrada}}</p>
             <p><strong>Hora de llegada al aeropuerto: </strong>{{$reserva->hora_entrada}}</p>
             <p><strong>Numero de vuelo: </strong>{{$reserva->numero_vuelo_entrada}}</p>
@@ -54,15 +55,16 @@
             @endif
             @if ($reserva->id_tipo_reserva == 2 || $reserva->id_tipo_reserva == 3)
             </div>
-            <div id="todos_los_tipos"class="p-3 mb-4 border rounded" >
-            <h3 class="mb-3">Datos generales</h3>
+            <div id="todos_los_tipos" class="p-3 mb-4 border rounded">
+            <h3 class="mb-3">Datos de vuelta</h3>
             <p><strong>Fecha de departura: </strong>{{$reserva->fecha_salida}}</p>
             <p><strong>Hora de departura: </strong>{{$reserva->hora_salida}}</p>
             <p><strong>Hora de recogida en hotel: </strong>{{$reserva->hora_recogida}}</p>
             <p><strong>Numero de vuelo: </strong>{{$reserva->numero_vuelo_salida}}</p>
             @endif
-</div>
 
+
+    </div>
             <form action="{{route('reserva.edit',$reserva->id_reserva)}}"class="d-inline-block me-2">
                 @csrf
                 <button type="submit"class="btn-bd-primary">Editar</button>
@@ -72,7 +74,7 @@
                 @method('DELETE')
                 <button type="submit"class="btn-bd-primary">Borrar</button>
             </form>
-    </div><br>
+    </div>
     @endforeach
 
 </div>

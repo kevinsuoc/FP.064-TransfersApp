@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Hotel;
 use App\Models\Precio;
 use App\Models\Vehiculo;
+use Exception;
 use Illuminate\Http\Request;
 
 // TODO: Los precios se agregan como enteros
@@ -60,7 +61,12 @@ class PrecioController extends Controller
 
     public function destroy(string $id)
     {
-        Precio::destroy($id);
+        try {
+            Precio::destroy($id);
+        } catch (Exception $e){
+            return redirect()->route('precio.index')->with('error', 'No se puede eliminar el precio');
+        }
+        
         return redirect()->route( 'precio.index')->with('success', 'Precio eliminado');
     }
 

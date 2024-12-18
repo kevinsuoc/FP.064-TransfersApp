@@ -11,14 +11,21 @@
     </div>
 @endif
 
+@if (session('error'))
+    <div class="alert alert-warning">
+        {{ session('error') }}
+    </div>
+@endif
+
 <form action="{{route('hotel.create')}}">
         @csrf
+        <div class="d-flex justify-content-center">
         <button type="submit" class="btn-bd-primary">Agregar hotel</button>
+        </div>
 </form>
 
 @foreach ($hoteles as $hotel)
-<div class="mt-4">
-    <h5>Hotel:</h5>
+<div class="mt-4 p-3 mb-4 border rounded">
     <p><strong>Zona: </strong>{{$hotel->zona->descripcion}}</p>
     <p><strong>Comision: </strong>{{$hotel->comision}} %</p>
     <p><strong>Usuario: </strong>{{$hotel->usuario}}</p>
@@ -31,7 +38,7 @@
         @method('DELETE')
         <button type="submit"class="btn-bd-primary">Borrar</button>
     </form>
-</div><br>
+</div>
 @endforeach
 
 </div>

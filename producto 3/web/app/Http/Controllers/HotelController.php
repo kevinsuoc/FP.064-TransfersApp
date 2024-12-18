@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Hotel;
 use App\Models\Zona;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
@@ -43,26 +44,46 @@ class HotelController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $this->validar($request);
-        $this->setData($request, Hotel::find($id)); 
+        if (isset($request->isPassword)){
+            $this->validarPassword($request);
+            $this->setDataPassword($request, Hotel::find($id)); 
+        }
+        else{
+            $this->validar($request);
+            $this->setData($request, Hotel::find($id)); 
+        }
+        
         return redirect()->back()->with('success', 'Hotel actualizado');  
     }
 
     public function destroy(string $id)
     {
-        Hotel::destroy($id);
+        try {
+            Hotel::destroy($id);
+        } catch (Exception $e){
+            return redirect()->route('hotel.index')->with('error', 'No se puede eliminar el hotel');
+        }
+
         return redirect()->route('hotel.index')->with('success', 'Hotel eliminado');
     }
 
     private function validar(Request $request){
         $request->validateWithBag('validacion', [
             'id_zona' => ['required'],
-            'comision' => ['required', 'between:0,100', 'numeric'],
+            'comision' => ['required', 'between:0,100', 'decimal:0,2'],
             'usuario' => ['required', 'between:2,50', 'string'],
             'password' => ['nullable', Password::min(8)],
         ], [
             'between' => 'El campo debe ser entre :min y :max.',
             'email.unique' => 'El correo electrónico ya está registrado.',
+            'password' => 'La contraseña debe tener más de 7 caracteres',
+        ]);
+    }
+
+    private function validarPassword(Request $request){
+        $request->validateWithBag('validacion', [
+            'password' => ['nullable', Password::min(8)],
+        ], [
             'password' => 'La contraseña debe tener más de 7 caracteres',
         ]);
     }
@@ -73,6 +94,15 @@ class HotelController extends Controller
         $hotel->usuario = $request->usuario;
         if ($request->filled('password')){
             $hotel->password = Hash::make($request->password);
+        }
+        $hotel->save();
+    }
+
+    private function setDataPassword(Request $request, Hotel $hotel){
+        if ($request->filled('password')){
+            $hotel->password = Hash::make($request->password);
+        } else {
+            $hotel->password = null;
         }
         $hotel->save();
     }

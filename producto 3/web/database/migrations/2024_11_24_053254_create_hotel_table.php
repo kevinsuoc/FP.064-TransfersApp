@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_hotel');
             $table->unsignedBigInteger('id_zona');
             $table->foreign('id_zona')->references('id_zona')->on('p3_transfer_zona');
-            $table->integer('comision', false, true);
+            $table->decimal('comision');
             $table->string('usuario', 100)->unique();
             $table->string('password', 100)->nullable();
         });

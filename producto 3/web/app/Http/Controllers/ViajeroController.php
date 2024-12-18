@@ -36,8 +36,10 @@ class ViajeroController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $this->validar($request);
-        $this->setData($request, Viajero::find($id)); 
+        $viajero  = Viajero::find($id);
+
+        $this->validarUpdate($request, $viajero);
+        $this->setData($request, $viajero); 
         return redirect()->back()->with('success', 'Perfil actualizado');
     }
 
@@ -55,6 +57,29 @@ class ViajeroController extends Controller
             'between' => 'El campo debe tener entre :min y :max caracteres.',
             'email.unique' => 'El correo electrónico ya está registrado.',
         ]);
+    }
+
+    private function validarUpdate(Request $request, Viajero $viajero){
+        $rules = [
+            'nombre' => ['required', 'between:2,50', 'string'],
+            'apellido1' =>['required', 'between:2,50', 'string'],
+            'apellido2' => ['required', 'between:2,50', 'string'],
+            'ciudad' => ['required', 'between:2,50', 'string'],
+            'pais' => ['required', 'between:2,50', 'string'],
+            'direccion' => ['required', 'between:2,50'],
+            'codigo_postal' => ['required', 'between:2,50'],
+        ];
+
+        $mensajes = [
+            'between' => 'El campo debe tener entre :min y :max caracteres.',
+            'email.unique' => 'El correo electrónico ya está registrado.',
+        ];
+
+        if ($viajero->email != $request->email){
+            $rules['email'] = ['required', 'email', 'unique:App\Models\Viajero,email'];
+        }
+
+        $request->validateWithBag('validacion', $rules, $mensajes);
     }
 
     private function setData(Request $request, Viajero $viajero){

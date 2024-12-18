@@ -24,7 +24,7 @@
 
                 <div class="form-group mb-4">
                     <label for="comision">Comisión</label>
-                    <input value="{{$hotel->comision}}" type="number" class="form-control" name="comision" id="comision" required>
+                    <input value="{{$hotel->comision}}" type="number" step="0.01" class="form-control" name="comision" id="comision" required>
                     @error('comision', 'validacion')
                         <div class="alert alert-danger mt-2">{{ $message }}</div>
                     @enderror
@@ -38,7 +38,9 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn-bd-primary mb-3">Aceptar</button>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn-bd-primary mb-3">Aceptar</button>
+                </div>
                 @if (session('success'))
                     <div class="alert alert-success mt-3">{{ session('success') }}</div>
                 @endif
@@ -49,10 +51,15 @@
                 @method('PUT')
                 <div class="form-group mb-4">
                     <label for="password">Contraseña</label>
-                    <input type="password" class="form-control" name="password" id="password" required>
                 </div>
 
-                <button type="submit" class="btn-bd-primary mb-3">Cambiar contraseña</button>
+                <input type="hidden" name="isPassword" value="y">
+                <input type="password" class="form-control" name="password" id="password">
+
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn-bd-primary mb-3">Cambiar contraseña</button>
+                </div>
+
                 @if (session('success-password'))
                     <div class="alert alert-success mt-3">{{ session('success-password') }}</div>
                 @endif

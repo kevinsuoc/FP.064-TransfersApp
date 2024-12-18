@@ -12,7 +12,7 @@
             </div>
         @endif
 
-        <form action="{{ route('calendario.index') }}" method="post" class="container mt-4">
+        <form action="{{ route('calendario.index') }}" class="container mt-4">
             @csrf
             <div class="form-group">
                 <label for="vista">Selecciona el tipo de vista:</label>
@@ -65,7 +65,7 @@
         <div class="row mt-4">
             @foreach ($trayectos as $trayecto)
                 <div class="col-md-4 mb-4">
-                    <div class="card">
+                    <div class="card p-3">
                         <h4>Trayecto</h4><hr>
                         <p><strong>Fecha:</strong> {{ $trayecto['dia'] }} {{ $trayecto['hora'] }}</p>
                         <p><strong>Localizador:</strong> {{ $trayecto['localizador'] }}</p>

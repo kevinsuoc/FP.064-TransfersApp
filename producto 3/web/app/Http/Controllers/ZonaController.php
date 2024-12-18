@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Zona;
+use Exception;
 use Illuminate\Http\Request;
 
 class ZonaController extends Controller
@@ -46,13 +47,20 @@ class ZonaController extends Controller
     // Elimina el recurso
     public function destroy(string $id)
     {
-        Zona::destroy($id);
+        try {
+            Zona::destroy($id);
+        } catch (Exception $e){
+            return redirect()->route('zona.index')->with('error', 'No se puede eliminar la zona');
+        }
+        
         return redirect()->route('zona.index')->with('success', 'Zona eliminada');
     }
 
     private function validar(Request $request){
         $request->validateWithBag('validacion', [
             'descripcion' => ['required', 'between:2,50', 'string'],
+        ], [
+            'between' => 'El campo debe tener entre :min y :max caracteres.',
         ]);
     }
 

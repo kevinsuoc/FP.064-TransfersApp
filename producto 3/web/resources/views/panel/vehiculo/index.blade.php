@@ -11,18 +11,22 @@
         </div>
     @endif
 
-    <form action="{{route('vehiculo.create')}}">
+    @if (session('error'))
+        <div class="alert alert-warning">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <form action="{{route('vehiculo.create')}}" class="d-flex justify-content-center">
             @csrf
-            <button type="submit"class="btn-bd-primary">Agregar vehiculo</button>
+            <button type="submit"class="btn-bd-primary mb-4">Agregar vehiculo</button>
     </form>
 
     @foreach ($vehiculos as $vehiculo)
-    <div>
-    <div class="mt-4">
-        <h5>Vehículo:</h5>
+    <div class="p-3 mb-4 border rounded">
             <p><strong>Descripción: </strong>{{$vehiculo->descripcion}}</p>
             <p><strong>Email conductor: </strong>{{$vehiculo->email_conductor}}</p>
-            <form action="{{route('vehiculo.edit',$vehiculo->id_vehiculo)}}"class="d-inline-block me-2>
+            <form action="{{route('vehiculo.edit',$vehiculo->id_vehiculo)}}" class="d-inline-block me-2">
                 @csrf
                 <button type="submit"class="btn-bd-primary">Editar</button>
             </form>
@@ -31,7 +35,7 @@
                 @method('DELETE')
                 <button type="submit"class="btn-bd-primary">Borrar</button>
             </form>
-    </div><br>
+    </div>
     @endforeach
 
 </div>

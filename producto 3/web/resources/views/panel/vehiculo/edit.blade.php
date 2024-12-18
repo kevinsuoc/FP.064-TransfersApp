@@ -13,18 +13,24 @@
             <div class="form-group mb-4">
             <label for="descripcion">Descripción</label>
             <input value="{{$vehiculo->descripcion}}" class="form-control" type="text" name="descripcion" id="descripcion" required><br>
-            @error('descripcion', 'validacion')
-                <div class="alert alert-danger">{{ $message }}</div><br>
-            @enderror
-
-            <label for="email_conductor">Email conductor</label>
-            <input value="{{$vehiculo->email_conductor}}" class="form-control" type="email" name="email_conductor" id="email_conductor" required><br>
-            @error('email_conductor', 'validacion')
-                <div class="alert alert-danger">{{ $message }}</div><br>
-            @enderror
             </div>
 
+            @error('descripcion', 'validacion')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+
+            <div class="form-group mb-4">
+                <label for="email_conductor">Email conductor</label>
+                <input value="{{$vehiculo->email_conductor}}" class="form-control" type="email" name="email_conductor" id="email_conductor" required><br>
+            </div>
+
+            @error('email_conductor', 'validacion')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+
+            <div class="d-flex justify-content-center">
             <button type="submit"class="btn-bd-primary mb-3">Aceptar</button>
+            </div>
 
             @if (session('success'))
                 <div class="alert alert-success">

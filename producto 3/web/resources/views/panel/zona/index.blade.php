@@ -11,13 +11,19 @@
         </div>
     @endif
 
-    <form action="{{route('zona.create')}}">
+    @if (session('error'))
+        <div class="alert alert-warning">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    <form action="{{route('zona.create')}}" class="d-flex justify-content-center">
             @csrf
             <button type="submit"class="btn-bd-primary">Agregar zona</button>
     </form>
 
     @foreach ($zonas as $zona)
-    <div class="mt-4">
+    <div class="mt-4 p-3 mb-4 border rounded">
         <h5>Zona:</h5>
                 <p><strong>Descripción: </strong>{{$zona->descripcion}}</p>
                 <form action="{{route('zona.edit',$zona->id_zona)}}" class="d-inline-block me-2">
@@ -29,7 +35,7 @@
                     @method('DELETE')
                     <button type="submit" class="btn-bd-primary">Borrar</button>
                 </form>
-            </div><br>
+            </div>
     @endforeach
 
 </div>

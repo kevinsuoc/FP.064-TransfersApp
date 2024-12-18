@@ -13,19 +13,23 @@
             <div class="form-group mb-4">
                 <label for="descripcion">Descripción</label>
                 <input value="{{ old('descripcion') }}" class="form-control" type="text" name="descripcion" id="descripcion" required>
-                @error('descripcion', 'validacion')
+            </div>
+
+            @error('descripcion', 'validacion')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-            </div>
             <div class="form-group mb-4">
                 <label for="email_conductor">Email conductor</label>
                 <input value="{{ old('email_conductor') }}" class="form-control" type="email" name="email_conductor" id="email_conductor" required>
-                @error('email_conductor', 'validacion')
-                    <div class="alert alert-danger">{{ $message }}</div><br>
-                @enderror
             </div>
 
-            <button type="submit"class="btn-bd-primary">Crear</button>
+            @error('email_conductor', 'validacion')
+                <div class="alert alert-danger">{{ $message }}</div><br>
+            @enderror
+
+            <div class="d-flex justify-content-center">
+                <button type="submit"class="btn-bd-primary">Crear</button>
+            </div>
 
         </form>
         <form action="{{ route('vehiculo.index') }}" class="list-group-item">

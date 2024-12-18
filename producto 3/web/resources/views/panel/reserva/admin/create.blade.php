@@ -67,9 +67,9 @@
         </div>
     </form>
 
-    <form action="{{ route('vehiculo.index') }}" class="mt-4">
+    <form action="{{ route('reserva.index') }}" class="mt-4">
         @csrf
-        <button type="submit" class="btn btn-secondary w-100">Panel reservas</button>
+        <button type="submit" class="btn btn-primary w-100">Panel reservas</button>
     </form>
 </div>
 

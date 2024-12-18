@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vehiculo;
+use Exception;
 use Illuminate\Http\Request;
 
 // Mas detalles acerca de cada método se encuentran en la clase Zona (Son análogos) y documentación.
@@ -35,14 +36,20 @@ class VehiculoController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $this->validar($request);
-        $this->setData($request, Vehiculo::find($id)); 
+        $vehiculo = Vehiculo::find($id);
+
+        $this->validarUpdate($request, $vehiculo);
+        $this->setData($request, $vehiculo); 
         return redirect()->back()->with('success', 'Vehiculo actualizado');
     }
 
     public function destroy(string $id)
     {
-        Vehiculo::destroy($id);
+        try {
+            Vehiculo::destroy($id);
+        } catch (Exception $e){
+            return redirect()->route('vehiculo.index')->with('error', 'No se puede eliminar el vehiculo');
+        }
         return redirect()->route('vehiculo.index')->with('success', 'Vehiculo eliminado');
     }
 
@@ -53,8 +60,25 @@ class VehiculoController extends Controller
             'email_conductor' => ['required', 'email', 'unique:App\Models\Vehiculo,email_conductor'],
         ], [
             'between' => 'El campo debe tener entre :min y :max caracteres.',
-            'email.unique' => 'El correo electrónico ya está registrado.',
+            'email_conductor.unique' => 'El correo electrónico ya está registrado.',
         ]);
+    }
+
+    private function validarUpdate(Request $request, Vehiculo $vehiculo){
+        $rules = [
+            'descripcion' => ['required', 'between:2,50', 'string'],
+        ];
+
+        $mensajes = [
+            'between' => 'El campo debe tener entre :min y :max caracteres.',
+            'email_conductor.unique' => 'El correo electrónico ya está registrado.',
+        ];
+
+        if ($request->email_conductor != $vehiculo->email_conductor){
+            $rules['email_conductor'] = ['required', 'email', 'unique:App\Models\Vehiculo,email_conductor'];
+        }
+
+        $request->validateWithBag('validacion', $rules,$mensajes );
     }
 
     private function setData(Request $request, Vehiculo $vehiculo){

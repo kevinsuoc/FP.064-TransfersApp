@@ -24,7 +24,7 @@
 
             <div class="form-group mb-4">
                 <label for="comision">Comisión</label>
-                <input value="{{ old('comision') }}" type="number" class="form-control" name="comision" id="comision" required>
+                <input value="{{ old('comision') }}" type="number" step="0.01" class="form-control" name="comision" id="comision" required>
                 @error('comision', 'validacion')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
@@ -46,7 +46,10 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn-bd-primary mb-3">Crear</button>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn-bd-primary mb-3">Crear</but>
+            </div>
+            
         </form>
 
         <form action="{{ route('hotel.index') }}" class="list-group-item">
