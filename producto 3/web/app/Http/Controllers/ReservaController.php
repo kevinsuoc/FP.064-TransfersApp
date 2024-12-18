@@ -103,6 +103,7 @@ class ReservaController extends Controller
                     $totalComisiones += ($reserva->precio->precio) * $hotel->comision / 100;
                 }
             }
+
             return view('panel.reserva.admin.index', [
             'reservas' => $reservas,
             'mes' => $request->mes,
