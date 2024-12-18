@@ -44,7 +44,13 @@ class CalendarioController extends Controller
 
         $trayectos = $this->procesarTrayectos($reservas, $filtroData);
 
-        return view('panel.calendario.index', ['trayectos'=>$trayectos, 'filtroData'=>$filtroData]);
+        $trayectosEntradaPorFecha = collect($trayectos)->groupBy('dia_entrada')->toArray();
+        $trayectosSalidaPorFecha = collect($trayectos)->groupBy('dia_salida')->toArray();
+        $trayectosPorFecha = array_merge($trayectosEntradaPorFecha,$trayectosSalidaPorFecha);
+
+        $calendario_header = $this->generarCalendario($filtroData['mes'],$filtroData['anyo'],null,null);
+
+        return view('panel.calendario.index', ['trayectos'=>$trayectos,'trayectosPorFecha' => $trayectosPorFecha, 'filtroData'=>$filtroData, 'calendarData'=>$calendario_header]);
     }
 
     private function obtenerDataFiltro($request): array
@@ -136,4 +142,41 @@ class CalendarioController extends Controller
 				return false;
 		}
 	}
+    public function generarCalendario($month, $year, $lang, $holidays = null)
+    {
+        $headings = $this->getHeadings($lang);
+
+        $runningDay = Carbon::create($year, $month, 1)->dayOfWeek;
+        $runningDay = ($runningDay === 0) ? 6 : $runningDay-1;
+
+        $daysInMonth = Carbon::create($year, $month, 1)->daysInMonth;
+        $monthName = $this->getMonth($month);
+        $calendarData = [
+            'headings' => $headings,
+            'month' => $month,
+            'year' => $year,
+            'runningDay' => $runningDay,
+            'daysInMonth' => $daysInMonth,
+            'holidays' => $holidays ?? [],
+            'monthName'=> $monthName,
+        ];
+
+        return $calendarData;
+    }
+
+    private function getHeadings($lang)
+    {
+        return match ($lang) {
+            'en' => ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+            'es' => ['L', 'M', 'M', 'J', 'V', 'S', 'D'],
+            'ca' => ['DI', 'Dm', 'Dc', 'Dj', 'Dv', 'Ds', 'Dg'],
+            default => ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'], // Default to Spanish
+        };
+    }
+    private function getMonth($month)
+    {
+        $months=['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+        return  $months[$month-1];
+    }
+
 }

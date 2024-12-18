@@ -187,3 +187,62 @@
 #perfilSection.active, #reservasSection.active, #editSection.active {
     display: block;
 }
+
+   /* Contenedor del calendario */
+   .calendar-container {
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid #000;
+    background-color: #f8f9fa; /* Fondo claro para el calendario */
+}
+
+/* Estilo de las celdas de días */
+.day-cell {
+    min-height: 100px;
+    position: relative;
+    border: 1px solid #ddd; /* Borde gris claro para cada celda */
+    background-color: #fff; /* Fondo blanco para los días */
+    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+}
+
+.day-cell:hover {
+    background-color: #f0f8ff; /* Cambio de color al pasar el ratón sobre las celdas */
+}
+
+/* Fecha en la celda */
+.date-label {
+    font-weight: bold;
+    text-align: right;
+    color: #000; /* Color oscuro para la fecha */
+    padding: 5px;
+}
+
+/* Estilo de los trayectos en las celdas */
+.trayecto-item {
+    margin-top: 5px;
+    background-color: #add8e6; /* Fondo azul claro para los trayectos */
+    border: 1px solid #FFF;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+/* Encabezado de la tabla (días de la semana) */
+table th {
+    background-color: #343a40; /* Fondo oscuro para el encabezado */
+    color: #000; 
+}
+
+/* Bordes de las celdas de la tabla */
+table td, table th {
+    border: 1px solid #ddd; /* Borde gris claro */
+}
+
+/* Colores alternados en las filas para la tabla */
+table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Fondo gris claro para filas pares */
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* Fondo blanco para filas impares */
+}

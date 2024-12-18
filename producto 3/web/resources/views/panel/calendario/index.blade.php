@@ -16,10 +16,8 @@
         <form action="{{ route('calendario.index') }}" class="container mt-4">
             @csrf
             <div class="form-group">
-                <label for="vista">Selecciona el tipo de vista:</label>
-                <select id="tipo" name="tipo" class="form-control" onchange="this.form.submit()">
-                    <option value="diaria" {{ $filtroData['tipo'] == 'diaria' ? 'selected' : '' }}>Vista Diaria</option>
-                    <option value="semanal" {{ $filtroData['tipo'] == 'semanal' ? 'selected' : '' }}>Vista Semanal</option>
+                <label for="vista">Selecciona el año y mes:</label>
+                <select id="tipo" name="tipo" class="form-control" onchange="this.form.submit()" style="display:none">
                     <option value="mensual" {{ $filtroData['tipo'] == 'mensual' ? 'selected' : '' }}>Vista Mensual</option>
                 </select>
             </div>
@@ -62,23 +60,76 @@
                 <button type="submit" class="btn-bd-primary">Filtrar</button>
             </div>
         </form>
+    <div class="calendar-container">
+        <h1>
+            <p>
+        
+        {{$calendarData['monthName']}}
+        
+        </p>
+        </h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                @foreach ($calendarData['headings'] as $heading)
+                    <th class="text-center">{{ $heading }}</th>
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $dayCounter = 1;
+                $runningDay = $calendarData['runningDay'];
+                $daysInMonth = $calendarData['daysInMonth'];
+            @endphp
 
-        <div class="row mt-4">
-            @foreach ($trayectos as $trayecto)
-                <div class="col-md-4 mb-4">
-                    <div class="card p-3">
-                        <h4>Trayecto</h4><hr>
-                        <p><strong>Fecha:</strong> {{ $trayecto['dia'] }} {{ $trayecto['hora'] }}</p>
-                        <p><strong>Localizador:</strong> {{ $trayecto['localizador'] }}</p>
-                        <p><strong>Email viajero:</strong> {{ $trayecto['email'] }}</p>
-                        <button class="btn-bd-primary" onclick="verDetalle({{ json_encode($trayecto) }})">Ver más</button>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
+            <!-- Primera fila -->
+            <tr>
+                @for ($i = 0; $i < $runningDay; $i++)
+                    <td></td>
+                @endfor
 
+                @while ($dayCounter <= $daysInMonth)
+                    <td>
+                        <div class="day-cell">
+                            <div class="date-label">{{ $dayCounter }}</div>
+                            @php
+                                $currentDate = sprintf('%04d-%02d-%02d', $calendarData['year'], $calendarData['month'], $dayCounter);
+                            @endphp
+                            @if (isset($trayectosPorFecha[$currentDate]))
+                                @foreach ($trayectosPorFecha[$currentDate] as $trayecto)
+                                    <div class="trayecto-item">
+                                        <strong>{{ $trayecto['tipo'] }}</strong><br>
+                                        {{ $trayecto['localizador'] }}<br>
+                                        {{ $trayecto['hora'] }}<br>
+                                        <button class="btn-bd-primary" onclick="verDetalle({{ json_encode($trayecto) }})">Ver más</button>
+                                    </div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </td>
+                    @php
+                        $dayCounter++;
+                        $runningDay++;
+                    @endphp
+
+                    @if ($runningDay % 7 == 0 && $dayCounter <= $daysInMonth)
+            </tr>
+            <tr>
+                @endif
+                @endwhile
+
+                <!-- Celdas vacías al final -->
+                @while ($runningDay % 7 != 0)
+                    <td></td>
+                    @php $runningDay++; @endphp
+                @endwhile
+            </tr>
+        </tbody>
+    </table>
 </div>
+</div>
+
 </div>
 
 <!-- Modal para ver detalles -->
@@ -110,6 +161,11 @@
             </div>
         </div>
     </div>
+
+
+
+
+
 </div>
 
 
@@ -138,6 +194,9 @@
         modal.show();
     }
 </script>
+
+
+
 
 
 
