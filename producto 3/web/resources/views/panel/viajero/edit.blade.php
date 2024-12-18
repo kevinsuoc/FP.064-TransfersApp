@@ -74,7 +74,7 @@
 
 
             <label class="form-label" for="password">Contraseña</label>
-            <input type="password" name="password" id="password" required><br>
+            <input class="form-select mb-3" type="password" name="password" id="password" required><br>
 
 
             <label class="form-label"for="password_confirmation">Confirmar contraseña</label>

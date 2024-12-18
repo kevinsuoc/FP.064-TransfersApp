@@ -2,7 +2,7 @@
 
 <div class="main-container">
 @include('header')
-<div class="container mt-5 p-4 shadow-sm rounded" style="max-width: 600px; background: #f8f9fa;">
+<div class="container mt-5 p-4 shadow-sm rounded" style="max-width: 850px; background: #f8f9fa;">
     <h2 class="mb-4 text-center">Crear reserva</h2>
     <form action="{{route('reserva.store')}}" method="POST">
         @csrf
@@ -63,7 +63,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn-bd-primary  w-100">Crear</button>
+            <button type="submit" class="btn-bd-primary ">Crear</button>
         </div>
     </form>
 
