@@ -39,18 +39,21 @@
                  <div class="form-group mt-3">
                     <label for="precio">Precio</label>
                     <input value="{{old('precio')}}" type="number" step="0.01" name="precio" id="precio" class="form-control" required>
-                    @error('precio', 'validacion')
+                </div> 
+                
+                     @error('precio', 'validacion')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                     @error('precio_unico', 'validacion')
                         <div class="alert alert-danger">{{ $message }}</div>
                     @enderror
                
-
-                    <button type="submit" class="btn-bd-primary mt-4">Crear</button>
+                    <div class="d-flex justify-content-center">
+                      <button type="submit" class="btn-bd-primary mt-4">Crear</button>
+                    </div>
                            
                     </form>
-                    </div> 
+ 
                      <form action="{{ route('precio.index') }}" class="mt-4">
                      @csrf
                 <button type="submit" class="btn-bd-primary w-100">Panel precios</button>

@@ -15,7 +15,7 @@
         <div class="form-container">
             <div class="d-flex justify-content-center"> <!-- Usamos flexbox para centrar los formularios -->
                 <div class="login-form mx-3"> <!-- Espaciado entre los formularios -->
-                    <form action="/authenticateLogin" method="POST">
+                    <form action="{{ route('authenticateLogin') }}" method="POST">
                         @csrf
                         @method('POST')
 
@@ -35,7 +35,7 @@
                 
 
                 <!-- Espaciado entre los formularios -->
-                    <form action="/registrarse">
+                    <form action="{{ route('registrarse') }}">
                         @csrf
                         @method('GET')
                         <button type="submit" class="btn-bd-primary  ">Registrarse</button>

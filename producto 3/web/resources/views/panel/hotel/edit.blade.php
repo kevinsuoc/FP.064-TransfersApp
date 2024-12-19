@@ -63,7 +63,7 @@
                 @if (session('success-password'))
                     <div class="alert alert-success mt-3">{{ session('success-password') }}</div>
                 @endif
-                @error('descripcion', 'password')
+                @error('password', 'validacion')
                     <div class="alert alert-danger mt-2">{{ $message }}</div>
                 @enderror
             </form>

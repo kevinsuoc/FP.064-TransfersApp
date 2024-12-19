@@ -34,8 +34,10 @@
                 @enderror
                 </div>
                 <div class="form-group mt-3">
-                <label class="form-label" for="precio">Precio</label>
-                <input  class="form-control" value="{{$precio->precio}}" type="number" step="0.01" name="precio" id="precio" required>
+                  <label class="form-label" for="precio">Precio</label>
+                  <input  class="form-control" value="{{$precio->precio}}" type="number" step="0.01" name="precio" id="precio" required>
+                </div>
+
                 @error('precio', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -43,13 +45,16 @@
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
 
-                <button type="submit"class="btn-bd-primary mt-4">Aceptar</button><br>
+                <div class="d-flex justify-content-center mb-4">
+                <button type="submit"class="btn-bd-primary mt-4">Aceptar</button>
+                </div>
+
                 @if (session('success'))
                     <div class="alert alert-success">
                     {{ session('success') }}
                     </div>
                 @endif
-                </div>
+                
 
             </div>
             </form>

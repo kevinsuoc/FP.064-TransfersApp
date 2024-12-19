@@ -86,23 +86,29 @@
                 @enderror
             </div>
             @endif
-
-            @error('fecha', 'validacion')
-            <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
         
 
             <input type="hidden" name="id_tipo_reserva" value="{{$reserva->id_tipo_reserva}}">
+
             <button type="submit" class="btn-bd-primary">Aceptar</button>
-            @error('descripcion', 'validacion')
+
+
+        </div>
+        @error('descripcion', 'validacion')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
+            
+        @error('fecha', 'validacion')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+
+
+            
             @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
             @endif
-        </div>
     </form>
     <form action="{{ route('userReserva.index') }}" class="list-group-item">
             @csrf

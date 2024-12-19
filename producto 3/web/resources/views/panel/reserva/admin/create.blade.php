@@ -7,7 +7,7 @@
     <form action="{{route('reserva.store')}}" method="POST">
         @csrf
         <div class="form-group">
-            <select id="id_tipo_reserva" name="id_tipo_reserva" class="form-select mb-4" onchange="mostrarDatosReserva()">
+            <select id="id_tipo_reserva" name="id_tipo_reserva" class="form-select mb-4" onchange="mostrarDatosReserva()" required>
                 <option value="" disabled selected>Elige un tipo de reserva</option>
                 @foreach ($tiposReserva as $tipoReserva)
                 <option value="{{$tipoReserva->id_tipo_reserva}}" @if(old('id_tipo_reserva') == $tipoReserva->id_tipo_reserva) selected @endif>{{$tipoReserva->descripcion}}</option>
