@@ -1,0 +1,27 @@
+services:
+  wordpress:
+    image: wordpress:php8.1
+    container_name: wordpress-4
+    restart: always
+    ports:
+      - 80:80
+    env_file:
+      - .env
+    volumes:
+      - ./web:/var/www/html/
+  database:
+    image: mysql:8.0.39
+    container_name: database-4
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./database:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin:5.2.1
+    container_name: phpmyadmin-4
+    restart: always
+    ports:
+      - 8080:80
+    env_file:
+      .env
