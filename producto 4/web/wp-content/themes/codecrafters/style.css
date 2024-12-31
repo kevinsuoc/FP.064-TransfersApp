@@ -6,6 +6,44 @@ Author: CodeCrafters
 Author URI: https://oceanwp.org/
 Template: oceanwp
 Version: 1.0
+Text Domain: oceanwp
 */
 
-/* Parent stylesheet should be loaded from functions.php not using @import */
+.transfers-data-table {
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    max-width: 600px;
+    border-collapse: separate;
+	overflow: hidden;
+}
+
+.first-table-row {
+    background-color: rgb(23, 253, 253);
+}
+
+.transfers-data-table td, .transfers-data-table th {
+    border: 1px solid rgb(61, 71, 71);
+    padding: 8px;
+}
+
+#servicios-data {
+    display: flex;           
+    justify-content: center; 
+}
+
+.site-main{
+	background-color: rgb(230, 248, 253);
+}
+
+.wp-block-heading{
+	color: rgb(3, 3, 161);
+}
+
+#site-navigation{
+	width: 100%;
+	background-color: rgb(255, 251, 236);
+}
+
+.text-wrap{
+	color: black;
+}

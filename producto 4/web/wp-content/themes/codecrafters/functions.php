@@ -31,3 +31,11 @@ function oceanwp_child_enqueue_parent_style() {
 }
 
 add_action( 'wp_enqueue_scripts', 'oceanwp_child_enqueue_parent_style' );
+
+add_action('wp_head', 'my_custom_styles_and_scripts');
+
+function my_custom_styles_and_scripts() {
+  ?>
+	<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri(); ?>/style.css" type="text/css" media="all">
+  <?php
+}
