@@ -1,8 +1,6 @@
 <?php
 /* Template Name: JSON Data Page */
 
-get_header();
-
 ?>
 
 <?php
